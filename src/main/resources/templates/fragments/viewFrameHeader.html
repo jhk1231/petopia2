@@ -1,25 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 
-<!-- <div class="header-top">
-	<div class="header-profile">
-		<span class="material-icons"> account_circle </span>
-	</div>
-	<div class="header-alarm">
-		<span class="material-icons"> notifications_none </span>
-	</div>
-	<div class="header-icon">
-		<span class="material-icons"> widgets </span>
-	</div>
-	<form action="#" class="header-all-search">
-		<input type="text" name="all-search" class="header-search-hide">
-		<a href="#" class="header-search-icon"><span
-			class="material-icons"> search </span></a>
-	</form>
-</div>
 
-<img src="img/banner-img.jpg" alt="배너">
- -->
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="/">Petopia</a>
@@ -36,7 +18,7 @@
             </form>
            
            	<!-- admin Toggle-->
-            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0 icon-gray" id="adminToggle" href="#!"><i class="fas fa-cog fa-lg"></i></button>
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0 icon-gray" id="adminToggle" th:onclick="'location.href=\''+ @{manager} + '\' '"><i class="fas fa-cog fa-lg"></i></button>
            
            <!-- alarm Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0 icon-gray" id="alramToggle" href="#!"><i class="fas fa-bell fa-lg"></i></button>           
@@ -50,6 +32,7 @@
                         <li><a class="dropdown-item" href="#!">신입집사</a></li>
                         <li><hr class="dropdown-divider" /></li>
                         <li><a class="dropdown-item" href="#!">Profile</a></li>
+                        <li><a class="dropdown-item" href="#!">쪽지함</a></li>
                         <li><hr class="dropdown-divider" /></li>
                         <li><a class="dropdown-item" href="#!">Logout</a></li>
                     </ul>
