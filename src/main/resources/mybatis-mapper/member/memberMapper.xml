@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.member.MemberMapper">
+	<resultMap type="memberVo" id="detailInfoByManager">
+		<result property="no" javaType="int" column="member_no" jdbcType="INTEGER"/>
+		<result property="email" javaType="string" column="email" jdbcType="VARCHAR"/>
+		<result property="grade" javaType="string" column="name" jdbcType="VARCHAR"/>
+		<result property="nickname" javaType="string" column="nickname" jdbcType="VARCHAR"/>
+		<result property="regDate" javaType="string" column="regdate" jdbcType="DATE"/>
+		<result property="lastDate" javaType="string" column="lastdate" jdbcType="DATE"/>
+		<result property="docs" javaType="int" column="docs" jdbcType="INTEGER"/>
+		<result property="comms" javaType="int" column="comms" jdbcType="INTEGER"/>
+		<result property="visits" javaType="int" column="visits" jdbcType="INTEGER"/>
+		<result property="ban" javaType="string" column="ban" jdbcType="DATE"/>
+	</resultMap>
+	<select id="selectMemberByManager" parameterType="int" resultType="memberVo" resultMap="detailInfoByManager">
+		SELECT member_no, email, name, nickname, regdate, lastdate, M.docs, M.comms, visits, ban
+		FROM member M RIGHT JOIN grade G
+		ON M.grade_no = G.grade_no
+		WHERE member_no = #{no}
+	</select>
+	<update id="updateBan" parameterType="Map">
+		UPDATE member
+		SET	ban = DATE_ADD(NOW(), INTERVAL)
+		WHERE member_no = #{no}
+	</update>
+	<update id="updateMemberByForce" parameterType="int">
+		UPDATE member
+		SET ismember = 2
+		WHERE member_no = #{no};
+	</update>
+	<update id="plusMemberDocs" parameterType="int">
+		UPDATE member
+    	SET docs = docs + 1
+    	WHERE member_no = #{no};
+	</update>
+	<update id="minusMemberDocs" parameterType="int">
+		UPDATE member
+    	SET docs = docs - 1
+    	WHERE member_no = #{no};
+	</update>
+	<update id="plusMemberComms" parameterType="int">
+		UPDATE member
+    	SET comms = comms + 1
+    	WHERE member_no = #{no};
+	</update>
+    <update id="minusMemberComms" parameterType="int">
+    	UPDATE member
+    	SET comms = comms - 1
+    	WHERE member_no = #{no};
+    </update>
+</mapper>

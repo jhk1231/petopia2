@@ -49,7 +49,7 @@ public class DataSourceConfig {
 		public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception{
 			SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
 			sqlSessionFactory.setDataSource(dataSource);
-			sqlSessionFactory.setMapperLocations(applicationContext.getResources("classpath:/mybatis-mapper/**/*mapper.xml"));
+			sqlSessionFactory.setMapperLocations(applicationContext.getResources("classpath:/mybatis-mapper/**/*Mapper.xml"));
 			sqlSessionFactory.setTypeAliasesPackage("com.example.vo");
 			sqlSessionFactory.setConfiguration(mybatisConfig());
 			return sqlSessionFactory.getObject();
