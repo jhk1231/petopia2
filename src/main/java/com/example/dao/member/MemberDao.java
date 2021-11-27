@@ -7,7 +7,11 @@ import org.springframework.stereotype.Repository;
 import com.example.vo.member.MemberVO;
 
 public interface MemberDao {
-	// 회원의 리스트 조회
+	public void test();
+	public MemberVO selectMember(int no);	
+	public MemberVO selectMember(String email, String password) throws Exception;
+	public void updateLastDdate(int no) throws Exception;
+  // 회원의 리스트 조회
 	ArrayList<MemberVO> selectMemberList(int startRow, int memberPerPage);
 
 	// 회원의 총 수
