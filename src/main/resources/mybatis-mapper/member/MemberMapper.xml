@@ -2,23 +2,23 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+ 
 <mapper namespace="com.example.mapper.member.MemberMapper">
-<!--     <resultMap id="memberListResult" type="memberVo">
-        <result property="no" javaType="int" column="member_no" jdbcType="INTEGER" />
+    <resultMap id="memberListResult" type="memberVo">
+        <result property="no" javaType="INTEGER" column="member_no" jdbcType="INTEGER" />
         <result property="email" javaType="String" column="email" jdbcType="CHAR" />
         <result property="password" javaType="String" column="password" jdbcType="CHAR" />
         <result property="nickname" javaType="String" column="nickname" jdbcType="CHAR" />
-        <result property="regDate" javaType="String" column="regdate" jdbcType="DATETIME" />
-        <result property="lastDate" javaType="String" column="lastdate" jdbcType="DATETIME" />
-        <result property="grade" javaType="int" column="grade_no" jdbcType="SMALLINT" />
-        <result property="docs" javaType="int" column="docs" jdbcType="INTEGER" />
-        <result property="comms" javaType="int" column="comms" jdbcType="INTEGER" />
-        <result property="visits" javaType="int" column="visits" jdbcType="INTEGER" />
-        <result property="ban" javaType="String" column="ban" jdbcType="DATETIME" />
-        <result property="isMember" javaType="int" column="ismember" jdbcType="SMALLINT" />
-    </resultMap>
-
+        <result property="regDate" javaType="String" column="regdate" jdbcType="TIMESTAMP" />
+        <result property="lastDate" javaType="String" column="lastdate" jdbcType="TIMESTAMP" />
+        <result property="grade" javaType="INTEGER" column="grade_no" jdbcType="SMALLINT" />
+        <result property="docs" javaType="INTEGER" column="docs" jdbcType="INTEGER" />
+        <result property="comms" javaType="INTEGER" column="comms" jdbcType="INTEGER" />
+        <result property="visits" javaType="INTEGER" column="visits" jdbcType="INTEGER" />
+        <result property="ban" javaType="String" column="ban" jdbcType="TIMESTAMP" />
+        <result property="isMember" javaType="INTEGER" column="ismember" jdbcType="SMALLINT" />
+	</resultMap>
+<!-- 
     <select id="selectMemberList" parameterType="Map" resultType="memberVo" resultMap="memberListResult">
         SELECT member_no, email, name, regdate, visits, ban
         FROM member M RIGHT JOIN grade G2
@@ -28,15 +28,22 @@
         LIMIT #{memberPerPage} OFFSET #{startRow}
     </select>
 -->
-    <select id="selectMember_byIDPwd" parameterType="String" resultType="memberVo">
-        SELECT member_no, email
+    <select id="selectMember_byIDPwd" parameterType="String" resultMap="memberListResult">
+        <!-- SELECT member.member_no, email, nickname -->
+        SELECT *
         FROM member
         WHERE email=#{email} AND password=#{password}
     </select>
 
-	<select id="test" parameterType="int" resultType="memberVo">
+	<select id="test" parameterType="int" resultMap="memberListResult">
         SELECT member_no, email
         FROM member
         WHERE member_no = 1
     </select>
+    
+    <update id = "updateLastDdate" parameterType = "int">
+	    UPDATE member 
+	    SET lastdate = CURRENT_TIMESTAMP 
+	    WHERE member_no = #{no}
+    </update>
 </mapper>

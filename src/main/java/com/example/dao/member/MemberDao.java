@@ -6,4 +6,5 @@ public interface MemberDao {
 	public void test();
 	public MemberVO selectMember(int no);	
 	public MemberVO selectMember(String email, String password) throws Exception;
+	public void updateLastDdate(int no) throws Exception;
 }

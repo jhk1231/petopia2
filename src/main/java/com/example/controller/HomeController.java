@@ -5,21 +5,21 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.config.SessionConfig;
 import com.example.service.member.MemberService;
 import com.example.vo.member.MemberVO;
 
 import lombok.extern.java.Log;
+
 
 @Controller
 @Log
@@ -32,8 +32,6 @@ public class HomeController {
 	
 	@GetMapping("/")
 	public String index() {
-		//return "view/home/viewHomeTemplate";
-		log.info("line 23 : show login view");
 		return "view/member/login";
 	}
 	
@@ -70,8 +68,10 @@ public class HomeController {
 			failText = "로그인에 성공했습니다.";
 			
 			//HttpSession session = request.getSession();
-			System.out.println(session);
-			session.setAttribute("user", user);
+			//System.out.println(session);
+			SessionConfig.getSessionidCheck("loginUser", Integer.toString(user.getNo()));
+			
+			session.setAttribute("loginUser", user);
 			session.setMaxInactiveInterval(60*60); // 세션 유지 시간 1시간으로 설정
 		}
 		
@@ -85,6 +85,13 @@ public class HomeController {
 	@GetMapping("/main")
 	public String petopiaMain() {
 		return "view/home/viewHomeTemplate";
+	}
+	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		
+		return "redirect:main";
 	}
 	
 }

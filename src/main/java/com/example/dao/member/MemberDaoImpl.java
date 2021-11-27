@@ -32,4 +32,10 @@ public class MemberDaoImpl implements MemberDao {
 		
 	}
 
+	@Override
+	public void updateLastDdate(int no) throws Exception {
+		// TODO Auto-generated method stub
+		mapper.updateLastDdate(no);
+	}
+
 }

@@ -14,7 +14,12 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public MemberVO login(String email, String password) throws Exception {
-		return memberdao.selectMember(email, password);
+		MemberVO member = memberdao.selectMember(email, password);
+		
+		if(member != null)
+			memberdao.updateLastDdate(member.getNo());
+		
+		return member;
 	}
 
 	@Override
