@@ -11,9 +11,9 @@
 		th:href="@{https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css}"
 		rel="stylesheet" />
 	<link th:href="@{css/theme_styles.css}" rel="stylesheet" />
+	<link th:href="@{css/DatabasesStyle.css}" rel="stylesheet" />
 
 	<link th:href="@{css/homeContentsStyle.css}" rel="stylesheet" />
-	<link th:href="@{css/homeNavStyle.css}" rel="stylesheet" />
 
 	<script
 		th:src="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js}"
@@ -28,10 +28,10 @@
 
 	<div id="layoutSidenav">
 		<!-- Nav -->
-		<th:block layout:fragment="nav" th:include="@{/fragments/nav}"></th:block>
+		<th:block layout:fragment="nav" th:include="@{/fragments/managerNav}"></th:block>
 		<!-- Content -->
-		<th:block layout:fragment="viewMainContent"
-			th:include="@{/fragments/viewMainContent}"></th:block>
+		<th:block layout:fragment="viewMainContent" th:attr="th:include=|${@{MamberContent}}|"
+			></th:block>
 	</div>
 
 	<!-- footer -->
