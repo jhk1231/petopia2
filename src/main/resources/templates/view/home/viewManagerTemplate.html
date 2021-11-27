@@ -30,8 +30,8 @@
 		<!-- Nav -->
 		<th:block layout:fragment="nav" th:include="@{/fragments/managerNav}"></th:block>
 		<!-- Content -->
-		<th:block layout:fragment="viewMainContent"
-			th:include="@{/fragments/viewManagerContent}"></th:block>
+		<th:block layout:fragment="viewMainContent" th:attr="th:include=|${@{MamberContent}}|"
+			></th:block>
 	</div>
 
 	<!-- footer -->
