@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- <mapper namespace="com.example.vo.MemberVO"> -->
+<mapper namespace="com.example.mapper.board.ArticleMapper">
+
+	<resultMap type="articleVo" id="articleVOResult">
+		<result property="no" javaType="int" column="article_no"  jdbcType="INTEGER"/>
+		<result property="subject" javaType="String" column="subject"  jdbcType="VARCHAR"/>
+		<result property="nickname" javaType="String" column="nickname"  jdbcType="VARCHAR"/>
+		<result property="writeDate" javaType="String" column="writedate" jdbcType="VARCHAR"/>
+		<result property="viewcount" javaType="int" column="viewcount" jdbcType="VARCHAR"/>
+		<result property="likecount" javaType="int" column="likecount"  jdbcType="VARCHAR"/>
+	</resultMap>
+
+	<select id="selectBoard" parameterType="Integer" resultType="articleVo" resultMap="articleVOResult">
+		{ CALL sp_article_select_board(#{boardNo}) }
+	</select>
+
+	<resultMap type="articleVo" id="detailArticleVOResult">
+		<result property="subject" javaType="String" column="subject"  jdbcType="VARCHAR"/>
+		<result property="nickname" javaType="String" column="nickname"  jdbcType="VARCHAR"/>
+		<result property="writeDate" javaType="String" column="writedate" jdbcType="VARCHAR"/>
+		<result property="content" javaType="String" column="content" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<select id="selectArticle" parameterType="Integer" resultType="articleVo" resultMap="detailArticleVOResult">
+		{ CALL sp_article_select_detail(#{articleNo}) }
+	</select>
+
+	
+	
+	<insert id="insertArticle" statementType="CALLABLE" parameterType="articleVo">
+		{ CALL sp_article_insert(#{memberNo}, #{boardNo}, #{nickname}, #{subject}, #{content}) }
+		
+		<selectKey resultType="int" keyProperty="no" keyColumn="article_no" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	
+	
+	<delete id="deleteArticle" parameterType="int" statementType="CALLABLE">
+		{ CALL sp_article_delete(#{articleNo}) }
+	</delete>
+	
+</mapper>
