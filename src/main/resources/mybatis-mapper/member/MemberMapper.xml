@@ -31,18 +31,18 @@
     <select id="selectMember_byIDPwd" parameterType="String" resultMap="memberListResult">
         <!-- SELECT member.member_no, email, nickname -->
         SELECT *
-        FROM member
+        FROM Member
         WHERE email=#{email} AND password=#{password}
     </select>
 
 	<select id="test" parameterType="int" resultMap="memberListResult">
         SELECT member_no, email
-        FROM member
+        FROM Member
         WHERE member_no = 1
     </select>
     
     <update id = "updateLastDdate" parameterType = "int">
-	    UPDATE member 
+	    UPDATE Member 
 	    SET lastdate = CURRENT_TIMESTAMP 
 	    WHERE member_no = #{no}
     </update>
