@@ -48,7 +48,7 @@
 								<div style="display: inline;">
 									<td colspan="2">
 										<input type="button" th:onclick="|location.href='@{/writeArticleForm}'|" value="글쓰기"/>
-										<input type="button" th:onclick="|location.href='@{/nListArticle/${article.boardNo}}'|" value="목록"/>
+										<input type="button" th:onclick="|location.href='@{/nListArticle/{boardNo}(boardNo=${article.boardNo})}'|" value="목록"/>
 										<input type="button" value="추천"/>
 										<strong class="like_num">23</strong>
 										<input type="button" value="답글쓰기"/>
@@ -59,7 +59,7 @@
 								<!--본인만 가능-->
 								<div style="float: right;">
 									<td>
-										<input type="button" value="수정"/>
+										<input type="button" th:onclick="|location.href='@{/updateArticleForm/{articleNo}(articleNo=${article.no})}'|" value="수정"/>
 										<input type="button" value="삭제"/>
 									</td>
 								</div>

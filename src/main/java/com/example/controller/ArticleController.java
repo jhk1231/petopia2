@@ -47,6 +47,8 @@ public class ArticleController {
 		// create
 		ArticleVO article = this.articleService.retrieveArticle(articleNo);
 		// bind
+		article.setNo(articleNo);
+		log.info("detail Art No" + article.getNo());
 		model.addAttribute("article", article);
 		// view
 		return "/view/board/detailArticleTemplate";
@@ -67,6 +69,26 @@ public class ArticleController {
 		model.addAttribute("gradeNo", member.getGrade());  // 나중에 seesion member에 접근해서 grade_no 받아올 것
 		return "/view/board/wrtieArticleFormTemplate";
 	}
+	
+	
+	@GetMapping("/updateArticleForm/{articleNo}")
+	public String writeForm(@PathVariable int articleNo,
+										HttpServletRequest req, Model model) {
+		log.info("updateForm articleNo: "+ articleNo);
+		ArticleVO article = this.articleService.retrieveArticle(articleNo); // 게시글 정보 가져오기
+		// create
+		HttpSession session = req.getSession();
+		MemberVO member = (MemberVO)session.getAttribute("loginUser");
+		// bind
+		List<BoardVO> boardList = new ArrayList<BoardVO>();
+		boardList.add(new BoardVO(1, "어류"));boardList.add(new BoardVO(2, "조류"));	boardList.add(new BoardVO(3, "영장류"));
+		// view
+		model.addAttribute("boardList", boardList);
+		model.addAttribute("article", article);
+		model.addAttribute("gradeNo", member.getGrade());  // 나중에 seesion member에 접근해서 grade_no 받아올 것
+		return "/view/board/updateArticleFormTemplate";
+	}
+	
 
 // Create
 
@@ -101,7 +123,7 @@ public class ArticleController {
 
 	// 노말 tpye board
 	@GetMapping("/nListArticle/{boardNo}")
-	public ModelAndView selectAllNomalArticle(@PathVariable int boardNo) {
+	public ModelAndView selectAllNomalArticle(@PathVariable("boardNo") int boardNo) {
 		// create
 		ModelAndView mav = new ModelAndView();
 		List<ArticleVO> articles = this.articleService.retrieveBoard(boardNo);

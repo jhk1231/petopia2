@@ -13,7 +13,7 @@
 <div id="layoutSidenav_content">
 	<main>
 		<div id="write_board_page">
-			<form enctype="multipart/form-data" th:object="${articleVO}" th:action="@{/insertArticle}" method="post">
+			<form enctype="multipart/form-data" th:object="${article}" th:action="@{/updateArticle}" method="post">
 				<div id="selectBoard">
 					<select id="boardList" th:field="*{boardNo}" required>
 						<option th:each="board: ${boardList}"
@@ -44,23 +44,22 @@
 
 					<div id="in_subject">
 						<textarea id="utitle" th:field="*{subject}" rows="1" cols="55"
-							placeholder="제목" maxlength="100" required></textarea>
+							placeholder="제목" maxlength="100" th:value="${article.subject}" required></textarea>
 					</div>
-
+					<div id="in_content">
+						<textarea id="ucontent" th:field="*{content}" th:value="${article.content}" placeholder="내용" required></textarea>
+					</div>
 					<div id="import_bth">
+						<!--골치 아프네 파일 삭제 기능이랑 같이 만들자.-->
 						<!-- GPS 지도 버튼-->
 						<input type="button" value="GPS" />
 						<!-- 첨부파일 -->
-						<input type="file" name="importAttacheFile" />
+						<input type="file" th:text="${article.getAttacheFile().getOriginalFileName()}|" name="importAttacheFile" />
 						<!-- 이미지 파일 첨부 -->
-						<input type="file" name="imageFiles"  multiple="multiple" /> 
+						<input type="file" name="imageFiles"  multiple="multiple" /><br/>
+						<img th:each="imageFile : ${article.fileList}" th:src="|/images/${imageFile.getSystemFileName()}|" width="200" height="200"/>
 						<!-- <a name="selectbtnimage"id="selectimage" /> 
 						<img src="/importfile.png" board='0'onclick="document.all.selectFile.click();document.all.selectbtnimage.value=document.all.selectFile.value" /> -->
-					</div>
-
-
-					<div id="in_content">
-						<textarea id="ucontent" th:field="*{content}" placeholder="내용" required></textarea>
 					</div>
 			</form>
 		</div>

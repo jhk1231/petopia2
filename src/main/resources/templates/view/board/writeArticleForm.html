@@ -13,7 +13,7 @@
 <div id="layoutSidenav_content">
 	<main>
 		<div id="write_board_page">
-			<form enctype="multipart/form-data" th:object="${articleVO}" th:action="@{/insertArticle}" method="post">
+			<form enctype="multipart/form-data" th:object="${article}" th:field="${article}" th:action="@{/updateArticle}" method="post">
 				<div id="selectBoard">
 					<select id="boardList" th:field="*{boardNo}" required>
 						<option th:each="board: ${boardList}"
