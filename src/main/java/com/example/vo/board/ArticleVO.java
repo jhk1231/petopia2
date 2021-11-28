@@ -1,5 +1,8 @@
 package com.example.vo.board;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.ibatis.type.Alias;
 
 import lombok.AllArgsConstructor;
@@ -32,6 +35,6 @@ public class ArticleVO {
 	private int groupNum; // 그룹에서의 순서
 	private int dept; // 원글과의 거리
 	private int displayNotice; // 공지 보여지는 여부
-//	private List<ArticleFileVO> fileList = new ArrayList<ArticleFileVO>(); // 첨부파일
+	private List<FileVO> fileList = new ArrayList<FileVO>(); // 첨부파일
 //	private List<ReplyVO> replyList = new ArrayList<ReplyVO>(); // 댓글
 }

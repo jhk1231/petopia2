@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.example.mapper.board.FileMapper">
+	
+	
+	<parameterMap type="fileVo" id="insertFileMap">
+		<parameter property="articleNo" javaType="Int" jdbcType="INTEGER" mode="IN"/>
+		<parameter property="originalFileName" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="systemFileName" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="fileSize" javaType="Long" jdbcType="BIGINT" mode="IN"/>
+	</parameterMap>
+	
+	<insert id="insertFile" parameterType="fileVo" parameterMap="insertFileMap">
+		INSERT INTO File (article_no, originalfilename, systemfilename, filesize)
+		VALUES (?,?,?,?) 
+	</insert>
+</mapper>

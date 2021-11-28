@@ -3,6 +3,7 @@ package com.example.service.board;
 import java.util.List;
 
 import com.example.vo.board.ArticleVO;
+import com.example.vo.board.FileVO;
 
 public interface ArticleService {
 

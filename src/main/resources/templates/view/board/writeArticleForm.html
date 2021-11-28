@@ -47,14 +47,16 @@
 							placeholder="제목" maxlength="100" required></textarea>
 					</div>
 
-					<!-- <div id="import_bth">
-						<button type="button">
-							<img src="/gps.png" /> <input type="file" name="selectFile"
-								style="display: none" /> <a name="selectbtnimage"
-								id="selectimage" /> <img src="/importfile.png" board='0'
-								onclick="document.all.selectFile.click();document.all.selectbtnimage.value=document.all.selectFile.value" />
-					</div> -->
-
+					<div id="import_bth">
+						<!-- GPS 지도 버튼-->
+						<input type="button" value="GPS" />
+						<!-- 첨부파일 -->
+						<input type="file" name="attacheFile" />
+						<!-- 이미지 파일 첨부 -->
+						<input type="file" name="imageFiles"  multiple="multiple" /> 
+						<!-- <a name="selectbtnimage"id="selectimage" /> 
+						<img src="/importfile.png" board='0'onclick="document.all.selectFile.click();document.all.selectbtnimage.value=document.all.selectFile.value" /> -->
+					</div>
 
 
 					<div id="in_content">
