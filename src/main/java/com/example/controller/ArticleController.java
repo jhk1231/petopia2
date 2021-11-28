@@ -100,8 +100,8 @@ public class ArticleController {
 // 게시판 목록 조회
 
 	// 노말 tpye board
-	@GetMapping("/nListArticle")
-	public ModelAndView selectAllNomalArticle(@RequestParam int boardNo) {
+	@GetMapping("/nListArticle/{boardNo}")
+	public ModelAndView selectAllNomalArticle(@PathVariable int boardNo) {
 		// create
 		ModelAndView mav = new ModelAndView();
 		List<ArticleVO> articles = this.articleService.retrieveBoard(boardNo);
@@ -109,7 +109,7 @@ public class ArticleController {
 		mav.addObject("boardName", boardNo); // 차후 이름으로 변경할것
 		mav.addObject("articles", articles); // 게시글 정보 전송
 		// view
-		mav.setViewName("/view/board/listArticleNomal");
+		mav.setViewName("/view/board/listArticleNomalTemplate");
 		return mav;
 	}
 

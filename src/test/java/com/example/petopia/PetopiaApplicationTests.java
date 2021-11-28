@@ -1,6 +1,7 @@
 package com.example.petopia;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.List;
 
@@ -15,7 +16,6 @@ import com.example.mapper.board.ArticleMapper;
 import com.example.mapper.board.FileMapper;
 import com.example.service.board.ArticleService;
 import com.example.util.FileManager;
-import com.example.vo.board.SelectArticleVO;
 
 import lombok.extern.slf4j.Slf4j;
 

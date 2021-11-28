@@ -19,6 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<resultMap type="articleVo" id="detailArticleVOResult">
+		<result property="boardNo" javaType="int" column="board_no" jdbcType="INTEGER"/>
 		<result property="subject" javaType="String" column="subject"  jdbcType="VARCHAR"/>
 		<result property="nickname" javaType="String" column="nickname"  jdbcType="VARCHAR"/>
 		<result property="writeDate" javaType="String" column="writedate" jdbcType="VARCHAR"/>
