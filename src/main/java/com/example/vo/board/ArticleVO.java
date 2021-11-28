@@ -35,6 +35,7 @@ public class ArticleVO {
 	private int groupNum; // 그룹에서의 순서
 	private int dept; // 원글과의 거리
 	private int displayNotice; // 공지 보여지는 여부
-	private List<FileVO> fileList = new ArrayList<FileVO>(); // 첨부파일
+	private FileVO attacheFile; //첨부 파일
+	private List<FileVO> fileList = new ArrayList<FileVO>(); // 이미지 List
 //	private List<ReplyVO> replyList = new ArrayList<ReplyVO>(); // 댓글
 }

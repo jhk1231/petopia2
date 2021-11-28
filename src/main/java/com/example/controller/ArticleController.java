@@ -74,18 +74,19 @@ public class ArticleController {
 	public RedirectView insertArticle(@ModelAttribute("articleVO") ArticleVO articleVO,
 													@ModelAttribute FileFormVO form,    
 													HttpServletRequest req) throws IOException {
+		log.info("insert접근");
 		// create
 		RedirectView redirectView = new RedirectView();
 		HttpSession session = req.getSession();
 		MemberVO member = (MemberVO)session.getAttribute("loginUser");
 		// 파일 첨부 지정 폴더에 Upload도 동시에 실행
-		FileVO attacheFile = fileManager.uploadFile(form.getAttacheFile()); //첨부 파일
+		FileVO attacheFile = fileManager.uploadFile(form.getImportAttacheFile()); //첨부 파일
 		List<FileVO> imageFiles = fileManager.uploadFiles(form.getImageFiles()); // 이미지 파일
-		imageFiles.add(attacheFile); // 첨부 파일도 이미지 파일에 넣어준다.
 		
 		// bind
 		articleVO.setMemberNo(member.getNo());
 		articleVO.setNickname(member.getNickname());
+		articleVO.setAttacheFile(attacheFile);
 		articleVO.setFileList(imageFiles);
 		
 		this.articleService.registerArticle(articleVO);

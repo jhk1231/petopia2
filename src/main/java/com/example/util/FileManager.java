@@ -18,9 +18,13 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class FileManager {
 	
-	@Value("${file.dir}")
-	private String fileDir;  // 파일이 저장될 경로
+	 @Value("${file.dir}")
+	 private String fileDir;  // 파일이 저장될 경로
 	
+//	 public FileManager() {
+//		 this.fileDir = "D:/SpringBootHome/petopia2/src/main/resources/static/upload/";
+//	}
+	 
 	// fileName을 받아서 fullPath 반환
 	public String getFullPath(String fileName) {
 		return this.fileDir + fileName;
@@ -47,11 +51,10 @@ public class FileManager {
 		String systemFileName = createSystemFileName(originalFileName);
 		Long fileSize = multipartFile.getSize(); // File크기
 
-//		log.info("fileFullPath={}", getFullPath(this.fileDir));
-//		log.info("originalFileName: {}", originalFileName);
-//		log.info("systemFileName: {}",systemFileName);
-//		log.info("fileSize: {}", fileSize);
-//		log.info("pwd: {}", pwd);
+		log.info("fileFullPath={}", getFullPath(this.fileDir));
+		log.info("originalFileName: {}", originalFileName);
+		log.info("systemFileName: {}",systemFileName);
+		log.info("fileSize: {}", fileSize);
 		
 		multipartFile.transferTo(new File(getFullPath(systemFileName))); // 파일 경로에 저장
 		

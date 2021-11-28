@@ -1,5 +1,6 @@
 package com.example.service.board;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import com.example.dao.board.ArticleDao;
 import com.example.dao.board.FileDao;
 import com.example.vo.board.ArticleVO;
 import com.example.vo.board.FileVO;
+import com.example.vo.board.SelectArticleVO;
 
 @Service("articleService")
 public class ArticleServiceImpl implements ArticleService {
@@ -23,7 +25,13 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	@Transactional
 	public ArticleVO retrieveArticle(int articleNo) { // 세부 조회
-		return this.articleDao.selectArticle(articleNo);
+		List<SelectArticleVO> results = this.articleDao.selectArticle(articleNo);
+		ArticleVO article = results.get(0).getArticle(); // 게시글 정보 출력
+		List<FileVO> fileList = new ArrayList<FileVO>();
+		for (SelectArticleVO result : results) {
+			fileList.add(result.getFile());
+		}
+		return fileList(article, fileList);
 	}
 
 	@Override
@@ -40,8 +48,13 @@ public class ArticleServiceImpl implements ArticleService {
 		List<FileVO> fileList = article.getFileList();
 		for (FileVO file : fileList) {
 			file.setArticleNo(articleNo);
-			this.fileDao.insertFile(file); // 첨부파일 추가
+			file.setFileType(1);
+			this.fileDao.insertFile(file); // 이미지 파일들 저장
 		}
+		FileVO attachFile = article.getAttacheFile();
+		attachFile.setArticleNo(articleNo);
+		attachFile.setFileType(0);
+		this.fileDao.insertFile(attachFile); // 첨부파일은 맨 마지막으로 가게해서 저장
 	}
 
 	@Override
@@ -56,6 +69,24 @@ public class ArticleServiceImpl implements ArticleService {
 	public void removeArticle(int articleNo) {
 		this.articleDao.deleteArticle(articleNo);
 
+	}
+
+	
+	
+	// file 꺼내서 추출, retirveArticle에서 사용됨
+	private ArticleVO fileList(ArticleVO article, List<FileVO> files) {
+		if (files == null) {
+			return article;
+		}
+		List<FileVO> imageFiles = new ArrayList<FileVO>();
+		for (FileVO file : files) {
+			if(file.getFileType() == 0) {
+				article.setAttacheFile(file);
+			}
+			imageFiles.add(file); //이미지 파일은 fileType= 1
+		}
+		article.setFileList(imageFiles); // 결과 저장 
+		return article;
 	}
 
 }

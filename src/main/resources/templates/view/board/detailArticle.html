@@ -29,11 +29,20 @@
 							</tr>
 							<tr>
 								<th>내용</th>
-							<td th:text="${article.content}" th:field="*{content}"></td>
+								<td th:text="${article.content}" th:field="*{content}"></td>
 							</tr>
 							<tr>
 								<th>첨부파일</th>
-								<td>파일.jpg</td>
+								<td th:if="${article.attacheFile == null}">첨부된 파일이 없습니다.</td>
+								<td th:unless="${article.attacheFile == null}"><a th:href="|/attach/${article.getAttacheFile().getNo()}|"
+									 th:text="${article.getAttacheFile().getSystemFileName()}|"></a>
+								</td>
+							</tr>
+							<tr th:if="${article.fileList != null}">
+							<td>
+								<!--이미지 파일들-->
+								<img th:each="imageFile : ${article.fileList}" th:src="|/images/${imageFile.getSystemFileName()}|" width="200" height="200"/>
+								</td>
 							</tr>
 						</tbody>
 					</table>

@@ -14,6 +14,11 @@ public class FileDaoImpl implements FileDao {
 	@Autowired
 	private FileMapper fileMapper;
 	
+	@Override
+	public FileVO selectFile(int fileNo) {
+		return fileMapper.selectFile(fileNo);
+	}
+	
 	
 	@Override
 	public List<FileVO> selectFileList(int articleNo) {

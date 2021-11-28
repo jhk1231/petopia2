@@ -2,7 +2,6 @@ package com.example.petopia;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -16,8 +15,7 @@ import com.example.mapper.board.ArticleMapper;
 import com.example.mapper.board.FileMapper;
 import com.example.service.board.ArticleService;
 import com.example.util.FileManager;
-import com.example.vo.board.ArticleVO;
-import com.example.vo.board.FileVO;
+import com.example.vo.board.SelectArticleVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,10 +34,10 @@ class PetopiaApplicationTests {
 	@DisplayName("Mapper 생성 test")
 	void createTest() {
 //		assertNotNull(this.dataSource);
-//		assertNotNull(this.articleMapper);
+		assertNotNull(this.articleMapper);
 //		assertNotNull(this.fileMapper);
 //		assertNotNull(this.replyMapper);
-		assertNotNull(this.articleService);
+//		assertNotNull(this.articleService);
 //		assertNotNull(this.fileManager);
 	}
 	
@@ -82,6 +80,22 @@ class PetopiaApplicationTests {
 //		article.setFileList(fList);
 //		this.articleService.registerArticle(article);
 //	}
+
+//	@Test
+//	void selectFile() {
+//		FileVO fie = this.fileMapper.selectFile(2);
+//		log.info("파일 찍기={}", fie.toString());
+//	}
+	
+//	@Test
+//	void select() {
+//		List<SelectArticleVO> select = this.articleMapper.selectArticle(91);
+//		for (SelectArticleVO selectArticleVO : select) {
+//			log.info(selectArticleVO.getArticle().toString());
+//		}
+//		log.info("***************" + select.get(0).getArticle());
+//	}
+	
 	
 	
 }

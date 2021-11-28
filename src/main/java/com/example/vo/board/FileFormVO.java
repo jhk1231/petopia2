@@ -11,7 +11,7 @@ import lombok.Data;
 public class FileFormVO {
 	
 	private Long fileNo;
-	private MultipartFile attacheFile;
+	private MultipartFile importAttacheFile;
 	private List<MultipartFile> imageFiles;
 	
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.mapper.board.ArticleMapper;
 import com.example.vo.board.ArticleVO;
+import com.example.vo.board.SelectArticleVO;
 
 @Repository("articleDao")
 public class ArticleDaoImpl implements ArticleDao {
@@ -20,7 +21,7 @@ public class ArticleDaoImpl implements ArticleDao {
 	
 	
 	@Override
-	public ArticleVO selectArticle(int articleNo) {
+	public List<SelectArticleVO> selectArticle(int articleNo) {
 		return this.articleMapper.selectArticle(articleNo);
 	}
 

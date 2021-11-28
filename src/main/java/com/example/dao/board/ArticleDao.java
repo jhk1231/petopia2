@@ -3,10 +3,11 @@ package com.example.dao.board;
 import java.util.List;
 
 import com.example.vo.board.ArticleVO;
+import com.example.vo.board.SelectArticleVO;
 
 public interface ArticleDao {
 
-	ArticleVO selectArticle(int articleNo); //세부 조회
+	List<SelectArticleVO> selectArticle(int articleNo); //세부 조회
 	
 	List<ArticleVO> selectBoard(int boardNo); // 목록 조회
 	
