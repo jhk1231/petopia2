@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<!-- <a th:href="@{/notelist(isRecieve=${isRecieve})">목록으로</a> -->
+<span th:if="${isRecieve} == 1">보낸사람 : </span>
+<span th:if="${isRecieve} == 0">받은사람 : </span>
+<span th:text = "${note.counterpart_nickname}"></span><br>
+날짜 : <span th:text = "${note.sendDate}"></span><br>
+내용 : <span th:text = "${note.content}"></span><br>
+<!-- <a href ="${pageContext.request.contextPath}/noteList.do?isRecieve=${param.isRecieve}">목록</a><br><br>
+
+보낸사람 : ${requestScope.note.counterpart_nickname} <br>
+보낸날짜 : ${requestScope.note.sendDate }<br>
+내용 : ${ requestScope.note.content }
+
+<form action = "${pageContext.request.contextPath}/deleteNote.do" method = "POST">
+	<input type="hidden" name="noteNo" value = "${requestScope.note.note_no}" />
+	<input type="hidden" name = "counterpartNo" value = "${requestScope.note.counterpart_no }" />
+	<input type="hidden" name="isRecieve" value = "${requestScope.note.sendrecieve}" />
+	<button type = "submit">삭제</button>
+</form>
+ -->
+</body>
+</html>
