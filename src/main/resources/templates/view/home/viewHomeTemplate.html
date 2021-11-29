@@ -6,7 +6,7 @@
 
 <th:block layout:fragment="head">
 	<title>반려동물 카페</title>
-
+	<link rel="shortcut icon" th:href="@{/images/favicon.ico}">
 	<link
 		th:href="@{https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css}"
 		rel="stylesheet" />
@@ -31,7 +31,7 @@
 		<th:block layout:fragment="nav" th:include="@{/fragments/nav}"></th:block>
 		<!-- Content -->
 		<th:block layout:fragment="viewMainContent"
-			th:include="@{/fragments/viewMainContent}"></th:block>
+			th:include="@{${HomeContent}}"></th:block>
 	</div>
 
 	<!-- footer -->

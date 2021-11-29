@@ -11,7 +11,7 @@ public class ManagerController {
 	
 	@GetMapping("/manager")
 	public String manager(Model model) {
-		model.addAttribute("memberContent","/fragments/viewMainContent");
+		model.addAttribute("memberContent","fragments/MemberContent");
 		return "view/home/viewManagerTemplate";
 	}
 	
