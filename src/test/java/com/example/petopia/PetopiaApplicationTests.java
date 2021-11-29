@@ -1,9 +1,8 @@
 package com.example.petopia;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
-import java.util.List;
+import java.io.File;
 
 import javax.sql.DataSource;
 
@@ -17,6 +16,7 @@ import com.example.mapper.board.FileMapper;
 import com.example.service.board.ArticleService;
 import com.example.util.FileManager;
 
+import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -29,7 +29,7 @@ class PetopiaApplicationTests {
 //	@Autowired private ReplyMapper replyMapper;
 	@Autowired private ArticleService articleService;
 	@Autowired private FileManager fileManager;
-	
+
 	@Test
 	@DisplayName("Mapper 생성 test")
 	void createTest() {
@@ -97,5 +97,10 @@ class PetopiaApplicationTests {
 //	}
 	
 	
-	
+//	@Test
+//	void te() {
+//	
+//		
+//	}
+//	
 }

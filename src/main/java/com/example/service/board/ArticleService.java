@@ -1,5 +1,6 @@
 package com.example.service.board;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.example.vo.board.ArticleVO;

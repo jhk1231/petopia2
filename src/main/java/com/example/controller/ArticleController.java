@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.service.board.ArticleService;
@@ -67,7 +66,7 @@ public class ArticleController {
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("articleVO", articleVO);
 		model.addAttribute("gradeNo", member.getGrade());  // 나중에 seesion member에 접근해서 grade_no 받아올 것
-		model.addAttribute("HomeContent", "/view/board/wrtieArticleFormTemplate");
+		model.addAttribute("HomeContent", "/view/board/writeArticleForm");
 		return "view/home/viewHomeTemplate";
 	}
 	
@@ -87,7 +86,7 @@ public class ArticleController {
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("article", article);
 		model.addAttribute("gradeNo", member.getGrade());  // 나중에 seesion member에 접근해서 grade_no 받아올 것
-		model.addAttribute("HomeContent", "/view/board/updateArticleFormTemplate");
+		model.addAttribute("HomeContent", "/view/board/updateArticleForm");
 		return "view/home/viewHomeTemplate";
 	}
 	
@@ -106,7 +105,11 @@ public class ArticleController {
 		// 파일 첨부 지정 폴더에 Upload도 동시에 실행
 		FileVO attacheFile = fileManager.uploadFile(form.getImportAttacheFile()); //첨부 파일
 		List<FileVO> imageFiles = fileManager.uploadFiles(form.getImageFiles()); // 이미지 파일
-		
+//		System.out.println(form.getImageFiles().size());
+//		System.out.println(imageFiles.size());
+		if(imageFiles.size() > 0) {
+				fileManager.createThumbnail(imageFiles.get(0).getSystemFileName()); // 썸네일 생성
+		}
 		// bind
 		articleVO.setMemberNo(member.getNo());
 		articleVO.setNickname(member.getNickname());
@@ -133,7 +136,7 @@ public class ArticleController {
 		model.addAttribute("boardName", boardNo); // 차후 이름으로 변경할것
 		model.addAttribute("articles", articles); // 게시글 정보 전송
 		// view
-		int boardkind = 1;
+		int boardkind = 0;
 		model.addAttribute("boardkind", boardkind);
 		return "/view/home/viewBoardTemplate";
 	}

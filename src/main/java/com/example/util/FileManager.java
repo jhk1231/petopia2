@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.vo.board.FileVO;
 
 import lombok.extern.slf4j.Slf4j;
+import net.coobird.thumbnailator.Thumbnails;
 
 @Slf4j
 @Component
@@ -60,6 +61,21 @@ public class FileManager {
 		
 		return new FileVO(originalFileName, systemFileName, fileSize); // 파일 저장하고 원본, 시스템 파일명 반환
 	}
+	
+	
+	// 썸네일 생성
+	public void createThumbnail(String systemFileName) throws IOException {
+		File image = new File(getFullPath(systemFileName));
+		File thumbnail = new File(getFullPath("thumbnail/thumb" + systemFileName));
+		
+		if (image.exists()) {
+			Thumbnails.of(image).size(190, 150).outputFormat("png").toFile(thumbnail);
+		}
+//		return null;
+	}
+	
+	
+	
 	
 	
 	// 서버에서 관리할 파일이름 추출
