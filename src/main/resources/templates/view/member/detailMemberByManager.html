@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="content">
+        <table border = "1">
+            <tr>
+                <td class="title">ID</td>
+                <td class="val">${member.email}</td>
+                <td class="title">등급</td>
+                <td class="val">${member.grade}</td>
+            </tr>
+            
+            <tr>
+                <td class="title">닉네임</td>
+                <td class="val">${member.nickname}</td>
+                <td class="title">게시글 수</td>
+                <td class="val">${member.docs}</td>
+            </tr>
+            
+            <tr>
+                <td class="title">가입 날짜</td>
+                <td class="val">${member.regDate}</td>
+                <td class="title">댓글 수</td>
+                <td class="val">${member.comms}</td>
+            </tr>
+            
+            <tr>
+                <td class="title">최근 방문 날짜</td>
+                <td class="val">${member.lastDate}</td>
+                <td class="title">방문 횟수</td>
+                <td class="val">${member.visits}</td>
+            </tr>
+            
+            <tr>
+                <td class="title">탈퇴 여부</td>
+                <td class="val"></td>
+                <td class="title">활동 중지</td>
+                <td class="val">
+                    ${member.ban}
+                    <select name="banSelect" id="drop">
+                        <option value="7d">7일</option>
+                        <option value="1d">1일</option>
+                        <option value="1m">1분</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
