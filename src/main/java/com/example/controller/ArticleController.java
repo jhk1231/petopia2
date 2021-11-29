@@ -67,7 +67,8 @@ public class ArticleController {
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("articleVO", articleVO);
 		model.addAttribute("gradeNo", member.getGrade());  // 나중에 seesion member에 접근해서 grade_no 받아올 것
-		return "/view/board/wrtieArticleFormTemplate";
+		model.addAttribute("HomeContent", "/view/board/wrtieArticleFormTemplate");
+		return "view/home/viewHomeTemplate";
 	}
 	
 	
@@ -86,7 +87,8 @@ public class ArticleController {
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("article", article);
 		model.addAttribute("gradeNo", member.getGrade());  // 나중에 seesion member에 접근해서 grade_no 받아올 것
-		return "/view/board/updateArticleFormTemplate";
+		model.addAttribute("HomeContent", "/view/board/updateArticleFormTemplate");
+		return "view/home/viewHomeTemplate";
 	}
 	
 

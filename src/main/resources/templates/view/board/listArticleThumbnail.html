@@ -9,8 +9,19 @@
 			<div class="row mt-3 mb-5">
 				<h1><span>썸네일 게시판</span></h1>
 			</div>
+			<ui>
+				<li th:each="article : ${articles}">
+					<div class="Empty" th:if="{image == null}">
+						<a href="#"><span class="thumb"><img src="기본 이미지" alt=""></span><strong>이미지 제목</strong></a>
+						<p>날짜</p>
+					</div>
+					<div class="notEmpty">
+						<a href="#"><span class="thumb"><img src="이미지 경로" alt=""></span><strong>이미지 제목</strong></a>
+						<p>날짜</p>
+					</div>
+				</li>
+			</ui>
 		</div>
 	</main>
 </div>
-
 </html>

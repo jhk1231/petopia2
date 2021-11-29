@@ -1,57 +1,77 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org/"></html>
-<html>
-<head>
-<meta charset="UTF-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<title>Insert title here</title>
-<link
-	th:href="@{https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css}"
-	rel="stylesheet" />
-<link th:href="@{css/theme_styles.css}" rel="stylesheet" />
-<script
-	th:src="@{https://cdn.jsdelivr.net/npm/simple-datatables@latest}"
-	th:crossorigin="anonymous"></script>
-<script th:src="@{js/datatables-simple-demo.js}"></script>
+<!-- <!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
 
- <script th:src="@{js/jquery-3.6.0.min.js}"></script>
+</html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>Insert title here</title>
+	<link th:href="@{https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css}" rel="stylesheet" />
+	<link th:href="@{css/theme_styles.css}" rel="stylesheet" />
+	<script th:src="@{https://cdn.jsdelivr.net/npm/simple-datatables@latest}" th:crossorigin="anonymous"></script>
+	<script th:src="@{js/datatables-simple-demo.js}"></script>
+
+	<script th:src="@{js/jquery-3.6.0.min.js}"></script>
 </head>
-<body>
-	<div class="articleList">
-		<div class="article-header">
-			<i class="board-name" th:text="${boardName}">게시판 이름</i>
+
+<body> </body>
+</html>
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+
+<div id="layoutSidenav_content">
+	<main>
+		<div class="container-fluid px-4">
+
+			<div class="row mt-3 mb-5">
+				<div class="articleList">
+					<div class="article-header">
+						<i class="board-name" th:text="${boardName}">게시판 이름</i>
+					</div>
+					<div class="articles card-body">
+						<div class="dataTable-top"></div>
+						<div class="dataTable-container">
+							<table class="dataTable-table">
+								<thead>
+									<tr>
+										<th>No</th>
+										<th>제목</th>
+										<th>작성자</th>
+										<th>작성일</th>
+										<th>조회수</th>
+										<th>추천</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									<tr th:each="article : ${articles}">
+										<td th:text="${article.no}"></td>
+										<td>
+											<a th:text="${article.subject}"
+												th:href="|/detailArticle/${article.no}|"></a>
+										</td>
+										<td th:text="${article.nickname}"></td>
+										<td th:text="${article.writeDate}"></td>
+										<td th:text="${article.viewcount}"></td>
+										<td th:text="${article.likecount}"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="dataTable-bottom"></div>
+					</div>
+					<div class="write_article_btn">
+						<button id="writeForm_btn" th:onclick="|location.href='@{/writeArticleForm}'|"
+							type="button">글쓰기</button>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div class="articles card-body">
-			<table id="datatablesSimple">
-				<thead>
-					<tr>
-						<th>No</th>
-						<th>제목</th>
-						<th>작성자</th>
-						<th>작성일</th>
-						<th>조회수</th>
-						<th>추천</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="article : ${articles}">
-						<td th:text="${article.no}"></td>
-						<td>
-							<a th:text="${article.subject}" th:href="|/detailArticle/${article.no}|"></a>	
-						</td>
-						<td th:text="${article.nickname}"></td>
-						<td th:text="${article.writeDate}"></td>
-						<td th:text="${article.viewcount}"></td>
-						<td th:text="${article.likecount}"></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div class="write_article_btn">
-			<button id="writeForm_btn" 
-					th:onclick="|location.href='@{/writeArticleForm}'|"
-					type="button" >글쓰기</button>
-		</div>
-	</div>
-</body>
+	</main>
+</div>
+
+
 </html>

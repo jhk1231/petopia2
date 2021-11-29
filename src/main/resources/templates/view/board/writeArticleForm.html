@@ -1,71 +1,79 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
-<style>
-#noticeCheck {
-	display: inline;
-}
-.noticeCheck {
-	display: none;
-}
-</style>
 
 
 <div id="layoutSidenav_content">
 	<main>
-		<div id="write_board_page">
-			<form enctype="multipart/form-data" th:object="${article}" th:field="${article}" th:action="@{/updateArticle}" method="post">
-				<div id="selectBoard">
-					<select id="boardList" th:field="*{boardNo}" required>
-						<option th:each="board: ${boardList}"
-											th:value="${board.boardNo}"
-											th:text="${board.boardName}"
-											>
-						</option> 
-					</select>
-				</div>
+		<div class="container-fluid px-4">
 
-				<div id="write_area">
-					<div class="write_options">
-					<!-- 공지사항 출력 여부 -->
-						<div class="displayNotice">
-							<!-- 관리자가 아니면 미설정을 default로 -->					
-							<input th:unless="${gradeNo}==1" type="hidden" name="displayNotice" value=0>
-							<!-- 관리자면 활성화 -->
-							<p id="noticeCheck" th:if="${gradeNo}==1" style="width: 50%;">공지등록</p>
-							<select id="displayNotice" th:if="${gradeNo}==1" th:field="*{displayNotice}">
-								<option value="0" selected>미설정</option>
-								<option value="1">게시판</option>
-								<option value="2">전체</option>
-							</select> 
+			<div class="row mt-3 mb-5">
+
+				<!-- <style>
+#noticeCheck {
+	display: inline;
+}
+
+.noticeCheck {
+	display: none;
+}
+</style> -->
+				<div id="write_board_page">
+					<form enctype="multipart/form-data" th:object="${article}"
+						th:field="${article}" th:action="@{/updateArticle}" method="post">
+						<div id="selectBoard">
+							<select id="boardList" th:field="*{boardNo}" required>
+								<option th:each="board: ${boardList}"
+									th:value="${board.boardNo}" th:text="${board.boardName}">
+								</option>
+							</select>
 						</div>
-						<input type="button" value="취소" onclick="history.back(-1)">
-						<button type="submit">등록</button>
-					</div>
 
-					<div id="in_subject">
-						<textarea id="utitle" th:field="*{subject}" rows="1" cols="55"
-							placeholder="제목" maxlength="100" required></textarea>
-					</div>
+						<div id="write_area">
+							<div class="write_options">
+								<!-- 공지사항 출력 여부 -->
+								<div class="displayNotice">
+									<!-- 관리자가 아니면 미설정을 default로 -->
+									<input th:unless="${gradeNo}==1" type="hidden"
+										name="displayNotice" value=0>
+									<!-- 관리자면 활성화 -->
+									<p id="noticeCheck" th:if="${gradeNo}==1" style="width: 50%;">공지등록</p>
+									<select id="displayNotice" th:if="${gradeNo}==1"
+										th:field="*{displayNotice}">
+										<option value="0" selected>미설정</option>
+										<option value="1">게시판</option>
+										<option value="2">전체</option>
+									</select>
+								</div>
+								<input type="button" value="취소" onclick="history.back(-1)">
+								<button type="submit">등록</button>
+							</div>
 
-					<div id="import_bth">
-						<!-- GPS 지도 버튼-->
-						<input type="button" value="GPS" />
-						<!-- 첨부파일 -->
-						<input type="file" name="importAttacheFile" />
-						<!-- 이미지 파일 첨부 -->
-						<input type="file" name="imageFiles"  multiple="multiple" /> 
-						<!-- <a name="selectbtnimage"id="selectimage" /> 
+							<div id="in_subject">
+								<textarea id="utitle" th:field="*{subject}" rows="1" cols="55"
+									placeholder="제목" maxlength="100" required></textarea>
+							</div>
+
+							<div id="import_bth">
+								<!-- GPS 지도 버튼-->
+								<input type="button" value="GPS" />
+								<!-- 첨부파일 -->
+								<input type="file" name="importAttacheFile" />
+								<!-- 이미지 파일 첨부 -->
+								<input type="file" name="imageFiles" multiple="multiple" />
+								<!-- <a name="selectbtnimage"id="selectimage" /> 
 						<img src="/importfile.png" board='0'onclick="document.all.selectFile.click();document.all.selectbtnimage.value=document.all.selectFile.value" /> -->
-					</div>
+							</div>
 
-
-					<div id="in_content">
-						<textarea id="ucontent" th:field="*{content}" placeholder="내용" required></textarea>
-					</div>
-			</form>
+							<div id="in_content">
+								<textarea id="ucontent" th:field="*{content}" placeholder="내용"
+									required></textarea>
+							</div>
+					</form>
+				</div>
+			</div>
 		</div>
 </div>
 </main>
 </div>
-</html>
 
+</html>
