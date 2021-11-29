@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -51,7 +50,8 @@ public class ArticleController {
 		log.info("detail Art No" + article.getNo());
 		model.addAttribute("article", article);
 		// view
-		return "/view/board/detailArticleTemplate";
+		model.addAttribute("HomeContent", "/view/board/detailArticle");
+		return "view/home/viewHomeTemplate";
 	}
 
 	@GetMapping("/writeArticleForm")
@@ -123,16 +123,17 @@ public class ArticleController {
 
 	// 노말 tpye board
 	@GetMapping("/nListArticle/{boardNo}")
-	public ModelAndView selectAllNomalArticle(@PathVariable("boardNo") int boardNo) {
+	public String selectAllNomalArticle(@PathVariable("boardNo") int boardNo,
+														Model model) {
 		// create
-		ModelAndView mav = new ModelAndView();
 		List<ArticleVO> articles = this.articleService.retrieveBoard(boardNo);
 		// bind
-		mav.addObject("boardName", boardNo); // 차후 이름으로 변경할것
-		mav.addObject("articles", articles); // 게시글 정보 전송
+		model.addAttribute("boardName", boardNo); // 차후 이름으로 변경할것
+		model.addAttribute("articles", articles); // 게시글 정보 전송
 		// view
-		mav.setViewName("/view/board/listArticleNomalTemplate");
-		return mav;
+		int boardkind = 1;
+		model.addAttribute("boardkind", boardkind);
+		return "/view/home/viewBoardTemplate";
 	}
 
 }
