@@ -16,4 +16,10 @@ public interface NoteDao {
 	public int insertNoteContent(String content) throws Exception;
 	public void insertNote_member(Map<String, Object> map) throws Exception;
 	public void insertNote_counterpart(Map<String, Object> map) throws Exception;
+	
+	// 쪽지 delete
+	public void deleteNote(NoteVO note);
+	public void updateRecieveNoteDeleteOnNoteContent(NoteVO note);
+	public void updateSendNoteDeleteOnNoteContent(NoteVO note);
+	public void deleteNoteContent();
 }

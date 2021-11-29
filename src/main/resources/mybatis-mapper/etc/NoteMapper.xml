@@ -64,4 +64,24 @@
 		VALUES(#{notecontent_no}, #{counterpart_no}, #{member_no}, #{member_nickname}, #{sendrecieve_counterpart})
 	</insert>
 	
+	<!-- 쪽지 삭제 -->
+	<delete id = "deleteNote" parameterType="noteVo">
+		DELETE FROM Note
+		WHERE notecontent_no = #{notecontent_no} AND member_no = #{member_no}
+	</delete>
+	<update id = "updateRecieveDeleteOnNoteContent" parameterType="noteVo">
+		UPDATE noteContent
+		SET recieveDelete = 1
+		WHERE notecontent_no = #{notecontent_no} 
+	</update>
+	<update id = "updateSendDeleteOnNoteContent" parameterType="noteVo">
+		UPDATE noteContent
+		SET sendDelete = 1
+		WHERE notecontent_no = #{notecontent_no} 
+	</update>
+	<delete id="deleteNoteContent">
+		DELETE FROM noteContent
+		WHERE recieveDelete = 1 AND sendDelete = 1
+	</delete>
+	
 </mapper>

@@ -12,4 +12,6 @@ public interface NoteService {
 	public void updateRead(int noteNo, int userNo);
 	public NoteVO retriveNote(int noteNo);
 	public boolean registerNote(NoteVO note, MemberVO user);
+	public void removeNote(ArrayList<NoteVO> notelist, int isRecieve);
+	
 }

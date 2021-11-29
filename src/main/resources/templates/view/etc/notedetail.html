@@ -11,18 +11,13 @@
 <span th:text = "${note.counterpart_nickname}"></span><br>
 날짜 : <span th:text = "${note.sendDate}"></span><br>
 내용 : <span th:text = "${note.content}"></span><br>
-<!-- <a href ="${pageContext.request.contextPath}/noteList.do?isRecieve=${param.isRecieve}">목록</a><br><br>
 
-보낸사람 : ${requestScope.note.counterpart_nickname} <br>
-보낸날짜 : ${requestScope.note.sendDate }<br>
-내용 : ${ requestScope.note.content }
-
-<form action = "${pageContext.request.contextPath}/deleteNote.do" method = "POST">
-	<input type="hidden" name="noteNo" value = "${requestScope.note.note_no}" />
-	<input type="hidden" name = "counterpartNo" value = "${requestScope.note.counterpart_no }" />
-	<input type="hidden" name="isRecieve" value = "${requestScope.note.sendrecieve}" />
+<form action = "/deletenote" method = "POST">
+	<input type="hidden" name="noteNo" th:value = "${note.note_no}" />
+	<input type="hidden" name = "counterpartNo" th:value = "${note.counterpart_no }" />
+	<input type="hidden" name="isRecieve" th:value = "${note.sendrecieve}" />
 	<button type = "submit">삭제</button>
 </form>
- -->
+ 
 </body>
 </html>

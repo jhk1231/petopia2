@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,11 +29,35 @@ public class NoteController {
 	
 	private static final int POST_PER_PAGE = 3;
 	private static final int PAGE_BLOCK = 3;
-	
-//	map.put("/noteDetailBoard.do", "controller.NoteDetailFormCommand");
-//	map.put("/writeNote.do", "controller.WriteNoteCommand");
+
 //	map.put("/deleteNote.do", "controller.NoteDeleteCommand");
-//	map.put("/sendMail.do", "controller.MailCommand");
+	
+	@PostMapping("/deletenote")
+	public String delete(@RequestParam("deleteNoteList") List<Integer> list, int isRecieve, HttpSession session) {
+		
+		MemberVO user = (MemberVO) session.getAttribute("loginUser");
+		System.out.println("isRecieve : " + isRecieve);
+		
+		List<NoteVO> notelist = new ArrayList<NoteVO>();
+		
+		for( Integer no : list) {
+			NoteVO temp = new NoteVO();
+			temp.setNotecontent_no(no);
+			temp.setSendrecieve(isRecieve);
+			temp.setMember_no(user.getNo());
+			notelist.add(temp);
+		}
+		
+		service.removeNote((ArrayList<NoteVO>) notelist, isRecieve);
+		
+		// 1. 쪽지 일련번호
+		return "redirect:notelist?isRecieve=" + isRecieve;
+	}
+//	@PostMapping("/deletenote")
+//	public String deleteNote(int isRecieve, int noteNo, int counterpartNo) {
+//		
+//		return "redirect:notelist";
+//	}
 	
 	@ResponseBody
 	@PostMapping("/sendnote")

@@ -24,4 +24,10 @@ public interface NoteMapper {
 	public int selectLastID() throws Exception;
 	public void insertNote_member(Map<String, Object> map) throws Exception;
 	public void insertNote_counterpart(Map<String, Object> map) throws Exception;
+	
+	// 쪽지 delete
+	public void deleteNote(NoteVO note);
+	public void updateRecieveDeleteOnNoteContent(NoteVO note);
+	public void updateSendDeleteOnNoteContent(NoteVO notelist);
+	public void deleteNoteContent();
 }

@@ -71,4 +71,28 @@ public class NoteDaoImpl implements NoteDao {
 		mapper.insertNote_counterpart(map);
 	}
 
+	@Override
+	public void deleteNote(NoteVO note) {
+		// TODO Auto-generated method stub
+		mapper.deleteNote(note);
+	}
+
+	@Override
+	public void updateRecieveNoteDeleteOnNoteContent(NoteVO note) {
+		// TODO Auto-generated method stub
+		mapper.updateRecieveDeleteOnNoteContent(note);
+	}
+
+	@Override
+	public void updateSendNoteDeleteOnNoteContent(NoteVO note) {
+		// TODO Auto-generated method stub
+		mapper.updateSendDeleteOnNoteContent(note);
+	}
+
+	@Override
+	public void deleteNoteContent() {
+		// TODO Auto-generated method stub
+		mapper.deleteNoteContent();
+	}
+
 }

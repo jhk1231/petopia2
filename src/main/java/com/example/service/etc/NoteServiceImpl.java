@@ -68,6 +68,7 @@ public class NoteServiceImpl implements NoteService {
 			dao.insertNote_member(map);
 			// 상대가 받은 쪽지 insert
 			dao.insertNote_counterpart(map);
+			
 			isSuccess = true;
 		} catch (Exception e) {
 			isSuccess = false;
@@ -75,6 +76,21 @@ public class NoteServiceImpl implements NoteService {
 		}
 		
 		return isSuccess;
+	}
+
+	@Transactional
+	@Override
+	public void removeNote(ArrayList<NoteVO> notelist, int isRecieve) {
+		
+		notelist.forEach(note -> dao.deleteNote(note));
+		
+		
+		if(isRecieve == 1)
+			notelist.forEach(note -> dao.updateRecieveNoteDeleteOnNoteContent(note));
+		else if(isRecieve == 0)
+			notelist.forEach(note -> dao.updateSendNoteDeleteOnNoteContent(note));
+		
+		dao.deleteNoteContent();
 	}
 	
 }
