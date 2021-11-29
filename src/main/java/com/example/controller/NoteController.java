@@ -1,6 +1,8 @@
 package com.example.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -8,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.service.etc.NoteService;
 import com.example.vo.etc.NoteVO;
@@ -29,6 +33,43 @@ public class NoteController {
 //	map.put("/writeNote.do", "controller.WriteNoteCommand");
 //	map.put("/deleteNote.do", "controller.NoteDeleteCommand");
 //	map.put("/sendMail.do", "controller.MailCommand");
+	
+	@ResponseBody
+	@PostMapping("/sendnote")
+	public Map<String, String> sendNote(int counterpartNo, String counterpartNickname, String content, HttpSession session) {
+		Map<String, String> map = new HashMap<String, String>();
+		MemberVO user = (MemberVO) session.getAttribute("loginUser");
+		
+		NoteVO note = new NoteVO();
+		note.setCounterpart_no(counterpartNo);
+		note.setCounterpart_nickname(counterpartNickname);
+		note.setContent(content);
+		
+		map.put("isSuccess", Boolean.toString(service.registerNote(note, user)));
+		
+		return map;
+	}
+	
+	@GetMapping("/writenote")
+	public String wirteNote(@RequestParam int memberNo, Model model, HttpSession session) {
+		MemberVO user = (MemberVO) session.getAttribute("loginUser");
+		
+		if(memberNo == user.getNo()) {
+			model.addAttribute("isSelf", 1);
+		}
+		else {
+			model.addAttribute("isSelf", 0);	
+			
+			// 멤버 dao에 MemberVo selectMemberProfile(int member_no) 추가 되면 그걸로 바꿔야함
+			MemberVO counterpart = new MemberVO();
+			counterpart.setNo(2);
+			counterpart.setNickname("이이이");
+			
+			model.addAttribute("counterpart", counterpart);
+		}
+		
+		return "view/etc/writenote";
+	}
 	
 	@GetMapping("/notedetail")
 	public String noteDetail(@RequestParam int isRecieve, @RequestParam int noteContentNo, @RequestParam int noteNo, Model model, HttpSession session) {

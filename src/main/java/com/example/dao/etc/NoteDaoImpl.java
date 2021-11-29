@@ -2,6 +2,7 @@ package com.example.dao.etc;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -49,6 +50,25 @@ public class NoteDaoImpl implements NoteDao {
 	public NoteVO selectNote(int noteNo) {
 		// TODO Auto-generated method stub
 		return mapper.selectNote(noteNo);
+	}
+
+	@Override
+	public int insertNoteContent(String content) throws Exception {
+		// TODO Auto-generated method stub
+		mapper.insertNoteContent(content);
+		return mapper.selectLastID();
+	}
+
+	@Override
+	public void insertNote_member(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		mapper.insertNote_member(map);
+	}
+
+	@Override
+	public void insertNote_counterpart(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		mapper.insertNote_counterpart(map);
 	}
 
 }

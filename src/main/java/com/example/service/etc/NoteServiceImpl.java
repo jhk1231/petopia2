@@ -1,12 +1,16 @@
 package com.example.service.etc;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.dao.etc.NoteDao;
 import com.example.vo.etc.NoteVO;
+import com.example.vo.member.MemberVO;
 
 @Service
 public class NoteServiceImpl implements NoteService {
@@ -41,6 +45,36 @@ public class NoteServiceImpl implements NoteService {
 	public NoteVO retriveNote(int noteNo) {
 		// TODO Auto-generated method stub
 		return dao.selectNote(noteNo);
+	}
+
+	@Transactional
+	@Override
+	public boolean registerNote(NoteVO note, MemberVO user) {
+		// TODO Auto-generated method stub
+		boolean isSuccess = false;
+		try {
+			int index = dao.insertNoteContent(note.getContent());
+
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("notecontent_no", index);
+			map.put("member_no", user.getNo());
+			map.put("member_nickname", user.getNickname());
+			map.put("counterpart_no", note.getCounterpart_no());
+			map.put("counterpart_nickname", note.getCounterpart_nickname());
+			map.put("sendrecieve_member", 0);
+			map.put("sendrecieve_counterpart", 1);
+
+			// 내가 보낸 쪽지 insert
+			dao.insertNote_member(map);
+			// 상대가 받은 쪽지 insert
+			dao.insertNote_counterpart(map);
+			isSuccess = true;
+		} catch (Exception e) {
+			isSuccess = false;
+			e.printStackTrace();
+		}
+		
+		return isSuccess;
 	}
 	
 }

@@ -10,6 +10,7 @@
 		WHERE note_no = 1 
 	</select>
 
+	<!-- 쪽지 리스트 select -->
 	<select id="selectNoteList" parameterType="noteVO" resultType="noteVo">
 		SELECT Note.note_no, Note.member_no, Note.notecontent_no, Note.counterpart_no, Note.counterpart_nickname, 
 		noteContent.content, Note.sendDate, note.readDate, note.sendrecieve
@@ -19,17 +20,23 @@
 		ORDER BY note_no DESC
 		LIMIT #{pageSize} OFFSET #{startOffset}
 	</select>
+	
+	<!-- 쪽지 갯수 select -->
 	<select id="selectTotalNoteCount" resultType="INTEGER">
 		SELECT COUNT(*)
 		FROM Note
 		WHERE member_no = #{userNo} AND sendrecieve = #{isRecieve}
 	</select>
+	
+	<!-- 쪽지 상세 조회 select -->
 	<select id="selectNote" resultType="noteVo">
 		SELECT Note.note_no, Note.counterpart_no, Note.counterpart_nickname, noteContent.content,
 		Note.sendDate, Note.readDate, Note.sendrecieve  
 		FROM Note, noteContent 
 		WHERE Note.note_no = #{noteNo} AND Note.notecontent_no = noteContent.notecontent_no 
 	</select>
+	
+	<!-- 쪽지 읽음 update -->
 	<update id="updateRead_member">
 		UPDATE Note
 		SET readDate = NOW()
@@ -40,4 +47,21 @@
 		SET readDate = NOW()
 		WHERE note.notecontent_no = #{noteNo} and counterpart_no = #{userNo} and note.sendrecieve = #{isRecieve}
 	</update>
+	
+	<!-- 쪽지 insert -->
+	<insert id = "insertNoteContent">
+		INSERT INTO noteContent(content) VALUES(#{content})
+	</insert>
+	<select id = "selectLastID" resultType="INTEGER">
+		SELECT LAST_INSERT_ID()
+	</select>
+	<insert id="insertNote_member" parameterType="Map">
+		INSERT INTO note(notecontent_no, member_no, counterpart_no, counterpart_nickname, sendrecieve)
+		VALUES(#{notecontent_no}, #{member_no}, #{counterpart_no}, #{counterpart_nickname}, #{sendrecieve_member})
+	</insert>
+	<insert id="insertNote_counterpart" parameterType="Map">
+		INSERT INTO note(notecontent_no, member_no, counterpart_no, counterpart_nickname, sendrecieve)
+		VALUES(#{notecontent_no}, #{counterpart_no}, #{member_no}, #{member_nickname}, #{sendrecieve_counterpart})
+	</insert>
+	
 </mapper>
