@@ -35,7 +35,7 @@
 			<td th:if ="${note.read}" th:text="${note.readDate}"></td>
 			<td th:if ="${note.read} == false">읽지않음</td>
 			<td>
-			<input type="checkbox" name="deleteNoteList" th:value="${ note.notecontent_no }">
+			<input type="checkbox" name="deleteNote" th:value="${ note.notecontent_no }">
 			</td>
 		</tr>
 		 </form>
@@ -80,7 +80,10 @@
 
 	<script>
 		$('#delete').on('click', function(event) {	
-			$("#deleteForm").submit();
+			if( $("input[name=deleteNote]:checked").length <= 0 )
+				alert("삭제할 쪽지를 선택해주세요.");
+			else
+				$("#deleteForm").submit();
 			/* var form1 = $("#deleteForm").serialize();
 			console.log(form1); */
 		});

@@ -30,14 +30,12 @@ public class NoteController {
 	private static final int POST_PER_PAGE = 3;
 	private static final int PAGE_BLOCK = 3;
 
-//	map.put("/deleteNote.do", "controller.NoteDeleteCommand");
-	
 	@PostMapping("/deletenote")
-	public String delete(@RequestParam("deleteNoteList") List<Integer> list, int isRecieve, HttpSession session) {
+	public String delete(@RequestParam("deleteNote") List<Integer> list, int isRecieve, HttpSession session) {
 		
 		MemberVO user = (MemberVO) session.getAttribute("loginUser");
 		System.out.println("isRecieve : " + isRecieve);
-		
+		System.out.println(list.get(0));
 		List<NoteVO> notelist = new ArrayList<NoteVO>();
 		
 		for( Integer no : list) {

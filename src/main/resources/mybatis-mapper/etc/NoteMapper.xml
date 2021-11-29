@@ -30,7 +30,7 @@
 	
 	<!-- 쪽지 상세 조회 select -->
 	<select id="selectNote" resultType="noteVo">
-		SELECT Note.note_no, Note.counterpart_no, Note.counterpart_nickname, noteContent.content,
+		SELECT Note.note_no, noteContent.notecontent_no, Note.counterpart_no, Note.counterpart_nickname, noteContent.content,
 		Note.sendDate, Note.readDate, Note.sendrecieve  
 		FROM Note, noteContent 
 		WHERE Note.note_no = #{noteNo} AND Note.notecontent_no = noteContent.notecontent_no 
