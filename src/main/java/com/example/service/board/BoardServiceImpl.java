@@ -1,0 +1,94 @@
+package com.example.service.board;
+
+import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.example.dao.board.BoardDao;
+import com.example.vo.board.BoardBoardGradeVO;
+import com.example.vo.board.BoardGradeVO;
+import com.example.vo.board.BoardVO;
+
+@Repository("boardService")
+public class BoardServiceImpl implements BoardService {
+		
+	@Autowired
+	private BoardDao boardDao;
+
+	//게시판 추가(기본정보 + 등급)
+	@Override
+	public void registerBoard(BoardVO boardVo, BoardGradeVO boardGradeVo) {
+		this.boardDao.insertBoard(boardVo);		
+		boardGradeVo.setBoardNo(this.boardDao.selectLastInsertBoardNo()); 
+		this.boardDao.insertBoardGrade(boardGradeVo);
+	}
+
+	//연결된 게시글 조회
+	@Override
+	public int retrieveConnectArticle(int boardNo) {
+		int connectArticle = this.boardDao.selectConnectArticle(boardNo);
+		return connectArticle;
+	}
+
+	//게시판 삭제
+	@Override
+	public void removeBoard(int boardNo) {
+		this.boardDao.deleteBoard(boardNo);
+		
+	}
+
+	//게시판 수정
+	@Override
+	public void modifyBoard(BoardVO boardVo, BoardGradeVO boardGradeVo) {
+		this.boardDao.updateBoard(boardVo, boardGradeVo);
+		System.out.println(boardVo.toString() + "-------------service");
+		System.out.println(boardGradeVo.toString() + "-------------service");
+	}
+
+	//게시판 정보 조회
+	@Override
+	public BoardBoardGradeVO retrieveOneBoard(int boardNo) {
+		BoardBoardGradeVO boardGradeVo = this.boardDao.selectOneBoard(boardNo);
+		return boardGradeVo;
+	}
+	
+	//게시판 정보 조회 (전체)
+	@Override
+	public ArrayList<BoardBoardGradeVO> retrieveAllBoard() {
+		ArrayList<BoardBoardGradeVO> boardAndGradeList = this.boardDao.selectAllBoard();
+		return boardAndGradeList;
+	}
+
+	//게시판 중복 검사
+	@Override
+	public int retrieveDuplicateBoard(String boardName) {
+		int count = this.boardDao.selectDuplicateBoard(boardName);
+		return count;
+	}
+
+	//즐겨찾기 게시판 추가
+	@Override
+	public void registerFavoriteBoard(BoardVO boardVo) {
+		this.boardDao.insertFavoriteBoard(boardVo);
+	}
+
+	//즐겨찾기 게시판 삭제
+	@Override
+	public void removeFavoriteBoard(BoardVO boardVo) {
+		this.boardDao.deleteFavoriteBoard(boardVo);
+	}
+
+	@Override
+	public ArrayList<BoardVO> retrieveFavoriteBoardList(int no) {
+		ArrayList<BoardVO> favoriteList = this.boardDao.selectFavoriteBoardList(no);
+		//System.out.println("Service-------------------" + favoriteList);
+		return favoriteList;
+	}
+
+
+
+
+	
+
+}
