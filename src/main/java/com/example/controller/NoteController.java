@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.service.etc.NoteService;
 import com.example.vo.etc.NoteVO;
 import com.example.vo.member.MemberVO;
-import com.example.vo.paging.PageInfo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -110,7 +109,9 @@ public class NoteController {
 		MemberVO user = (MemberVO) session.getAttribute("loginUser");
 		//log.info(user.toString());
 		
-		List<NoteVO> notelist = service.selectNoteList(user.getNo(), isRecieve, 10, (currentPage - 1) * POST_PER_PAGE);
+		int startRow = (currentPage - 1) * POST_PER_PAGE;
+		
+		List<NoteVO> notelist = service.selectNoteList(user.getNo(), isRecieve, POST_PER_PAGE, startRow);
 		//notelist.forEach(m -> System.out.println(m.toString()));
 		model.addAttribute("notelist", notelist);
 		model.addAttribute("isRecieve", isRecieve);

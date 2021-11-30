@@ -7,7 +7,6 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.vo.etc.NoteVO;
-import com.example.vo.paging.Criteria;
 
 @Mapper
 public interface NoteMapper {
