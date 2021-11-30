@@ -5,16 +5,65 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-
 <mapper namespace="com.example.mapper.member.MemberMapper"><!-- @mapper를 쓰게 되면 mapper가 있는 경로를 써준다. -->
 <!-- xml로 할 때는 내 마음대로 이름 짓기 (예)"Member"-->	
+
+	<resultMap type="memberVo" id="detailInfoByManager">
+		<result property="no" javaType="int" column="member_no" jdbcType="INTEGER"/>
+		<result property="email" javaType="string" column="email" jdbcType="VARCHAR"/>
+		<result property="grade" javaType="string" column="name" jdbcType="VARCHAR"/>
+		<result property="nickname" javaType="string" column="nickname" jdbcType="VARCHAR"/>
+		<result property="regDate" javaType="string" column="regdate" jdbcType="DATE"/>
+		<result property="lastDate" javaType="string" column="lastdate" jdbcType="DATE"/>
+		<result property="docs" javaType="int" column="docs" jdbcType="INTEGER"/>
+		<result property="comms" javaType="int" column="comms" jdbcType="INTEGER"/>
+		<result property="visits" javaType="int" column="visits" jdbcType="INTEGER"/>
+		<result property="ban" javaType="string" column="ban" jdbcType="DATE"/>
+	</resultMap>
+
+
+	<select id="selectMemberByManager" parameterType="int" resultType="memberVo" resultMap="detailInfoByManager">
+		SELECT member_no, email, name, nickname, regdate, lastdate, M.docs, M.comms, visits, ban
+		FROM member M RIGHT JOIN grade G
+		ON M.grade_no = G.grade_no
+		WHERE member_no = #{no}
+	</select>
+	<update id="updateBan" parameterType="Map">
+		UPDATE member
+		SET	ban = DATE_ADD(NOW(), INTERVAL)
+		WHERE member_no = #{no}
+	</update>
+	<update id="updateMemberByForce" parameterType="int">
+		UPDATE member
+		SET ismember = 2
+		WHERE member_no = #{no};
+	</update>
+	<update id="plusMemberDocs" parameterType="int">
+		UPDATE member
+    	SET docs = docs + 1
+    	WHERE member_no = #{no};
+	</update>
+	<update id="minusMemberDocs" parameterType="int">
+		UPDATE member
+    	SET docs = docs - 1
+    	WHERE member_no = #{no};
+	</update>
+	<update id="plusMemberComms" parameterType="int">
+		UPDATE member
+    	SET comms = comms + 1
+    	WHERE member_no = #{no};
+	</update>
+    <update id="minusMemberComms" parameterType="int">
+    	UPDATE member
+    	SET comms = comms - 1
+    	WHERE member_no = #{no};
+    </update>
 
 	<!-- 회원가입 -->
 	<insert id="insertMember" parameterType="memberVO">   <!-- parameterType(경로)의 괄호 안에 들어간 건 MemberVO에 있는 @Alias("memberVO")과 이름이 일치해야 함 -->
 		INSERT INTO Member(member_no, grade_no, email, password, nickname)
 		VALUES (#{memberNo}, #{gradeNo}, #{email}, #{password}, #{nickname}) <!-- #{}안에는 MemberVO에서 선언한 변수명과 일치해야 함 -->
 	</insert>
-
 	<!-- 회원가입 시 이메일 중복확인-->
 	<select id="joinidcheck" parameterType="memberVO">
 		SELECT email
@@ -22,5 +71,5 @@
 		WHERE email = #{email}
 	</select>
 	
-	
 </mapper>
+
