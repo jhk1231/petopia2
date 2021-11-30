@@ -42,7 +42,7 @@ public class MemberVO {
 		this.password = password;
 	}
   
-  public MemberVO(@NonNull int no, @NonNull String email, @NonNull String nickname, String regDate, String lastDate, String grade, int docs,
+  public MemberVO(@NonNull int no, @NonNull String email, @NonNull String nickname, String regDate, String lastDate, int grade, int docs,
 			int comms, int visits, String ban) {
 		super();
 		this.no = no;
