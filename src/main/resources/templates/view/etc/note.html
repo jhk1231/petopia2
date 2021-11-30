@@ -45,8 +45,18 @@
 		</tbody>
 	</table>
 	<button type = "submit" id = "delete">삭제</button>
+	<br>
+	<span th:if="${startPage} > ${pageBlock}">
+		<a th:href="@{/notelist(isRecieve=${isRecieve}, currentPage=${startPage - pageBlock})}">[PREV]</a>
+	</span> 
+	<th:block th:each="pageNo : *{#numbers.sequence(startPage, endPage)}">
+		<span th:if="${pageNo == currentPage}" th:text="${pageNo}"></span>
+		<a th:if="${pageNo != currentPage}" th:text="${pageNo}" th:href="@{/notelist(isRecieve=${isRecieve}, currentPage=${pageNo})}"></a>
+	</th:block> 
 	
-	
+	<span th:if="${endPage} < ${totalPage}">
+	<a th:href="@{/notelist(isRecieve=${isRecieve}, currentPage=${endPage + 1})}">[NEXT]</a>
+	</span> 
 <!-- 	
 	<p>스타트 페이지 : ${ pageScope.startPage }</p>
 	<p>엔드 페이지 : ${ pageScope.endPage }</p> -->
@@ -57,7 +67,7 @@
 		</c:url>
 		<a href="${ prevUrl}">[PREV]</a>
 	</c:if> -->
-	page
+	<!-- page -->
 	<!-- <c:forEach var="i" begin="${startPage }" end="${endPage }">
 		<c:if test="${ i == currentPage }">
 			${ i }
@@ -84,18 +94,7 @@
 				alert("삭제할 쪽지를 선택해주세요.");
 			else
 				$("#deleteForm").submit();
-			/* var form1 = $("#deleteForm").serialize();
-			console.log(form1); */
 		});
-		/* $('#delete').on('click', function() {	
-			let chk_arr = [];
-
-			$("input[name=deleteNote]:checked").each(function() {
-				var chk = $(this).val();
-				chk_arr.push(chk);
-				console.log(chk);
-			}); 
-		}); */
 	</script>
 </body>
 </html>

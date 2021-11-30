@@ -28,6 +28,13 @@
 		WHERE member_no = #{userNo} AND sendrecieve = #{isRecieve}
 	</select>
 	
+	
+	<select id = "selectTotalNoteCount_page" resultType="criteria">
+		SELECT COUNT(*)
+		FROM Note
+		WHERE member_no = #{userNo} AND sendrecieve = #{isRecieve}
+	</select>
+	
 	<!-- 쪽지 상세 조회 select -->
 	<select id="selectNote" resultType="noteVo">
 		SELECT Note.note_no, noteContent.notecontent_no, Note.counterpart_no, Note.counterpart_nickname, noteContent.content,

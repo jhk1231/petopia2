@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.service.etc.NoteService;
 import com.example.vo.etc.NoteVO;
 import com.example.vo.member.MemberVO;
+import com.example.vo.paging.PageInfo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,15 +49,9 @@ public class NoteController {
 		
 		service.removeNote((ArrayList<NoteVO>) notelist, isRecieve);
 		
-		// 1. 쪽지 일련번호
 		return "redirect:notelist?isRecieve=" + isRecieve;
 	}
-//	@PostMapping("/deletenote")
-//	public String deleteNote(int isRecieve, int noteNo, int counterpartNo) {
-//		
-//		return "redirect:notelist";
-//	}
-	
+
 	@ResponseBody
 	@PostMapping("/sendnote")
 	public Map<String, String> sendNote(int counterpartNo, String counterpartNickname, String content, HttpSession session) {
@@ -119,20 +114,29 @@ public class NoteController {
 		//notelist.forEach(m -> System.out.println(m.toString()));
 		model.addAttribute("notelist", notelist);
 		model.addAttribute("isRecieve", isRecieve);
-	
+		
+		//int totalPostCount = service.retriveTotalNoteCount(user.getNo(), isRecieve);
+		//PageInfo pageinfo = new PageInfo(currentPage, PAGE_BLOCK, POST_PER_PAGE, totalPostCount);
+		//model.addAttribute("pageInfo", pageinfo);
 		int currentBlock = currentPage % PAGE_BLOCK == 0 ? currentPage / PAGE_BLOCK : currentPage / PAGE_BLOCK + 1;
 
 		int startPage = 1 + (currentBlock - 1) * PAGE_BLOCK;
 		int endPage = startPage + (PAGE_BLOCK - 1);
-
+		
+		System.out.println("startPage : " + startPage);
+		
 		int totalPostCount = service.retriveTotalNoteCount(user.getNo(), isRecieve);
 
 		int totalPage = totalPostCount % POST_PER_PAGE == 0 ? totalPostCount / POST_PER_PAGE : totalPostCount / POST_PER_PAGE + 1;
-
+		System.out.println("totalPage : " + totalPage);
 		if (endPage > totalPage) {
 			endPage = totalPage;
 		}
+
+		if(endPage <= 0)
+			endPage = startPage;
 		
+		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("pageBlock", PAGE_BLOCK);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
