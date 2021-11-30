@@ -1,6 +1,6 @@
 package com.example.mapper.etc;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -9,11 +9,9 @@ import com.example.vo.etc.DailyStatisticsVO;
 @Mapper()
 public interface DailyStatisticsMapper {
 
-	DailyStatisticsVO selectDaily(int dailyNo);
+	DailyStatisticsVO selectDaily();
 
-	List<DailyStatisticsVO> selectList();
+	ArrayList<DailyStatisticsVO> selectList();
 
-	void insertDaily(DailyStatisticsVO dailyVo);
-
-	void updateDaily(String dailyDate);
+	void insertAndupdateDaily();
 }

@@ -1,17 +1,16 @@
 package com.example.service.etc;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import com.example.vo.etc.DailyStatisticsVO;
 
 public interface DailyStatisticsService {
 
-	DailyStatisticsVO retrieve(int dailyNo);
+	DailyStatisticsVO retrieve();
 
-	List<DailyStatisticsVO> retrieveList();
+	ArrayList<DailyStatisticsVO> retrieveList();
 
-	void registerDaily(DailyStatisticsVO dailyVo);
+	void registerAndmodifyDaily();
 
-	void modifyDaily(String dailyDate);
 
 }

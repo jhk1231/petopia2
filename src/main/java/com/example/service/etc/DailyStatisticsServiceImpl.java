@@ -1,8 +1,6 @@
 package com.example.service.etc;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,31 +16,21 @@ public class DailyStatisticsServiceImpl implements DailyStatisticsService {
 	private DailyStatisticsDao dailyDao;
 	
 	@Override
-	public DailyStatisticsVO retrieve(int dailyNo) {
-		return this.dailyDao.selectDaily(dailyNo);
+	public DailyStatisticsVO retrieve() {
+		return this.dailyDao.selectDaily();
 	}
 
 	@Override
-	public List<DailyStatisticsVO> retrieveList() {
+	public ArrayList<DailyStatisticsVO> retrieveList() {
 		return this.dailyDao.selectList();
 	}
 
 	@Override
-	public void registerDaily(DailyStatisticsVO dailyVo) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	public void registerAndmodifyDaily() {
 		
-		Calendar calendar1 = Calendar.getInstance();
-		
-		String strToday = sdf.format(calendar1.getTime());
-		
-		this.dailyDao.insertDaily(dailyVo);
+		this.dailyDao.insertAndupdateDaily();
 
 	}
 
-	@Override
-	public void modifyDaily(String dailyDate) {
-		this.dailyDao.updateDaily(dailyDate);
-
-	}
 
 }

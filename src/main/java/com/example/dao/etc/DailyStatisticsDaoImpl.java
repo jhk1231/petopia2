@@ -1,6 +1,6 @@
 package com.example.dao.etc;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -8,36 +8,38 @@ import org.springframework.stereotype.Repository;
 import com.example.mapper.etc.DailyStatisticsMapper;
 import com.example.vo.etc.DailyStatisticsVO;
 
-
 @Repository("dailyDao")
 public class DailyStatisticsDaoImpl implements DailyStatisticsDao {
 
 	private DailyStatisticsMapper dailyMapper;
-	
+
+	private DailyStatisticsVO dailyVo;
+
 	@Autowired
 	public DailyStatisticsDaoImpl(DailyStatisticsMapper dailyMapper) {
 		this.dailyMapper = dailyMapper;
 	}
-	
+
 	@Override
-	public DailyStatisticsVO selectDaily(int dailyNo) {
-		return this.dailyMapper.selectDaily(dailyNo);
+	public DailyStatisticsVO selectDaily() {
+		dailyVo = dailyMapper.selectDaily();
+		dailyVo.setDailyDate((dailyVo.getDailyDate().split(" ")[0]));
+		return dailyVo;
 	}
 
 	@Override
-	public List<DailyStatisticsVO> selectList() {
-		return this.dailyMapper.selectList();
+	public ArrayList<DailyStatisticsVO> selectList() {
+		ArrayList<DailyStatisticsVO> dailyVo = dailyMapper.selectList();
+		for (DailyStatisticsVO dailyStatisticsVO : dailyVo) {
+			dailyStatisticsVO.setDailyDate((dailyStatisticsVO.getDailyDate().split(" ")[0]));
+
+		}
+		return dailyVo;
 	}
 
 	@Override
-	public void insertDaily(DailyStatisticsVO dailyVo) {
-		this.dailyMapper.insertDaily(dailyVo);
-
-	}
-
-	@Override
-	public void updateDaily(String dailyDate) {
-		this.dailyMapper.updateDaily(dailyDate);
+	public void insertAndupdateDaily() {
+		this.dailyMapper.insertAndupdateDaily();
 
 	}
 
