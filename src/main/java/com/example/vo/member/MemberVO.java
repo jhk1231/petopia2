@@ -3,11 +3,12 @@ package com.example.vo.member;
 import org.apache.ibatis.type.Alias;
 
 import lombok.AllArgsConstructor;
-
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -16,7 +17,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Alias("memberVo")
-
 public class MemberVO {
 	private @NonNull int no;
 	private @NonNull String email;
