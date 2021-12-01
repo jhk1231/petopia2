@@ -61,9 +61,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	
-	
 	<delete id="deleteArticle" parameterType="int" statementType="CALLABLE">
 		{ CALL sp_article_delete(#{articleNo}) }
 	</delete>
+	
+	
+	
+	<!-- 추천 -->
+	
+	<insert id="insertLike" parameterType="likeVo" statementType="CALLABLE">
+		{ CALL sp_insert_like(#{memberNo}, #{articleNo}) }
+	</insert>
+	
+	<resultMap type="likeVo" id="selectLikeMap">
+		<result property="no" javaType="int" column="recommend_no" jdbcType="INTEGER"/>
+		<result property="memberNo" javaType="int" column="member_no" jdbcType="INTEGER"/>
+		<result property="articleNo" javaType="int" column="article_no" jdbcType="INTEGER"/>
+	</resultMap>
+	
+	<select id="selectLike" parameterType="likeVo" statementType="CALLABLE" resultMap="selectLikeMap">
+		{ CALL sp_select_like( #{memberNo}, #{articleNo}) }
+	</select>
+	
+	<delete id="deleteLike" parameterType="int"  statementType="CALLABLE">
+		{ CALL sp_delete_like( #{no} ) }
+	</delete>
+	
+	
+	<select id="totalLikeCount" statementType="CALLABLE" parameterType="int" resultType="int">
+			{ CALL sp_totalcount_like(#{articleNo} ) }
+	</select>
+	
+	
 	
 </mapper>

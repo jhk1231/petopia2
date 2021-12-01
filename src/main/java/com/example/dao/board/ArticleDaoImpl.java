@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.mapper.board.ArticleMapper;
 import com.example.vo.board.ArticleVO;
+import com.example.vo.board.LikeVO;
 import com.example.vo.board.SelectArticleVO;
 
 @Repository("articleDao")
@@ -53,4 +54,30 @@ public class ArticleDaoImpl implements ArticleDao {
 		this.articleMapper.upViewcount(articleNo);
 	}
 
+//	// 추천
+//	@Override
+//	public void insertLike(LikeVO likeVO) {
+//		this.articleMapper.insertLike(likeVO);
+//	}
+//	
+//	// 추천 취소
+//	@Override
+//	public void deleteLike(int likeNo) {
+//		this.articleMapper.deleteLike(likeNo);
+//	}
+//	
+//	
+//	// pk값
+//	@Override
+//	public LikeVO selectLike(LikeVO likeVO) {
+//		return this.articleMapper.selectLike(likeVO);
+//	}
+//	
+//	@Override
+//	public int totalRecCount(int articleNo) {
+//		return this.articleMapper.totalLikeCount(articleNo);
+//	}
+	
+	
+	
 }

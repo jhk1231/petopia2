@@ -33,5 +33,11 @@ public class ReplyServiceImpl implements ReplyService {
 	public void removeReply(int replyNo) {
 		this.replyDao.deleteReply(replyNo);
 	}
+	
+	@Override
+	public void allDelete(int articleNo) {
+		this.replyDao.allDelete(articleNo);
+		
+	}
 
 }

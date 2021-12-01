@@ -1,6 +1,5 @@
 package com.example.service.board;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +20,8 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	@Autowired
 	private FileService fileService;
+	@Autowired
+	private ReplyService replyService;
 
 
 	@Override
@@ -62,13 +63,35 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	@Transactional
 	public void removeArticle(int articleNo) {
+		this.fileService.allDelete(articleNo);
+		this.replyService.allDelete(articleNo);
 		this.articleDao.deleteArticle(articleNo);
-
 	}
 
-	@Override
-	public void upViewcount(int articleNo) {
-		this.articleDao.upViewcount(articleNo);
-	}
+//	@Override
+//	public void upViewcount(int articleNo) {
+//		this.articleDao.upViewcount(articleNo);
+//	}
 
+//	@Override
+//	public void recUpdate(int memberNo, int articleNo) {
+//		
+//		LikeVO likeVO = new LikeVO(memberNo, articleNo);
+//		this.articleDao.selectLike(likeVO);
+//		int likeNo = likeVO.getNo();
+//		
+//		if (likeNo == 0) { // 추천x 일 때
+//			this.articleDao.insertLike(likeVO);	
+//		} else { // 추천이 되어 있을 때
+//			this.articleDao.deleteLike(likeNo); // 추천 삭제
+//		}
+//	}
+//	
+//	@Override
+//	public int totalRecCount(int articleNo) {
+//		return this.articleDao.totalRecCount(articleNo);
+//	}
+	
+	
+	
 }

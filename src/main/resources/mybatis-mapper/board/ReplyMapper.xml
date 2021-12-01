@@ -33,4 +33,8 @@
 		{ CALL sp_delete_reply( #{no} ) }
 	</delete>
 	
+	<delete id="allDelete" parameterType="int">
+		DELETE FROM Reply WHERE article_no = #{articleNo}
+	</delete>
+	
 </mapper>

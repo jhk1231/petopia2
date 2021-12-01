@@ -37,9 +37,15 @@ public class FileDaoImpl implements FileDao {
 	}
 
 	@Override
-	public void updateFile(FileVO file) {
-		// TODO Auto-generated method stub
-
+	public void deleteFile(int FileNo) {
+		this.fileMapper.deleteFile(FileNo);
+		
 	}
-
+	
+	@Override
+	public void allDelete(int articleNo) {
+		this.fileMapper.allDelete(articleNo);
+		
+	}
+	
 }

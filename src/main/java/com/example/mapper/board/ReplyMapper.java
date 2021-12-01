@@ -14,4 +14,5 @@ public interface ReplyMapper {
 	
 	void deleteReply(int replyNo); // 삭제
 	
+	void allDelete(int articleNo);
 }

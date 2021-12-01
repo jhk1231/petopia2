@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.vo.board.ArticleVO;
+import com.example.vo.board.LikeVO;
 import com.example.vo.board.SelectArticleVO;
 
 @Mapper
@@ -22,4 +23,12 @@ public interface ArticleMapper {
 	void deleteArticle(int articleNo); // 삭제
 	
 	void upViewcount(int aritlceNo); // 조회수 증가
+	
+//	LikeVO selectLike(LikeVO likeVO);
+//	
+//	void insertLike(LikeVO likeVO);
+//	
+//	void deleteLike(int likeNo); // 추천 삭제 
+//	
+//	int totalLikeCount(int articleNo);
 }

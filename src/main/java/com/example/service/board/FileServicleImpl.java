@@ -104,5 +104,15 @@ public class FileServicleImpl implements FileService {
 			return null;
 		}
 	}
-
+	
+	@Override
+	public void removeFile(int fileNo) {
+		this.fileDao.deleteFile(fileNo);
+	}
+	
+	@Override
+	public void allDelete(int articleNo) {
+		this.fileDao.allDelete(articleNo);
+		
+	}
 }

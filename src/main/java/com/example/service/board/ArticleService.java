@@ -18,5 +18,11 @@ public interface ArticleService {
 	
 	void removeArticle(int articleNo); // 삭제
 	
-	void upViewcount(int articleNo); // 조회수 up
+	
+	
+//	void upViewcount(int articleNo); // 조회수 up
+//	
+//	void recUpdate(int articleNo, int memberNo);
+//	
+//	int totalRecCount(int articleNo);
 }

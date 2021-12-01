@@ -13,4 +13,7 @@ public interface ReplyDao {
 	
 	void deleteReply(int replyNo); // 삭제
 	
+	void allDelete(int articleNo);
+
+	
 }

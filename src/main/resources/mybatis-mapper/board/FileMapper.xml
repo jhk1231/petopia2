@@ -41,9 +41,13 @@
 	</select>
 	
 	
+	<delete id="deleteFile" parameterType="int" statementType="CALLABLE">
+		DELETE FROM File WHERE article_no = #{no}
+	</delete>
 	
-	
-	
+	<delete id="allDelete" parameterType="int">
+		DELETE FROM File WHERE article_no = #{articleNo}
+	</delete>
 	
 	
 </mapper>

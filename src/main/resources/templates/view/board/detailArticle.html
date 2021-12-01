@@ -1,47 +1,5 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
-<!-- $(document).ready(function() {
-		// 추천 버튼 클릭시
-		$('#rec_update').click(function(){
-			$.ajax({
-				url: "${pageContext.request.contextPath}/RecUpdate.do",
-				type: "POST",
-				data:{
-					// 게시글을 추천 했는지 안했는지 확인.
-					articleNo: '${param.articleNo}',
-					memberNo: '${sessionScope.user.no }'
-				},
-				success: function(count){
-					$(".rec_count").html(JSON.parse(count).totalCount);
-					//recCount();
-				},
-			})
-		})
-		
-		// 게시글 추천수
-		function recCount(){
-			$.ajax({
-				url: "${pageContext.request.contextPath}/RecCount.do",
-				type: "POST",
-				data: {
-					// 게시글의 총 추천수만 구하면 되니 게시글 번호만 넘겨준다.
-					articleNo: '${param.articleNo}'
-				},
-				success: function(count){
-					// rec_count 내용을 비우고 count로 갱신
-					$(".rec_count").html(JSON.parse(count).totalCount);
-				},
-			})
-		};
-		// 맨처음 시작시 호출
-		recCount(); -->
-
-
-
-
-
-
-
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
 
 <div id="layoutSidenav_content">
 	<main>
@@ -53,6 +11,7 @@
 					<div>
 						<h1>
 							<input type="hidden" id="article_no" th:value="${article.no}">
+							<input type="hidden" id="board_no" th:value="${article.boardNo}">
 						</h1>
 						<form id="detailContent" th:object="${article}" name="article">
 							<table width=100%>
@@ -83,34 +42,34 @@
 										<th>첨부파일</th>
 										<td th:if="${article.attacheFile == null}">첨부된 파일이 없습니다.</td>
 										<td th:unless="${article.attacheFile == null}"><a
-												th:href="|/attach/${article.getAttacheFile().getNo()}|"
-												th:text="${article.getAttacheFile().getSystemFileName()}|"></a>
+											th:href="|/attach/${article.getAttacheFile().getNo()}|"
+											th:text="${article.getAttacheFile().getSystemFileName()}|"></a>
 										</td>
 									</tr>
 									<tr th:if="${article.fileList != null}">
 										<td>
 											<!--이미지 파일들--> <img th:each="imageFile : ${article.fileList}"
-												th:src="|/images/${imageFile.getSystemFileName()}|" width="200"
-												height="200" />
+											th:src="|/images/${imageFile.getSystemFileName()}|"
+											width="200" height="200" />
 										</td>
 									</tr>
 									<tr>
 										<div style="display: inline;">
 											<td colspan="2"><input type="button"
-													th:onclick="|location.href='@{/writeArticleForm}'|" value="글쓰기" />
-												<input type="button"
-													th:onclick="|location.href='@{/nListArticle/{boardNo}(boardNo=${article.boardNo})}'|"
-													value="목록" /> <input type="button" id="rec_update" value="추천" /> <strong
-													class="like_num">23</strong> <input type="button" value="답글쓰기" />
-											</td>
+												th:onclick="|location.href='@{/writeArticleForm}'|"
+												value="글쓰기" /> <input type="button"
+												th:onclick="|location.href='@{/nListArticle/{boardNo}(boardNo=${article.boardNo})}'|"
+												value="목록" /> <input type="button" id="rec_update"
+												value="추천" /> <strong><input type="text"
+													id="like_num" value=""></strong></td>
 										</div>
-
 
 										<!--본인만 가능-->
 										<div style="float: right;">
 											<td><input type="button"
-													th:onclick="|location.href='@{/updateArticleForm/{articleNo}(articleNo=${article.no})}'|"
-													value="수정" /> <input type="button" value="삭제" /></td>
+												th:onclick="|location.href='@{/updateArticleForm/{articleNo}(articleNo=${article.no})}'|"
+												value="수정" /> <input type="button" id="remove_article_btn"
+												value="삭제" /></td>
 										</div>
 									</tr>
 
@@ -121,12 +80,14 @@
 					<!-- 댓글 -->
 
 					<div id="writeReplyForm">
-						<textarea id="write_content" name="write_content" rwos="5" cols="50" placeholder="댓글을 입력해주세요."></textarea>
+						<textarea id="write_content" name="write_content" rwos="5"
+							cols="50" placeholder="댓글을 입력해주세요."></textarea>
 						<button type="button" id="write_reply_btn">등록</button>
 					</div>
 
 					<div id="replys">
-						<div class="reply_list" th:each="reply : ${article.getReplyList()}">
+						<div class="reply_list"
+							th:each="reply : ${article.getReplyList()}">
 							<table th:id="${reply.getNo()}">
 								<tbody>
 									<tr>
@@ -141,9 +102,9 @@
 								</tbody>
 								<tfoot>
 									<tr>
-										<td><input type="button" class="modify_Reply_Form_Btn" value="수정" />
-											<input type="button" class="remove_Reply_Btn" value="삭제" />
-										</td>
+										<td><input type="button" class="modify_Reply_Form_Btn"
+											value="수정" /> <input type="button" class="remove_Reply_Btn"
+											value="삭제" /></td>
 									</tr>
 								</tfoot>
 							</table>
@@ -167,41 +128,50 @@
 <script th:src="@{../js/jquery-3.6.0.min.js}"></script>
 <script>
 	$(document).ready(function () {
+	
+		$('#remove_article_btn').on('click',function(){
+			const boardNo = $("#board_no").val();
+			const articleNo = $("#article_no").val();
+			location.href='/removeArticle/' +   articleNo + '/' + boardNo; 
+		})
+		/* // 추천 버튼 클릭시
+		$('#rec_update').click(function () {
+			$.ajax({
+				url: "/RecUpdate",
+				type: "POST",
+				data: {
+					// 게시글을 추천 했는지 안했는지 확인.
+					articleNo: $("#article_no").val(),
+					memberNo: '${sessionScope.user.no }'
+				},
+				success: function (count) {
+					$("#rec_count").val(JSON.parse(count).totalCount);					
+					// $("#rec_count").html(JSON.parse(count).totalCount);
+					//recCount();
+				},
+			})
+		})
 
-		// // 추천 버튼 클릭시
-		// $('#rec_update').click(function () {
-		// 	$.ajax({
-		// 		url: "${pageContext.request.contextPath}/RecUpdate.do",
-		// 		type: "POST",
-		// 		data: {
-		// 			// 게시글을 추천 했는지 안했는지 확인.
-		// 			articleNo: $("#article_no").val(),
-		// 			memberNo: '${sessionScope.user.no }'
-		// 		},
-		// 		success: function (count) {
-		// 			$(".rec_count").html(JSON.parse(count).totalCount);
-		// 			//recCount();
-		// 		},
-		// 	})
-		// })
-
-		// // 게시글 추천수
-		// function recCount() {
-		// 	$.ajax({
-		// 		url: "${pageContext.request.contextPath}/RecCount.do",
-		// 		type: "POST",
-		// 		data: {
-		// 			// 게시글의 총 추천수만 구하면 되니 게시글 번호만 넘겨준다.
-		// 			articleNo: $("#article_no").val()
-		// 		},
-		// 		success: function (count) {
-		// 			// rec_count 내용을 비우고 count로 갱신
-		// 			$(".rec_count").html(JSON.parse(count).totalCount);
-		// 		},
-		// 	})
-		// };
-		// // 맨처음 시작시 호출
+		// 게시글 추천수
+		function recCount() {
+			$.ajax({
+				url: "/RecCount.do",
+				type: "POST",
+				data: {
+					// 게시글의 총 추천수만 구하면 되니 게시글 번호만 넘겨준다.
+					articleNo: $("#article_no").val()
+				},
+				success: function (count) {
+					// rec_count 내용을 비우고 count로 갱신
+					$("#rec_count").val(JSON.parse(count).totalCount);
+					$(".rec_count").html(JSON.parse(count).totalCount); 
+				},
+			})
+			// 맨처음 시작시 호출
 		// recCount();
+		}; 
+		*/
+		
 
 
 		/*-------------------댓글 ------------------ */

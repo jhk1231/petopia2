@@ -50,16 +50,13 @@
 						<textarea id="ucontent" th:field="*{content}" th:value="${article.content}" placeholder="내용" required></textarea>
 					</div>
 					<div id="import_bth">
-						<!--골치 아프네 파일 삭제 기능이랑 같이 만들자.-->
-						<!-- GPS 지도 버튼-->
-						<input type="button" value="GPS" />
 						<!-- 첨부파일 -->
-						<input type="file" th:text="${article.getAttacheFile().getOriginalFileName()}|" name="importAttacheFile" />
+						<input type="file" th:if="${article.attacheFile == null}" name="importAttacheFile"/>
+						<input type="file" th:unless="${article.getAttacheFile == null}" 
+						th:text="${article.getAttacheFile().getOriginalFileName()}|" name="importAttacheFile" />
 						<!-- 이미지 파일 첨부 -->
 						<input type="file" name="imageFiles"  multiple="multiple" /><br/>
 						<img th:each="imageFile : ${article.fileList}" th:src="|/images/${imageFile.getSystemFileName()}|" width="200" height="200"/>
-						<!-- <a name="selectbtnimage"id="selectimage" /> 
-						<img src="/importfile.png" board='0'onclick="document.all.selectFile.click();document.all.selectbtnimage.value=document.all.selectFile.value" /> -->
 					</div>
 			</form>
 		</div>

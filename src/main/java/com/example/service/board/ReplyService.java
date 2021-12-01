@@ -13,4 +13,6 @@ public interface ReplyService {
 	void modifyReply(ReplyVO reply); // 수정
 	
 	void removeReply(int replyNo); // 삭제
+	
+	void allDelete(int articleNo);
 }

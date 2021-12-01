@@ -3,6 +3,7 @@ package com.example.dao.board;
 import java.util.List;
 
 import com.example.vo.board.ArticleVO;
+import com.example.vo.board.LikeVO;
 import com.example.vo.board.SelectArticleVO;
 
 public interface ArticleDao {
@@ -18,4 +19,13 @@ public interface ArticleDao {
 	void deleteArticle(int articleNo); // 삭제
 	
 	void upViewcount(int articleNo); // 조회수 up
+	
+//	// 추천 --
+//	LikeVO selectLike(LikeVO likeVO);
+//	
+//	void insertLike(LikeVO likeVO);
+//	
+//	void deleteLike(int likeNo); // 추천 삭제 
+//	
+//	int totalRecCount(int totalRecCount);
 }

@@ -54,8 +54,6 @@
 							</div>
 
 							<div id="import_bth">
-								<!-- GPS 지도 버튼-->
-								<input type="button" value="GPS" />
 								<!-- 첨부파일 -->
 								<input type="file" name="importAttacheFile" />
 								<!-- 이미지 파일 첨부 -->
@@ -65,7 +63,7 @@
 							</div>
 
 							<div id="in_content">
-								<textarea id="ucontent" th:field="*{content}" placeholder="내용"
+								<textarea id="content" th:field="*{content}" placeholder="내용"
 									required></textarea>
 							</div>
 					</form>
