@@ -40,30 +40,6 @@ public class MemberDaoImpl implements MemberDao {
 		return null;
 	}
 
-  @Override
-	public ArrayList<MemberVO> selectMemberList(int startRow, int memberPerPage) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int selectTotalMember() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public ArrayList<MemberVO> selectSearchMember(int startRow, int memberPerPage, String keyfield, String keyword) {
-    // TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int selectTotalSearchMember(String keyfield, String keyword) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 	@Override
 	public ArrayList<MemberVO> selectSearchMember(int startRow, int memberPerPage, String keyfield, String keyword) {
 		// TODO Auto-generated method stub
