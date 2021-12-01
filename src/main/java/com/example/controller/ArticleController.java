@@ -142,7 +142,9 @@ public class ArticleController {
 
 	// 노말 tpye board
 	@GetMapping("/nListArticle/{boardNo}")
-	public String selectAllNomalArticle(@PathVariable("boardNo") int boardNo, Model model) {
+	public String selectAllNomalArticle(@PathVariable("boardNo") int boardNo,
+														@RequestParam("boardkind") int boardkind,
+														Model model) {
 		// create
 		List<ArticleVO> articles = this.articleService.retrieveBoard(boardNo);
 		// bind
@@ -152,13 +154,13 @@ public class ArticleController {
 			file.setFileType(1);
 			FileVO thumbFile = this.fileService.retrieveThumbFile(file);
 			article.setThumbnail(thumbFile);
-			log.info("$$$$$$$$$$$$$$" + article.toString());
+//			log.info("$$$$$$$$$$$$$$" + article.toString());
 		}
 
 		model.addAttribute("boardName", boardNo); // 차후 이름으로 변경할것
 		model.addAttribute("articles", articles); // 게시글 정보 전송
 		// view
-		int boardkind = 0; // 0 nomal, 1: thumbnail, 2: note
+//		int boardkind = 0; // 0 nomal, 1: thumbnail, 2: note
 		model.addAttribute("boardkind", boardkind); // 게시글 유형
 		return "/view/home/viewBoardTemplate";
 	}
