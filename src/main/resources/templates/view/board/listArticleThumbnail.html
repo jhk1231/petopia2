@@ -1,0 +1,29 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+
+<div id="layoutSidenav_content">
+	<main>
+		<div class="container-fluid px-4">
+
+			<div class="row mt-3 mb-5">
+				<h1><span>썸네일 게시판</span></h1>
+			</div>
+			<ui>
+				<li th:each="article : ${articles}">
+					<div class="notEmpty"></div>
+						<img th:src="|/thumbnailImages/${article.getThumbnail().getSystemFileName()}|">
+						<span class="thumb"><a th:href="|/detailArticle/${article.no}|">
+						<strong th:text="${article.subject}"></strong></a></span>
+						<p th:text="${article.writeDate}"></p>
+					</div>
+					<!-- <div class="Empty" th:if="{image == null}"></div>
+						<a href="#"><span class="thumb"><img src="이미지 경로" alt=""></span><strong>이미지 제목</strong></a>
+						<p>날짜</p>
+					</div> -->
+				</li>
+			</ui>
+		</div>
+	</main>
+</div>
+</html>
