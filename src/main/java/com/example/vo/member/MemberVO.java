@@ -29,7 +29,8 @@ public class MemberVO {
     private @NonNull String nickname;
     private String regDate;
     private String lastDate;
-    private int grade;
+    private String grade;
+    private int gradeNo;
     private int docs;
     private int comms;
     private int visits;
@@ -42,21 +43,22 @@ public class MemberVO {
 		this.password = password;
 	}
   
-  public MemberVO(@NonNull int no, @NonNull String email, @NonNull String nickname, String regDate, String lastDate, int grade, int docs,
-			int comms, int visits, String ban) {
+	public MemberVO(int no, String email, int gradeNo, String nickname, String regDate, String lastDate, int docs, int comms,
+			int visits, String ban, int isMember) {
 		super();
 		this.no = no;
 		this.email = email;
+		this.gradeNo = gradeNo;
 		this.nickname = nickname;
 		this.regDate = regDate;
 		this.lastDate = lastDate;
-		this.grade = grade;
 		this.docs = docs;
 		this.comms = comms;
 		this.visits = visits;
 		this.ban = ban;
+		this.isMember = isMember;
 	}
-  
+	
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
