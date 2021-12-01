@@ -95,21 +95,7 @@ public class MemberServiceImpl implements MemberService {
 	public void downMemberComms(int no) {
     this.memberMapper.minusMemberComms(no);
   	}
-	
-	@Override
-	public MemberVO login(String email, String password) throws Exception {
-		MemberVO member = memberdao.selectMember(email, password);
-		
-		if(member != null)
-			memberdao.updateLastDdate(member.getNo());
-		
-		return member;
-	}
 
-	@Override
-	public void test() {
-
-	}
 
 	@Override
 	public MemberVO retreiveMemberProfile(int member_no) {

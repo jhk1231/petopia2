@@ -11,8 +11,6 @@ import org.springframework.stereotype.Repository;
 import com.example.vo.member.MemberVO;
 
 import com.example.mapper.member.MemberMapper;
-import com.example.vo.member.MemberVO;
-
 import lombok.extern.java.Log;
 
 //여기부터가 기본 세팅
@@ -87,6 +85,24 @@ public class MemberDaoImpl implements MemberDao {
 	public void insertMemberNo(HashMap<String, Object> mVo) {
 		// TODO Auto-generated method stub
 		this.mapper.insertMemberNo(mVo);
+	}
+	
+	@Override
+	public ArrayList<MemberVO> selectSearchMember(int startRow, int memberPerPage, String keyfield, String keyword) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int selectTotalSearchMember(String keyfield, String keyword) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public MemberVO selectMemberProfile(int member_no) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

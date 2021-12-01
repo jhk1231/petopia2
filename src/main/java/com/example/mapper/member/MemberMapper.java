@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import com.example.vo.paging.Criteria;
 
 import com.example.vo.member.MemberVO;
-import com.example.vo.member.MembertestVO;
 
 @Repository("memberMapper")
 @Mapper

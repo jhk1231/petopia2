@@ -32,5 +32,4 @@ import net.minidev.json.JSONObject;
 @SpringBootTest
 class PetopiaApplicationTests {
 
-
 }
