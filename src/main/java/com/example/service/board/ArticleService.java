@@ -20,7 +20,7 @@ public interface ArticleService {
 	
 	
 	
-//	void upViewcount(int articleNo); // 조회수 up
+	void upViewcount(int articleNo); // 조회수 up
 //	
 //	void recUpdate(int articleNo, int memberNo);
 //	

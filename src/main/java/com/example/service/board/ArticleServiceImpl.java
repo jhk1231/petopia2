@@ -56,8 +56,7 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	@Transactional
 	public void modifyArticle(ArticleVO article) {
-		// TODO Auto-generated method stub
-
+		this.articleDao.updateArticle(article);
 	}
 
 	@Override
@@ -68,10 +67,11 @@ public class ArticleServiceImpl implements ArticleService {
 		this.articleDao.deleteArticle(articleNo);
 	}
 
-//	@Override
-//	public void upViewcount(int articleNo) {
-//		this.articleDao.upViewcount(articleNo);
-//	}
+	@Override
+	public void upViewcount(int articleNo) {
+		
+		this.articleDao.upViewcount(articleNo);
+	}
 
 //	@Override
 //	public void recUpdate(int memberNo, int articleNo) {

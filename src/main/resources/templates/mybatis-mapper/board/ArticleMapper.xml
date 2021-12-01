@@ -55,6 +55,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	
+	<update id="updateArticle" parameterType="articleVo" statementType="CALLABLE">
+		{ CALL sp_article_update(#{no}, #{subject}, #{content}) }
+	</update>
+	
+	
 	
 	<update id="upViewcount" parameterType="int" statementType="CALLABLE" >
 		{ CALL sp_up_viewcount(#{articleNo}) }
