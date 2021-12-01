@@ -25,13 +25,9 @@ import com.example.vo.paging.Paging;
 
 import lombok.extern.slf4j.Slf4j;
 
-import lombok.extern.slf4j.Slf4j;
-
-
 //여기부터가 기본 세팅
 @Slf4j
 @Controller
-@Slf4j
 public class MemberController {
 	@Autowired
 	private MemberService memberService;
