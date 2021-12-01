@@ -25,7 +25,7 @@ public class ManagerController {
 
 	@GetMapping("/manager")
 	public String manager(Model model) {
-		model.addAttribute("memberContent", "fragments/MemberContent");
+		model.addAttribute("managerContent", "fragments/MemberContent");
 		return "view/home/viewManagerTemplate";
 	}
 
@@ -37,7 +37,7 @@ public class ManagerController {
 		
 		dailyServiceImpl.registerAndmodifyDaily();
 		
-		model.addAttribute("memberContent", "fragments/StatisticsDailyContent");
+		model.addAttribute("managerContent", "fragments/StatisticsDailyContent");
 
 		model.addAttribute("dailyOne", dailyVo);
 		model.addAttribute("dailyList", dailyList);
@@ -54,7 +54,7 @@ public class ManagerController {
 		
 		
 
-		model.addAttribute("memberContent", "fragments/StatisticsTotalContent");
+		model.addAttribute("managerContent", "fragments/StatisticsTotalContent");
 
 		model.addAttribute("totalOne", totalVo);
 

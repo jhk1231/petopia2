@@ -87,10 +87,14 @@ public class ArticleController {
 		MemberVO member = (MemberVO) session.getAttribute("loginUser");
 		// bind
 		List<BoardVO> boardList = new ArrayList<BoardVO>();
-		boardList.add(new BoardVO(1, "어류"));
-		boardList.add(new BoardVO(2, "조류"));
-		boardList.add(new BoardVO(3, "영장류"));
-		boardList.add(new BoardVO(11, "썸네일"));
+		BoardVO b1 = new BoardVO();
+		b1.setBoardNo(1);
+		b1.setBoardName("어류");
+		BoardVO b2 = new BoardVO();
+		b2.setBoardNo(2);
+		b2.setBoardName("양서류");
+		boardList.add(b1);
+		boardList.add(b2);
 		// view
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("articleVO", articleVO);
@@ -109,9 +113,14 @@ public class ArticleController {
 		member.getGradeNo();
 		// bind
 		List<BoardVO> boardList = new ArrayList<BoardVO>();
-		boardList.add(new BoardVO(1, "어류"));
-		boardList.add(new BoardVO(2, "조류"));
-		boardList.add(new BoardVO(3, "영장류"));
+		BoardVO b1 = new BoardVO();
+		b1.setBoardNo(1);
+		b1.setBoardName("어류");
+		BoardVO b2 = new BoardVO();
+		b2.setBoardNo(2);
+		b2.setBoardName("양서류");
+		boardList.add(b1);
+		boardList.add(b2);
 		// view
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("article", article);

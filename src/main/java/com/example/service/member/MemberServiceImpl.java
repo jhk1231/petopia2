@@ -1,6 +1,7 @@
 package com.example.service.member;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,10 +10,12 @@ import com.example.mapper.member.MemberMapper;
 import com.example.vo.member.MemberVO;
 import com.example.vo.paging.Criteria;
 
-@Service("memberService")
+
+@Service("memberService") //얘는 서비스다
 public class MemberServiceImpl implements MemberService {
-	@Autowired
-	MemberDao memberdao;
+
+	@Autowired private MemberDao memberdao;//memberDao랑 연결해주겠다
+
 	@Autowired private MemberMapper memberMapper;
 	
 	@Override
@@ -90,7 +93,53 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override // 회원의 댓글 -1
 	public void downMemberComms(int no) {
-		this.memberMapper.minusMemberComms(no);
+    this.memberMapper.minusMemberComms(no);
+  	}
+
+
+	@Override
+	public MemberVO retreiveMemberProfile(int member_no) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override // 회원가입
+	public void registerMember(MemberVO mVo) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		this.memberdao.insertMemberNo(map);
+		System.out.println(map.get("no"));
+		mVo.setNo((int)map.get("no"));
+		System.out.println((int)map.get("no"));
+		this.memberdao.insertMember(mVo); //this를 적어주는 이유는 @Autowired 연결 선언해준 memberDao랑 같은 애라는걸 알려주려고 적는 거임 (얘가 얘다)
+		
+	}
+
+	@Override
+	public void modifyPassword(int memNo, String newPassword) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public boolean retrieveEmail(String email) {
+		String checkEmail = this.memberdao.selectEmail(email);
+		
+		if (checkEmail != null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public void modifyMember(int memberNo, String password) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public boolean retrieveNickname(String nickname) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

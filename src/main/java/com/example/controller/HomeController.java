@@ -3,6 +3,7 @@ package com.example.controller;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.config.SessionConfig;
+import com.example.service.board.CategoryService;
 import com.example.service.member.MemberService;
+import com.example.vo.board.CategoryVO;
 import com.example.vo.member.MemberVO;
 
 import lombok.extern.java.Log;
@@ -29,6 +32,9 @@ public class HomeController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private CategoryService categoryService;
 	
 	@GetMapping("/")
 	public String index() {
@@ -94,6 +100,10 @@ public class HomeController {
 	@GetMapping("/main")
 	public String petopiaMain(Model model) {
 		model.addAttribute("HomeContent","fragments/viewMainContent");
+		List<CategoryVO> categoryList = this.categoryService.retrieveCategoryBoardList();
+		model.addAttribute("categoryBoardList", categoryList);
+		CategoryVO categoryVo = new CategoryVO();
+		model.addAttribute("categoryVo", categoryVo);
 		return "view/home/viewHomeTemplate";
 	}
 	
@@ -104,4 +114,10 @@ public class HomeController {
 		return "redirect:main";
 	}
 	
+	@GetMapping("/join1")
+	public String join(Model model) {
+		MemberVO mVo = new MemberVO(); //MemberVO라는 빈칸 양식 종이를 새로 가져올때마다 new 선언
+		model.addAttribute("mVo", mVo); //model은 우편부, addAttribute 누군가에게 붙여주는 행동, "member"는 member가 속한이름, member 우편물 내용
+		return "view/member/register"; // "view/member/register" 이 주소로 보낸다.
+	}
 }

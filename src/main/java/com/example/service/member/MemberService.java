@@ -7,7 +7,9 @@ import com.example.vo.paging.Criteria;
 
 public interface MemberService {
 	public void test();
+
 	public MemberVO login(String email, String password) throws Exception;
+
 	// 회원의 리스트 조회
     ArrayList<MemberVO> retrieveMemberList(Criteria crt) throws Exception;
     // 회원 총 수
@@ -30,4 +32,16 @@ public interface MemberService {
     void upMemberComms(int no);
     // 댓글 삭제 시 회원의 댓글 수 변동
     void downMemberComms(int no);
+
+	void registerMember(MemberVO mVo);
+
+	void modifyPassword(int memNo, String newPassword);
+
+	void modifyMember(int memberNo, String password);
+
+	boolean retrieveNickname(String nickname);
+
+	MemberVO retreiveMemberProfile(int member_no);
+
+	boolean retrieveEmail(String email);
 }
