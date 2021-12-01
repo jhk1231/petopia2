@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.example.dao.member.MemberDao;
+import com.example.mapper.member.GradeMapper;
 import com.example.mapper.member.MemberMapper;
-import com.example.service.member.MemberService;
+import com.example.vo.member.MemberVO;
 
 @SpringBootTest
 class PetopiaApplicationTests {
@@ -15,6 +15,9 @@ class PetopiaApplicationTests {
 //	private MemberService service;
 	@Autowired
 	private MemberMapper mapper;
+	
+	@Autowired
+	private GradeMapper gradeMapper;
 	
 	@Test
 	void mappertest() {
