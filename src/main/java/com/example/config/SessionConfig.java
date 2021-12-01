@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 
-@WebListener
+//@WebListener
 @Slf4j
 public class SessionConfig implements HttpSessionListener, HttpSessionAttributeListener {
 

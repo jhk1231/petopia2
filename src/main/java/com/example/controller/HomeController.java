@@ -30,7 +30,7 @@ public class HomeController {
 	@Autowired
 	private MemberService memberService;
 	
-	@GetMapping("/")
+	@GetMapping("/loginForm")
 	public String index() {
 		return "view/member/login";
 	}
