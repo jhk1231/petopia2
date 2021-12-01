@@ -3,10 +3,7 @@ package com.example.dao.member;
 import com.example.vo.member.MemberVO;
 
 import java.util.ArrayList;
-
-import org.springframework.stereotype.Repository;
-
-import com.example.vo.member.MemberVO;
+import java.util.HashMap;
 
 public interface MemberDao {
 	public void test();
@@ -45,9 +42,10 @@ public interface MemberDao {
 
 	// 회원 가입
 	void insertMember(MemberVO mVo);
-
+	void insertMemberNo(HashMap<String, Object> mVo);
+	
 	// 회원가입 시 이메일 중복확인
-	boolean selectEmail(String email);
+	String selectEmail(String email);
 
 	MemberVO selectMember(String email);
 

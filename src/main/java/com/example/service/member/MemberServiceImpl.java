@@ -1,6 +1,8 @@
 package com.example.service.member;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.dao.member.MemberDao;
@@ -91,7 +93,13 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override // 회원가입
 	public void registerMember(MemberVO mVo) {
-		this.memberDao.insertMember(mVo); //this를 적어주는 이유는 @Autowired 연결 선언해준 memberDao랑 같은 애라는걸 알려주려고 적는 거임 (얘가 얘다)
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		this.memberdao.insertMemberNo(map);
+		System.out.println(map.get("no"));
+		mVo.setNo((int)map.get("no"));
+		System.out.println((int)map.get("no"));
+		this.memberdao.insertMember(mVo); //this를 적어주는 이유는 @Autowired 연결 선언해준 memberDao랑 같은 애라는걸 알려주려고 적는 거임 (얘가 얘다)
+		
 	}
 
 	@Override
@@ -102,8 +110,13 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public boolean retrieveEmail(String email) {
-		// TODO Auto-generated method stub
-		return false;
+		String checkEmail = this.memberdao.selectEmail(email);
+		
+		if (checkEmail != null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override

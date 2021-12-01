@@ -17,7 +17,7 @@ import lombok.extern.java.Log;
 
 @Log
 public class LoginFilter implements Filter {
-	private static final String[] whitelist = {"/", "/login", "/logout"};
+	private static final String[] whitelist = {"/", "/login", "/logout","/join1", "/join"};
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
