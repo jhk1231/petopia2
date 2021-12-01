@@ -17,10 +17,14 @@
 						<strong th:text="${article.subject}"></strong></a></span>
 						<p th:text="${article.writeDate}"></p>
 					</div>
-					<!-- <div class="Empty" th:if="{image == null}"></div>
-						<a href="#"><span class="thumb"><img src="이미지 경로" alt=""></span><strong>이미지 제목</strong></a>
+					<!-- 썸네일 이미지가 없을 때 -->
+					<div class="Empty" th:if="{image == null}"></div>
+						<img th:src="|/thumbnailImages/noimage.png|">
+						<span class="thumb"><a th:href="|/detailArticle/${article.no}|">
+						<strong th:text="${article.subject}"></strong></a></span>
+						<p th:text="${article.writeDate}"></p>
 						<p>날짜</p>
-					</div> -->
+					</div>
 				</li>
 			</ui>
 		</div>

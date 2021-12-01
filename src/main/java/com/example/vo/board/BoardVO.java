@@ -17,7 +17,10 @@ import lombok.ToString;
 @ToString
 @Alias("boardVO")
 public class BoardVO {
-   private int categoryNo;
+   public BoardVO(int i, String string) {
+		// TODO Auto-generated constructor stub
+	}
+private int categoryNo;
    private int boardNo;
    private String boardName;
    private int boardkind; //게시판종류  / TINYINT / NotNull, default 0

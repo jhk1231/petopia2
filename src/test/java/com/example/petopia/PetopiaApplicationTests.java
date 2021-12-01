@@ -1,26 +1,21 @@
 package com.example.petopia;
 
+import javax.sql.DataSource;
 
-import java.util.ArrayList;
-
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.test.context.SpringBootTest;
 
-
-
+import com.example.mapper.board.ArticleMapper;
+import com.example.mapper.board.FileMapper;
+import com.example.mapper.board.ReplyMapper;
+import com.example.mapper.etc.DailyStatisticsMapper;
 import com.example.mapper.member.GradeMapper;
 import com.example.mapper.member.MemberMapper;
-import com.example.vo.member.MemberVO;
-
-import com.example.mapper.etc.DailyStatisticsMapper;
-import com.example.vo.etc.DailyStatisticsVO;
-
-
+import com.example.service.board.ArticleService;
+import com.example.service.board.ReplyService;
+import com.example.util.FileManager;
 
 import lombok.extern.slf4j.Slf4j;
-import net.minidev.json.JSONObject;
 
 @Slf4j
 @SpringBootTest
@@ -56,7 +51,7 @@ class PetopiaApplicationTests {
 		// assertNotNull(this.replyMapper);
 //		assertNotNull(this.articleService);
 //		assertNotNull(this.fileManager);
-	}
+//	}
 //	@Test
 //	void tt() {
 //		this.replyService.removeReply(65);
@@ -135,8 +130,6 @@ class PetopiaApplicationTests {
 //			
 //		}
 //	}
-	
-	
 
 //	@Test
 //	void tt() {
@@ -171,38 +164,36 @@ class PetopiaApplicationTests {
 //		}
 //		log.info(json.toString());
 //	}
-	
 
-	@Autowired
-	private DailyStatisticsMapper dailyMapper;
+//	@Autowired
+//	private DailyStatisticsMapper dailyMapper;
 
-	/*
-	 * @Test void mappertest() {
-	 * //System.out.println(service.login("admin@naver.com", "1111")); try {
-	 * System.out.println(mapper.selectMember_byIDPwd("123@naver.com", "1234")); }
-	 * catch (Exception e) { // TODO Auto-generated catch block e.printStackTrace();
-	 * } }
-	 */
+/*
+ * @Test void mappertest() {
+ * //System.out.println(service.login("admin@naver.com", "1111")); try {
+ * System.out.println(mapper.selectMember_byIDPwd("123@naver.com", "1234")); }
+ * catch (Exception e) { // TODO Auto-generated catch block e.printStackTrace();
+ * } }
+ */
 
-	/*
-	 * @Test void mappertest1() {
-	 * //System.out.println(service.login("admin@naver.com", "1111"));
-	 * 
-	 * try { DailyStatisticsVO dailyVo = dailyMapper.selectDaily(2);
-	 * dailyVo.setDailyDate((dailyVo.getDailyDate().split(" ")[0]));
-	 * System.out.println(dailyVo); } catch (Exception e) { // TODO Auto-generated
-	 * catch block e.printStackTrace(); } }
-	 */
-	/*
-	 * @Test void mappertest1() { //
-	 * System.out.println(service.login("admin@naver.com", "1111"));
-	 * 
-	 * ArrayList<DailyStatisticsVO> dailyVo = dailyMapper.selectList(); for
-	 * (DailyStatisticsVO dailyStatisticsVO : dailyVo) {
-	 * dailyStatisticsVO.setDailyDate((dailyStatisticsVO.getDailyDate().split(" ")[0
-	 * ]));
-	 * 
-	 * } System.out.println(dailyVo); }
-	 */
-
+/*
+ * @Test void mappertest1() {
+ * //System.out.println(service.login("admin@naver.com", "1111"));
+ * 
+ * try { DailyStatisticsVO dailyVo = dailyMapper.selectDaily(2);
+ * dailyVo.setDailyDate((dailyVo.getDailyDate().split(" ")[0]));
+ * System.out.println(dailyVo); } catch (Exception e) { // TODO Auto-generated
+ * catch block e.printStackTrace(); } }
+ */
+/*
+ * @Test void mappertest1() { //
+ * System.out.println(service.login("admin@naver.com", "1111"));
+ * 
+ * ArrayList<DailyStatisticsVO> dailyVo = dailyMapper.selectList(); for
+ * (DailyStatisticsVO dailyStatisticsVO : dailyVo) {
+ * dailyStatisticsVO.setDailyDate((dailyStatisticsVO.getDailyDate().split(" ")[0
+ * ]));
+ * 
+ * } System.out.println(dailyVo); }
+ */
 }

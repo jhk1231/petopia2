@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.service.board.ArticleService;
@@ -83,14 +82,14 @@ public class ArticleController {
 		// view
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("articleVO", articleVO);
-		model.addAttribute("gradeNo", member.getGrade()); // 나중에 seesion member에 접근해서 grade_no 받아올 것
+		model.addAttribute("gradeNo", member.getGradeNo()); // 나중에 seesion member에 접근해서 grade_no 받아올 것
 		model.addAttribute("HomeContent", "/view/board/writeArticleForm");
 		return "view/home/viewHomeTemplate";
 	}
 
 	@GetMapping("/updateArticleForm/{articleNo}")
 	public String writeForm(@PathVariable int articleNo, HttpServletRequest req, Model model) {
-		log.info("updateForm articleNo: " + articleNo);
+//		log.info("updateForm articleNo: " + articleNo);
 		ArticleVO article = this.articleService.retrieveArticle(articleNo); // 게시글 정보 가져오기
 		// create
 		HttpSession session = req.getSession();
@@ -160,7 +159,7 @@ public class ArticleController {
 		model.addAttribute("boardName", boardNo); // 차후 이름으로 변경할것
 		model.addAttribute("articles", articles); // 게시글 정보 전송
 		// view
-//		int boardkind = 0; // 0 nomal, 1: thumbnail, 2: note
+		boardkind = 0; // 0 nomal, 1: thumbnail, 2: note
 		model.addAttribute("boardkind", boardkind); // 게시글 유형
 		return "/view/home/viewBoardTemplate";
 	}
