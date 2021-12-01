@@ -13,9 +13,16 @@
 
 	<link th:href="@{../css/homeContentsStyle.css}" rel="stylesheet" />
 
-	<script
-		th:src="@{../js/all.min.js}"
-		th:crossorigin="anonymous"></script>
+	<link th:href="@{../css/StatisticsStyle.css}" rel="stylesheet" />
+
+	<link rel="stylesheet"
+		href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+		crossorigin="anonymous">
+	<!-- 차트 링크 -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+	<script th:src="@{../js/all.min.js}" th:crossorigin="anonymous"></script>
 </th:block>
 
 <body class="sb-nav-fixed">
@@ -37,17 +44,13 @@
 		th:include="@{/fragments/viewFrameFooter}"></th:block>
 
 	<!-- Script -->
-	<script
-		th:src="@{../js/bootstrap.bundle.min.js}"
+	<script th:src="@{../js/bootstrap.bundle.min.js}"
 		th:crossorigin="anonymous"></script>
 	<script th:src="@{../js/scripts.js}"></script>
-	<script
-		th:src="@{../js/Chart.min.js}"
-		th:crossorigin="anonymous"></script>
+	<script th:src="@{../js/Chart.min.js}" th:crossorigin="anonymous"></script>
 	<script th:src="@{../js/chart-area-demo.js}"></script>
 	<script th:src="@{../js/chart-bar-demo.js}"></script>
-	<script
-		th:src="@{../js/simple-datatables@latest.js}"
+	<script th:src="@{../js/simple-datatables@latest.js}"
 		th:crossorigin="anonymous"></script>
 	<script th:src="@{../js/datatables-simple-demo.js}"></script>
 
