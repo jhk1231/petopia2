@@ -12,6 +12,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -24,13 +26,13 @@ import lombok.extern.slf4j.Slf4j;
 @MapperScan(basePackages = "com.example.mapper")
 public class DataSourceConfig {
 	
+		@Autowired
 		private ApplicationContext applicationContext;
 		
-		@Autowired
-		public DataSourceConfig(ApplicationContext applicationContext) {
-			this.applicationContext = applicationContext;
-		}
-		
+//		@Bean
+//		public PlatformTransactionManager transactionManager() throws Exception{
+//			return new DataSourceTransactionManager(dataSoruce());
+//		}
 		
 		@Bean
 		@ConfigurationProperties(prefix="spring.datasource.hikari")

@@ -1,10 +1,79 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script>
+	function sendData() {
+		var keyfield = $("#keyfield option:selected").val();
+		var keyword = $("#keyword").val()
+
+		if(keyword.trim() == "") {
+			alert("검색어를 입력해주세요.");
+			return;
+		}
+
+		$.ajax({
+			url : "${/members}",
+			method : "POST",
+			dataType :"json",
+			data : {
+				keyfield : keyfield,
+				keyword : keyword
+			},
+
+			success : function(data) {
+				$("#memberBody").replaceWith(data);
+			},
+			error : function(err) {
+				console.log(err);
+			}
+		});
+	}
+</script>
 </head>
 <body>
+	<div id="search">
+		<select name="" id="keyfield">
+			<option value="email">ID</option>
+			<option value="gradeNo">등급</option>
+		</select>
+		<input type="text" id="keyword">
+	</div>
+	<button type="button" id="searchBtn" onclick="sendData">검색</button>
+	<table>
+		<thead>
+			<tr>
+				<th>NO</th>
+				<th>ID</th>
+				<th>등급</th>
+				<th>가입 날짜</th>
+				<th>방문 횟수</th>
+				<th>비고</th>
+			</tr>
+		</thead>
+
+		<tbody th:each="member : ${lst}" id="memberBody">
+			<tr th:object="${member}">
+				<td th:text="*{no}"></td>
+				<td><a th:href="@{/members/{no}(no=${member.no})}" th:text="*{email}"></a></td>
+				<td th:text="*{grade}"></td>
+				<td th:text="*{regDate}"></td>
+				<td th:text="*{visits}"></td>
+				<td th:text="*{ban}"></td>
+			</tr>
+		</tbody>
+	</table>
+	<ul id = "paging" th:object="${paging}">
+		<li th:if="*{prev == true}"><a th:href="@{/members(currentPageNo=1)}">&laquo;</a></li>
+		<li th:if="*{prev == true}"><a th:href="@{/members(currentPageNo=*{startPage-1})}">&lsquo;</a></li>
+		<li th:each="i : *{#numbers.sequence(startPage, endPage)}"><a th:href="@{/members(currentPageNo=${i})}" th:text="${i}"></a></li>
+		<li th:if="*{next == true}"><a th:href="@{/members(currentPageNo=*{endPage+1})}">&rsquo;</a></li>
+		<li th:if="*{next == true}"><a th:href="@{/members(currentPageNo=*{endNumber})}">&raquo;</a></li>
+	</ul>
 
 </body>
 </html>

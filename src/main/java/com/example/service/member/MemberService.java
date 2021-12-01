@@ -3,6 +3,7 @@ package com.example.service.member;
 import java.util.ArrayList;
 
 import com.example.vo.member.MemberVO;
+import com.example.vo.paging.Criteria;
 
 public interface MemberService {
 	public void test();
@@ -55,5 +56,4 @@ public interface MemberService {
 	void modifyMember(int memberNo, String password);
 
 	boolean retrieveNickname(String nickname);
-
 }
