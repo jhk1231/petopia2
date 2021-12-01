@@ -12,7 +12,6 @@ import com.example.vo.board.CategoryBoardVO;
 import com.example.vo.board.CategoryVO;
 
 
-
 @Repository("categoryDao")
 public class CategoryDaoImpl implements CategoryDao {
 
@@ -26,6 +25,7 @@ public class CategoryDaoImpl implements CategoryDao {
 
 	@Override
 	public void updateCategory(int categoryNo, String categoryName) {
+		System.out.println("Dao ---------------- " + categoryNo + " " + categoryName);
 		this.categoryMapper.updateCategory(categoryNo, categoryName);	
 	}
 	
@@ -41,9 +41,21 @@ public class CategoryDaoImpl implements CategoryDao {
 	}
 
 	@Override
+	public ArrayList<CategoryVO> selectCategoryList() {
+		ArrayList<CategoryVO> categoryList = this.categoryMapper.selectCategoryList();
+		return categoryList;
+	}
+	
+	//카테고리 + 게시판 목록 조회
+	@Override
+	public ArrayList<CategoryBoardVO> selectCategoryBoardList() {
+		ArrayList<CategoryBoardVO> categoryBoardList = this.categoryMapper.selectCategoryBoardList();
+		return categoryBoardList;
+	}
+	
+	@Override
 	public CategoryVO selectOneCategory(int categoryNo) {
 		CategoryVO categoryVo = this.categoryMapper.selectOneCategory(categoryNo);
-		System.out.println(categoryVo.toString() + "--------------------------------------Dao");
 		return categoryVo; //categoryList[], boardList[]까지 불러옴.. 아니 NonNull 줬잖아 
 	}
 
@@ -53,17 +65,7 @@ public class CategoryDaoImpl implements CategoryDao {
 		return checkDuplicateCategory;
 	}
 
-//	@Override
-//	public ArrayList<CategoryVO> selectCategoryList() {
-//		ArrayList<CategoryVO> categoryList = this.categoryMapper.selectCategoryList();
-//		return categoryList;
-//	}
 
-//	@Override
-//	public void selectCategoryList(Map map) {
-//		List<CategoryBoardVO> list = this.categoryMapper.selectCategoryBoardList();
-//		
-//	}
 
 
 }

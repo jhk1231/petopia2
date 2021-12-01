@@ -1,6 +1,7 @@
 package com.example.dao.board;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -9,6 +10,7 @@ import com.example.mapper.board.BoardMapper;
 import com.example.vo.board.BoardBoardGradeVO;
 import com.example.vo.board.BoardGradeVO;
 import com.example.vo.board.BoardVO;
+import com.example.vo.board.CategoryBoardVO;
 
 @Repository("boardDao")
 public class BoardDaoImpl implements BoardDao {
@@ -20,7 +22,6 @@ public class BoardDaoImpl implements BoardDao {
 	@Override
 	public void insertBoard(BoardVO boardVo) {
 		this.boardMapper.insertBoard(boardVo);
-		System.out.println(boardVo.toString() + "---------------------Dao insertBoard");
 	}
 
 	@Override
@@ -32,9 +33,14 @@ public class BoardDaoImpl implements BoardDao {
 	@Override
 	public void insertBoardGrade(BoardGradeVO boardGradeVo) {
 		this.boardMapper.insertBoardGrade(boardGradeVo);		
-		System.out.println(boardGradeVo.toString() + "---------------------Dao insertBoardGrade");
 	}
 
+	//게시판 종류 조회
+	@Override
+	public List<BoardVO> selectBoardkind() {
+		List<BoardVO> boardkindList = this.boardMapper.selectBoardkind();
+		return boardkindList;
+	}
 	
 	//연결된 게시글 조회
 	@Override
@@ -100,6 +106,9 @@ public class BoardDaoImpl implements BoardDao {
 		//System.out.println("Dao-------------------" + favoriteList);
 		return favoriteList;
 	}
+
+
+
 
 
 

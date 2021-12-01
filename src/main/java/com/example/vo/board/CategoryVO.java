@@ -1,14 +1,13 @@
 package com.example.vo.board;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.type.Alias;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -22,11 +21,11 @@ import lombok.ToString;
 public class CategoryVO {
 	private int categoryNo;
 	private String categoryName;
-	//private ArrayList<CategoryVO> categoryList = new ArrayList<>();
-	//private ArrayList<BoardVO> boardList = new ArrayList<>();
 	
+	private List<CategoryVO> categoryList = new ArrayList<>();
+	private List<BoardVO> boardList = new ArrayList<>();
 	
-	
-
-	
+	public void addBoardList(BoardVO board) {
+		this.boardList.add(board);
+	}
 }

@@ -2,6 +2,7 @@ package com.example.dao.board;
 
 import java.util.ArrayList;
 
+import com.example.vo.board.CategoryBoardVO;
 import com.example.vo.board.CategoryVO;
 
 public interface CategoryDao {
@@ -14,11 +15,14 @@ public interface CategoryDao {
 	
 	public void deleteCategory(int categoryNo);
 	
+	public ArrayList<CategoryVO> selectCategoryList();
+	
+	public ArrayList<CategoryBoardVO> selectCategoryBoardList();
+	
 	public CategoryVO selectOneCategory(int categoryNo);
 	
 	public int selectDuplicateCategory(String categoryName);
 	
-//	public ArrayList<CategoryVO> selectCategoryList();
 
-//	public CategoryBoardVO 
+
 }

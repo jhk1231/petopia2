@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.example.vo.board.BoardBoardGradeVO;
 import com.example.vo.board.BoardGradeVO;
 import com.example.vo.board.BoardVO;
+import com.example.vo.board.CategoryBoardVO;
 
 
 @Mapper
@@ -19,6 +20,9 @@ public interface BoardMapper {
 	public int selectLastInsertBoardNo();
 	
 	public void insertBoardGrade(BoardGradeVO boardGradeVo);
+	
+	//게시판 종류 조회
+	public List<BoardVO> selectBoardkind();
 	
 	//연결된 게시글 조회
 	public int selectConnectArticle(int boardNo);

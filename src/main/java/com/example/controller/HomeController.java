@@ -3,6 +3,7 @@ package com.example.controller;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.config.SessionConfig;
+import com.example.service.board.CategoryService;
 import com.example.service.member.MemberService;
+import com.example.vo.board.CategoryVO;
 import com.example.vo.member.MemberVO;
 
 import lombok.extern.java.Log;
@@ -29,6 +32,9 @@ public class HomeController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private CategoryService categoryService;
 	
 	@GetMapping("/")
 	public String index() {
@@ -82,9 +88,29 @@ public class HomeController {
 		return map;
 	}
 	
+//	@GetMapping("/main")
+//	public String petopiaMain(Model model) {
+//		model.addAttribute("HomeContent","fragments/viewMainContent");
+//
+////		List<CategoryVO> categoryList = this.categoryService.retrieveCategoryBoardList();
+////		model.addAttribute("categoryBoardList", categoryList);
+////		model.addAttribute("HomeNav", "fragments/categoryBoardListContent");
+////			//카테고리 추가
+////		CategoryVO categoryVo = new CategoryVO();
+////		model.addAttribute("categoryVo", categoryVo);
+//		
+//		return "view/home/viewHomeTemplate";
+//		
+//	}
+//
+	
 	@GetMapping("/main")
 	public String petopiaMain(Model model) {
 		model.addAttribute("HomeContent","fragments/viewMainContent");
+		List<CategoryVO> categoryList = this.categoryService.retrieveCategoryBoardList();
+		model.addAttribute("categoryBoardList", categoryList);
+		CategoryVO categoryVo = new CategoryVO();
+		model.addAttribute("categoryVo", categoryVo);
 		return "view/home/viewHomeTemplate";
 	}
 	
@@ -94,5 +120,7 @@ public class HomeController {
 		
 		return "redirect:main";
 	}
+	
+
 	
 }
