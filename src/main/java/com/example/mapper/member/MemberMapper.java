@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import com.example.paging.Criteria;
 import com.example.vo.member.MemberVO;
-import com.example.vo.paging.Criteria;
 
 @Repository("memberMapper")
 @Mapper
@@ -15,7 +14,6 @@ public interface MemberMapper {
 	public MemberVO selectMember_byIDPwd(String email, String password) throws Exception;
 
 	public void updateLastDdate(int no) throws Exception;
-<
 
 	public MemberVO test();
 	
