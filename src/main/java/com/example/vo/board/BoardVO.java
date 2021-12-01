@@ -37,7 +37,5 @@ public class BoardVO {
 		this.boardName = boardName;
 		this.boardkind = boardkind;
 	}
-	
-	
-	
 }
+

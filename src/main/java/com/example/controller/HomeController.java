@@ -41,6 +41,12 @@ public class HomeController {
 		return "view/member/login";
 	}
 	
+	@GetMapping("/ga")
+	public String iid() {
+		return "vlew/home/asdmsadpo";
+	}
+	
+	
 	@ResponseBody
 	@PostMapping("/login")
 	public Map<String, String> login(MemberVO user, HttpSession session) {
@@ -53,7 +59,6 @@ public class HomeController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		int resultType = 0;
 		String failText = "";
 		if( user == null ) {
@@ -69,7 +74,11 @@ public class HomeController {
 		} else if( user.getIsMember() == 1) {
 			resultType = 3;
 			failText = "탈퇴한 회원입니다.";
-		} else {
+		}  else if( user.getIsMember() == 2) {
+			resultType = 4;
+			failText = "강제 탈퇴 당한 회원입니다.";
+		}
+		else {
 			resultType = 1;
 			failText = "로그인에 성공했습니다.";
 			
@@ -88,22 +97,6 @@ public class HomeController {
 		return map;
 	}
 	
-//	@GetMapping("/main")
-//	public String petopiaMain(Model model) {
-//		model.addAttribute("HomeContent","fragments/viewMainContent");
-//
-////		List<CategoryVO> categoryList = this.categoryService.retrieveCategoryBoardList();
-////		model.addAttribute("categoryBoardList", categoryList);
-////		model.addAttribute("HomeNav", "fragments/categoryBoardListContent");
-////			//카테고리 추가
-////		CategoryVO categoryVo = new CategoryVO();
-////		model.addAttribute("categoryVo", categoryVo);
-//		
-//		return "view/home/viewHomeTemplate";
-//		
-//	}
-//
-	
 	@GetMapping("/main")
 	public String petopiaMain(Model model) {
 		model.addAttribute("HomeContent","fragments/viewMainContent");
@@ -121,6 +114,10 @@ public class HomeController {
 		return "redirect:main";
 	}
 	
-
-	
+	@GetMapping("/join1")
+	public String join(Model model) {
+		MemberVO mVo = new MemberVO(); //MemberVO라는 빈칸 양식 종이를 새로 가져올때마다 new 선언
+		model.addAttribute("mVo", mVo); //model은 우편부, addAttribute 누군가에게 붙여주는 행동, "member"는 member가 속한이름, member 우편물 내용
+		return "view/member/register"; // "view/member/register" 이 주소로 보낸다.
+	}
 }
