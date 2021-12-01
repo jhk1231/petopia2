@@ -53,7 +53,6 @@ public class HomeController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		int resultType = 0;
 		String failText = "";
 		if( user == null ) {
@@ -69,7 +68,11 @@ public class HomeController {
 		} else if( user.getIsMember() == 1) {
 			resultType = 3;
 			failText = "탈퇴한 회원입니다.";
-		} else {
+		}  else if( user.getIsMember() == 2) {
+			resultType = 4;
+			failText = "강제 탈퇴 당한 회원입니다.";
+		}
+		else {
 			resultType = 1;
 			failText = "로그인에 성공했습니다.";
 			

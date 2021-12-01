@@ -1,5 +1,9 @@
 package com.example.vo.board;
 
+import java.util.ArrayList;
+
+import org.apache.ibatis.type.Alias;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,22 +12,20 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Alias("boardVO")
 public class BoardVO {
-	
-	private int categoryNo; //카테고리번호
-	private int boardNo; //게시판 번호
-	private String boardName; //게시판 이름
-	private int boardkind; //게시판종류
-	
-	// writeForm 게시판 목록 출력용
-	public BoardVO(int boardNo, String boardName) {
-		super();
-		this.boardNo = boardNo;
-		this.boardName = boardName;
-	}
-	
-	
+   private int categoryNo;
+   private int boardNo;
+   private String boardName;
+   private int boardkind; //게시판종류  / TINYINT / NotNull, default 0
+   
+   private int favoriateNo;
+   private int no;
+   
+   
+   
 }
+
