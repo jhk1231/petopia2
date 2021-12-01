@@ -5,13 +5,13 @@ import org.apache.ibatis.type.Alias;
 import lombok.AllArgsConstructor;
 
 import lombok.Data;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 //@Data
 @Getter
@@ -22,7 +22,7 @@ import lombok.ToString;
 @RequiredArgsConstructor
 //@ToString
 @Alias("memberVo")
-public class MemberVO {
+public class MemberVO{
     private @NonNull int no;
     private @NonNull String email;
     private String password;
@@ -42,15 +42,13 @@ public class MemberVO {
 		this.email = email;
 		this.password = password;
 	}
-  
-
-	public MemberVO(int no, String email, int gradeNo, String nickname, String regDate, String lastDate, int docs, int comms,
+	
+	public MemberVO(int no, String email, String grade, String nickname, String regDate, String lastDate, int docs, int comms,
 			int visits, String ban, int isMember) {
-
 		super();
 		this.no = no;
 		this.email = email;
-		this.gradeNo = gradeNo;
+		this.grade = grade;
 		this.nickname = nickname;
 		this.regDate = regDate;
 		this.lastDate = lastDate;
@@ -66,6 +64,4 @@ public class MemberVO {
 		// TODO Auto-generated method stub
 		return no + "," + email + "," + nickname + "," + lastDate + "," + grade + "," + visits + "," + ban;
 	}
-    
 }
-

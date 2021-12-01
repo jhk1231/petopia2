@@ -1,10 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
+
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- 
 <mapper namespace="com.example.mapper.member.MemberMapper">
-    <resultMap type="memberVo" id="detailInfoByManager">
+
+	<resultMap type="memberVo" id="detailInfoByManager">
 		<result property="no" javaType="int" column="member_no" jdbcType="INTEGER"/>
 		<result property="email" javaType="string" column="email" jdbcType="VARCHAR"/>
 		<result property="grade" javaType="string" column="name" jdbcType="VARCHAR"/>
@@ -27,20 +28,14 @@
 		<result property="ban" javaType="string" column="ban" jdbcType="VARCHAR"/>
 	</resultMap>
 	
-    <select id="selectMember_byIDPwd" parameterType="String" resultType="memberVo" resultMap="detailInfoByManager">
-        <!-- SELECT member.member_no, email, nickname -->
-        SELECT member_no, email, name, nickname, regdate, lastdate, M.docs, M.comms, visits, ban, ismember
+	<select id="selectMemberList" parameterType="criteria" resultType="memberVo" resultMap="briefMemberInfo">
+		SELECT member_no,email, name, regdate, visits, ban
 		FROM member M RIGHT JOIN grade G
 		ON M.grade_no = G.grade_no
-        WHERE email=#{email} AND password=#{password}
-    </select>
-    
-    <update id = "updateLastDdate" parameterType = "int">
-	    UPDATE Member 
-	    SET lastdate = CURRENT_TIMESTAMP 
-	    WHERE member_no = #{no}
-    </update>
-    
+		WHERE member_no > 0
+		ORDER BY member_no ASC, ismember ASC
+		LIMIT #{pageStart}, #{dataPerPage}
+	</select>
 	
 	<select id="selectTotalMember" resultType="int">
 		SELECT COUNT(*)
@@ -100,5 +95,19 @@
     	UPDATE member
     	SET comms = comms - 1
     	WHERE member_no = #{no};
+    </update>
+
+    <select id="selectMember_byIDPwd" parameterType="String" resultType="memberVo" resultMap="detailInfoByManager">
+        <!-- SELECT member.member_no, email, nickname -->
+        SELECT member_no, email, name, nickname, regdate, lastdate, M.docs, M.comms, visits, ban, ismember
+		FROM member M RIGHT JOIN grade G
+		ON M.grade_no = G.grade_no
+        WHERE email=#{email} AND password=#{password}
+    </select>
+    
+    <update id = "updateLastDdate" parameterType = "int">
+	    UPDATE Member 
+	    SET lastdate = CURRENT_TIMESTAMP 
+	    WHERE member_no = #{no}
     </update>
 </mapper>

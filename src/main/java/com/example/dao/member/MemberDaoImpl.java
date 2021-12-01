@@ -13,9 +13,8 @@ import lombok.extern.java.Log;
 @Repository("memberDao")
 @Log
 public class MemberDaoImpl implements MemberDao {
-	@Autowired
-	private SqlSession sqlSession;
-  
+
+	@Autowired private SqlSession sqlSession;
 	@Autowired
 	private MemberMapper mapper;
 	
@@ -66,38 +65,14 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public void updateBan(String banSelect, int no) {
+	public ArrayList<MemberVO> selectSearchMember(int startRow, int memberPerPage, String keyfield, String keyword) {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 	@Override
-	public void updateMemberByForce(int no) {
+	public int selectTotalSearchMember(String keyfield, String keyword) {
 		// TODO Auto-generated method stub
-
+		return 0;
 	}
-
-	@Override
-	public void plusMemberDocs(int no) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void minusMemberDocs(int no) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void plusMemberComms(int no) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void minusMemberComms(int no) {
-		// TODO Auto-generated method stub
-  }
-
 }

@@ -47,7 +47,6 @@ public class HomeController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		int resultType = 0;
 		String failText = "";
 		if( user == null ) {
