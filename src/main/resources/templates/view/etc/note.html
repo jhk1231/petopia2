@@ -3,61 +3,82 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script> 
+<script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
+
+<link th:href="@{css/bootstrap.min.css}" rel="stylesheet"
+	type="text/css" />
+<link th:href="@{css/theme_styles.css}" rel="stylesheet" type="text/css" />
+<link th:href="@{css/noteStyle.css}" rel="stylesheet" type="text/css" />
+
+
 </head>
 <body>
-	<span onclick="location.href='/main'">페토피아로 돌아가기</span>
-	<div class="note-header-style">
-	<span onclick="location.href='/notelist?isRecieve=1'">받은쪽지함</span>
-	<span onclick="location.href='/notelist?isRecieve=0'">보낸쪽지함</span>
-	</div>
-	<table class="note-table-style">
-		<thead>
-			<tr class="note-table-tr-style">
-				<th>번호</th>
-				<th th:if="${isRecieve} == 1">보낸사람</th>
-				<th th:if="${isRecieve} == 0">받은사람</th>
-				<th>내용</th>
-				<th>보낸날짜</th>
-				<th>읽은날짜</th>
-				<!-- <th>선택</th> -->
-			</tr>
-		</thead>
 
-		<tbody th:if = "${notelist} != null">
-		<form id = "deleteForm" action = "/deletenote" method = "POST">
-		<input type="hidden" id="isRecieve" name="isRecieve" th:value="${ isRecieve }"/>
-		<tr th:each = "note : ${notelist}"> 
-			<td th:text="${note.note_no}"></td>
-			<td th:text="${note.counterpart_nickname}"></td>
-			<td><a th:href="@{/notedetail(isRecieve=${isRecieve}, noteContentNo=${note.notecontent_no}, noteNo=${note.note_no})}"><span th:text="${note.content}"></span></a></td>
-			<td th:text="${note.sendDate}"></td>
-			<td th:if ="${note.read}" th:text="${note.readDate}"></td>
-			<td th:if ="${note.read} == false">읽지않음</td>
-			<td>
-			<input type="checkbox" name="deleteNote" th:value="${ note.notecontent_no }">
-			</td>
-		</tr>
-		 </form>
-		</tbody>
-		<tbody th:if = "${#lists.size(notelist)} == 0">
-			<tr><th>쪽지가 없습니다.</th></tr>
-		</tbody>
-	</table>
-	<button type = "submit" id = "delete">삭제</button>
+	<div class="note-header-back">
+		<span onclick="location.href='/main'">페토피아로 돌아가기</span>
+	</div>
+
+	<div class="note-header-style">
+		<span onclick="location.href='/notelist?isRecieve=1'">받은쪽지함</span> <span
+			onclick="location.href='/notelist?isRecieve=0'">보낸쪽지함</span>
+	</div>
+
+	<div class="note-contents-style">
+		<table class="note-table-style">
+			<thead>
+				<tr class="note-table-tr-style">
+					<th>번호</th>
+					<th th:if="${isRecieve} == 1">보낸사람</th>
+					<th th:if="${isRecieve} == 0">받은사람</th>
+					<th>내용</th>
+					<th>보낸날짜</th>
+					<th>읽은날짜</th>
+					<th></th>
+				</tr>
+			</thead>
+
+			<tbody th:if="${notelist} != null">
+				<form id="deleteForm" action="/deletenote" method="POST">
+					<input type="hidden" id="isRecieve" name="isRecieve"
+						th:value="${ isRecieve }" />
+					<tr th:each="note : ${notelist}">
+						<td th:text="${note.note_no}"></td>
+						<td th:text="${note.counterpart_nickname}"></td>
+						<td><a
+							th:href="@{/notedetail(isRecieve=${isRecieve}, noteContentNo=${note.notecontent_no}, noteNo=${note.note_no})}"><span
+								th:text="${note.content}"></span></a></td>
+						<td th:text="${note.sendDate}"></td>
+						<td th:if="${note.read}" th:text="${note.readDate}"></td>
+						<td th:if="${note.read} == false">읽지않음</td>
+						<td><input type="checkbox" name="deleteNote"
+							th:value="${ note.notecontent_no }"></td>
+					</tr>
+				</form>
+			</tbody>
+			<tbody th:if="${#lists.size(notelist)} == 0">
+				<tr>
+					<th>쪽지가 없습니다.</th>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<button type="submit" id="delete" class="note-del-style">삭제</button>
 	<br>
-	<span th:if="${startPage} > ${pageBlock}">
-		<a th:href="@{/notelist(isRecieve=${isRecieve}, currentPage=${startPage - pageBlock})}">[PREV]</a>
-	</span> 
-	<th:block th:each="pageNo : *{#numbers.sequence(startPage, endPage)}">
-		<span th:if="${pageNo == currentPage}" th:text="${pageNo}"></span>
-		<a th:if="${pageNo != currentPage}" th:text="${pageNo}" th:href="@{/notelist(isRecieve=${isRecieve}, currentPage=${pageNo})}"></a>
-	</th:block> 
-	
-	<span th:if="${endPage} < ${totalPage}">
-	<a th:href="@{/notelist(isRecieve=${isRecieve}, currentPage=${endPage + 1})}">[NEXT]</a>
-	</span> 
-<!-- 	
+	<div class="note-paging-style">
+		<span th:if="${startPage} > ${pageBlock}"> <a
+			th:href="@{/notelist(isRecieve=${isRecieve}, currentPage=${startPage - pageBlock})}">[PREV]</a>
+		</span>
+		<th:block th:each="pageNo : *{#numbers.sequence(startPage, endPage)}">
+			<span th:if="${pageNo == currentPage}" th:text="${pageNo}"></span>
+			<a th:if="${pageNo != currentPage}" th:text="${pageNo}"
+				th:href="@{/notelist(isRecieve=${isRecieve}, currentPage=${pageNo})}"></a>
+		</th:block>
+
+		<span th:if="${endPage} < ${totalPage}"> <a
+			th:href="@{/notelist(isRecieve=${isRecieve}, currentPage=${endPage + 1})}">[NEXT]</a>
+		</span>
+	</div>
+	<!-- 	
 	<p>스타트 페이지 : ${ pageScope.startPage }</p>
 	<p>엔드 페이지 : ${ pageScope.endPage }</p> -->
 	<!-- <c:if test="${startPage > pageBlock }">
@@ -89,8 +110,8 @@
 	</c:if> -->
 
 	<script>
-		$('#delete').on('click', function(event) {	
-			if( $("input[name=deleteNote]:checked").length <= 0 )
+		$('#delete').on('click', function(event) {
+			if ($("input[name=deleteNote]:checked").length <= 0)
 				alert("삭제할 쪽지를 선택해주세요.");
 			else
 				$("#deleteForm").submit();
