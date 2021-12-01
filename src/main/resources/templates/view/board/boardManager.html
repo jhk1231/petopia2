@@ -1,0 +1,194 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+
+<div id="layoutSidenav_content">
+	<main>
+		<div class="container-fluid px-4">
+
+			<div class="row mt-3 mb-5">
+			
+			
+				<!-- 관리버튼 -->
+				<div class="btns">
+					<div>
+						<!-- <input value="카테고리추가" type="button" onclick="addCategory()" id="addCategory"> -->
+						<button type="button" onclick="addCategory()" id="addCategoryBtn" >카테고리</button>
+					</div>
+					<div>
+						<button type="button" onclick="addBoard()"  id="addBoardBtn">게시판</button>
+					</div>
+				</div>
+
+				<!-- 카테고리 + 게시판 리스트 -->
+				<!-- https://github.com/Fidget278/petopia/blob/develop/WebContent/viewDetailArticleContent.jsp
+				342 -->
+				<div id="categoryBoardList">
+					<table>
+						<th:block th:each="category : ${categoryBoardList}">
+							<tr th:id="${category.getCategoryNo()}">
+								<td th:onclick="modifyCategory(this)">
+									<div th:text="${category.getCategoryName()}"></div>
+								</td>
+							</tr>
+							<th:block th:if="${category.getBoardList() != null}">
+								<th:block th:each="board : ${category.boardList}">
+									<tr>
+										<td><div th:text="${board.boardName}"></div></td>
+									</tr>
+								</th:block>
+							</th:block>
+						</th:block>
+					</table>
+				</div>
+
+
+				<!-- 빈페이지 -->
+				<div id="Blank">
+				</div>
+
+				<!-- 카테고리 추가 -->
+ 				<div id="writeCategory" style="display: none;">
+					<form th:action="@{/writeCategory}" th:object="${categoryVo}" method="post" >
+						<input type="text" th:field="*{categoryName}" placeholder="카테고리 이름" >
+	 					<div>
+							<button type="reset"> 취소 </button>
+							<button type="submit"> 저장 </button>
+						</div>
+					</form>
+				</div>
+
+				<!-- 카테고리 수정 -->				
+				<div id="modifyCategory" style="display: none;">
+					<form th:action="@{/modifyCategory}" th:object="${categoryVo}" method="post">
+						<input id="categoryName" type="text" th:field="*{categoryName}">
+						<input id="categoryNo" type="hidden" th:field="*{categoryNo}">
+						<div>
+							<button type="button" id="removeCategoryBtn" name=""> 삭제 </button>
+							<button type="reset"> 취소 </button>
+							<button type="submit"> 저장 </button>
+						</div>
+					</form>
+				</div>
+				
+
+<!--   				게시판 추가
+ 				<div id="writeBoard" >
+					<form th:action="@{/writeBoard}" th:object="${boardBoardGradeVo}" method="post" >
+ 					 	카테고리 : <div id="selectCategoryForBoard"></div>
+		
+ 						게시판 : <input type="text" th:field="$*{boardVO.getBoardName()}" placeholder="게시판 이름" ><br>
+						
+						읽기 등급 : <div id="selectReadGrade" ></div>
+
+						쓰기 등급 : <div id="selectWriteGrade" ></div>
+
+						게시판 종류 : <div id="selectboardkind"></div>
+
+	 					<div>
+							<button type="reset"> 취소 </button>
+							<button type="submit"> 저장 </button>
+						</div>
+					</form>
+				</div>
+  -->
+				
+				<!-- 게시판 수정 -->
+				<!-- https://mingggu.tistory.com/118 -->
+				
+			</div>
+		</div>
+	</main>
+
+	<!-- ajax -->
+
+ 	<script th:src="@{../js/jquery-3.6.0.min.js}"></script>
+	<script type="text/javascript" th:inline="javascript">
+	
+	//카테고리 추가
+ 	function addCategory() {
+		
+ 		$('#modifyCategory').hide();
+		$('#writeCategory').appendTo('#Blank');		
+		$('#writeCategory').show();
+	};		
+	
+
+	//카테고리 수정
+	function modifyCategory(e) {
+		console.log($(e).closest("tr").attr("id")); //가장 가까운 부모인 "tr"의 "id" 갖고 오기
+		console.log($(e).text());
+
+
+
+		$('#writeCategory').hide();
+		$('#modifyCategory').appendTo('#Blank');
+		$('#modifyCategory').show(); 
+
+		$('#categoryNo').val($(e).closest("tr").attr("id"));
+	}
+	
+	//카테고리 삭제
+	
+	
+	//게시판 추가
+	//컨트롤러 접근해서 값 받아올 ajax
+
+/*  		function selectList() {
+
+			$.ajax({
+				url : "/selectList",
+				type : "POST",
+
+				success : function(data) {
+					alert("!!!");
+					resolve(data);
+				},
+				error : function() {
+					alert("error!");
+				}
+			});
+		}
+
+		function addBoard() {
+
+			$('#modifyCategory').hide();
+			$('#writeCategory').hide();
+			$('#writeBoard').appendTo('#Blank');
+			$('#writeBoard').show();
+			
+			//함수 호출?
+			let list = selectList();
+
+			//id writeBoard 인 곳에 list에 담긴 값 전달
+			$("#writeBoard").html("");
+
+			for (let i = 0; i < list.length; i++) {
+ 				list[i];
+				<select id="categoryList" th:field="*{categoryName}" required>
+				<option th:each="category : ${categoryList}" th:value="${category.categoryNo}" th:text="${category.categoryName}">
+				</option>
+				</select>
+				
+				console.log(list);
+				//list로 받아서	 
+			}
+			$('#selectCategoryForBoard').html(list);
+
+		} */
+
+		//게시판 수정
+
+		//게시판 삭제
+	</script>
+
+
+
+
+
+
+
+</div>
+
+
+</html>

@@ -20,16 +20,40 @@
 			<div class="nav">
 				<div class="sb-sidenav-menu-heading">게시판</div>
 				<!-- 카테고리 시작 -->
-				<a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-					data-bs-target="#collapseCategory1" aria-expanded="false"
-					aria-controls="collapseCategory1">
-					<div class="sb-nav-link-icon">
+				<div id="categoryBoardList" class="collapsed">
+
+					<table>
+						<th:block th:each="category : ${categoryBoardList}">
+							<tr th:id="${category.getCategoryNo()}">
+								<td class = "nav-link">
+									<div class="sb-nav-link-icon">
+										<i class="fas fa-columns"></i>
+									</div> <span th:text="${category.getCategoryName()}"></span>
+									<div class="sb-sidenav-collapse-arrow">
+										<i class="fas fa-angle-down"></i>
+									</div>
+								</td>
+							</tr>
+							<th:block th:if="${category.getBoardList() != null}">
+								<th:block th:each="board : ${category.boardList}">
+									<tr>
+										<td><a th:text="${board.boardName}" th:href = "@{/nListArticlereq/{boardNo}/{boardkind}(boardNo = ${board.boardNo}, boardkind = ${board.boardkind})}"></a></td>
+									</tr>
+								</th:block>
+							</th:block>
+						</th:block>
+					</table>
+
+					<!-- <div class="sb-nav-link-icon">
 						<i class="fas fa-columns"></i>
-					</div> <span>Category</span>
+					</div> 
+					
+					<span>Category</span>
+					
 					<div class="sb-sidenav-collapse-arrow">
 						<i class="fas fa-angle-down"></i>
-					</div>
-				</a>
+					</div> -->
+				</div>
 				<!-- 카테고리 끝 -->
 
 
@@ -42,7 +66,7 @@
 						<li>Item</li>
 						<li>Item</li>
 						<li>Item</li>
-						
+
 					</ul>
 
 				</div>
