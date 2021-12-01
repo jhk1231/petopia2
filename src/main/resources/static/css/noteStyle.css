@@ -1,0 +1,55 @@
+@charset "UTF-8";
+
+body{
+    padding-left: 10px;
+}
+.note-header-back{
+    border: 1px solid #666666;
+    width: 150px;
+    margin: 10px 0;
+}
+.note-header-back span{
+    display: inline-block;
+    margin: 5px;
+    width: 100%;
+}
+.note-header-style{
+    margin: 0 10px 10px 0;
+
+}
+
+.note-header-style span{
+    display: inline-block;
+    border: 1px solid #666666;
+    padding: 10px;
+}
+.note-header-style span:hover{
+    background-color: #666666;
+    cursor: pointer;
+}
+
+.note-contents-style{
+    
+}
+.note-table-style{
+    text-align: center;
+}
+.note-table-style tr td,
+.note-table-style tr th{
+    border: 1px solid #666666;
+    padding: 10px;
+}
+
+.note-del-style{
+    margin-top: 10px;
+    width: 50px;
+}
+
+.note-paging-style{
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.note-paging-style span{
+    
+}
