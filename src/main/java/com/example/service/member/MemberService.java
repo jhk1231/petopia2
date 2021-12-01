@@ -6,7 +6,6 @@ import com.example.vo.member.MemberVO;
 import com.example.vo.paging.Criteria;
 
 public interface MemberService {
-	
 	public void test();
 	public MemberVO login(String email, String password) throws Exception;
 	// 회원의 리스트 조회

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.example.dao.member.MemberDao;
 import com.example.mapper.member.MemberMapper;
 import com.example.vo.member.MemberVO;
@@ -28,6 +27,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void test() {
+    
 	}
 	
 	@Override // 회원 목록 조회

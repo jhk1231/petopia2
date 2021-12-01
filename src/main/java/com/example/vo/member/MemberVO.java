@@ -3,6 +3,9 @@ package com.example.vo.member;
 import org.apache.ibatis.type.Alias;
 
 import lombok.AllArgsConstructor;
+
+import lombok.Data;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -61,5 +64,4 @@ public class MemberVO{
 		// TODO Auto-generated method stub
 		return no + "," + email + "," + nickname + "," + lastDate + "," + grade + "," + visits + "," + ban;
 	}
-   
 }

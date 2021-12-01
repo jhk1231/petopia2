@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import com.example.paging.Criteria;
 import com.example.vo.member.MemberVO;
 import com.example.vo.paging.Criteria;
 
@@ -14,6 +15,7 @@ public interface MemberMapper {
 	public MemberVO selectMember_byIDPwd(String email, String password) throws Exception;
 
 	public void updateLastDdate(int no) throws Exception;
+<
 
 	public MemberVO test();
 	
@@ -25,7 +27,7 @@ public interface MemberMapper {
 
 	// 해당 회원의 상세 조회
 	MemberVO selectMemberByManager(int no);
-	
+
 	// 정지 기간 7일 업데이트
 	void updateBan7days(int no);
 
@@ -49,4 +51,5 @@ public interface MemberMapper {
 
 	// 댓글 삭제 시 회원의 댓글 수 변동
 	void minusMemberComms(int no);
+
 }

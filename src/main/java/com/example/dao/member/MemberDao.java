@@ -2,6 +2,7 @@ package com.example.dao.member;
 
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Repository;
 import com.example.vo.member.MemberVO;
 
 public interface MemberDao {

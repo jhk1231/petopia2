@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -61,7 +62,11 @@ public class HomeController {
 		} else if( user.getIsMember() == 1) {
 			resultType = 3;
 			failText = "탈퇴한 회원입니다.";
-		} else {
+		}  else if( user.getIsMember() == 2) {
+			resultType = 4;
+			failText = "강제 탈퇴 당한 회원입니다.";
+		}
+		else {
 			resultType = 1;
 			failText = "로그인에 성공했습니다.";
 			
@@ -81,7 +86,8 @@ public class HomeController {
 	}
 	
 	@GetMapping("/main")
-	public String petopiaMain() {
+	public String petopiaMain(Model model) {
+		model.addAttribute("HomeContent","fragments/viewMainContent");
 		return "view/home/viewHomeTemplate";
 	}
 	
