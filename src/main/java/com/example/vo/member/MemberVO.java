@@ -43,8 +43,10 @@ public class MemberVO {
 		this.password = password;
 	}
   
+
 	public MemberVO(int no, String email, int gradeNo, String nickname, String regDate, String lastDate, int docs, int comms,
 			int visits, String ban, int isMember) {
+
 		super();
 		this.no = no;
 		this.email = email;
