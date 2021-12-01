@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.service.board.BoardService;
 import com.example.service.board.CategoryService;
-import com.example.service.member.GradeService;
+import com.example.vo.board.BoardBoardGradeVO;
 import com.example.vo.board.CategoryVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,8 +29,8 @@ public class BoardController {
 	@Autowired
 	private CategoryService categoryService;
 	
-	@Autowired
-	private GradeService gradeService;
+	//@Autowired
+	//private GradeService gradeService;
 
 //	@GetMapping("/main")
 //	public String petopiaMain(Model model) {
@@ -80,17 +80,17 @@ public class BoardController {
 		return "redirect:boardManager";
 	}
 	
-//	
+	
 //	//게시판 추가 - 목록 조회
 //	@PostMapping("/selectList")
 //	public String writeBoardForm(Model model) throws Exception {
 //		List<CategoryVO> categoryList = this.categoryService.retrieveCategoryBoardList();
-//		ArrayList<GradeVO> gradeList = this.gradeService.retrieveGradeList();
-//		List<BoardVO> boardkindList = this.boardService.retrieveBoardkind();
+//		//ArrayList<GradeVO> gradeList = this.gradeService.retrieveGradeList();
+//		//List<BoardVO> boardkindList = this.boardService.retrieveBoardkind();
 //
 //		model.addAttribute("categoryList", categoryList);
-//		model.addAttribute("gradeList", gradeList);
-//		model.addAttribute("boardkindList", boardkindList);
+//		//model.addAttribute("gradeList", gradeList);
+//		//model.addAttribute("boardkindList", boardkindList);
 //		return "/boardManager";
 //	}
 //
@@ -108,7 +108,7 @@ public class BoardController {
 //		this.boardService.registerBoard(boardBoardGradeVo.getBoardVo(), boardBoardGradeVo.getBoardGradeVo());
 //		return "redirect:boardManager";
 //	}
-//	
+	
 	
 	
 	@GetMapping("/nListArticlereq/{boardNo}/{boardkind}")

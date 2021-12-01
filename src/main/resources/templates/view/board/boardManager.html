@@ -71,14 +71,13 @@
 					</form>
 				</div>
 				
-				
-				
-<!--  				 게시판 추가
- 				<div id="writeBoard" style="display: none;">
-					<form th:action="@{/writeBoard}" th:object="${boardBoardGradeVo}" method="post" >
-					 	카테고리 : <div id="selectCategoryForBoard" th:object=""></div>
 
- 						게시판 : <input type="text" th:field="*{boardName}" placeholder="게시판 이름" >
+<!--   				게시판 추가
+ 				<div id="writeBoard" >
+					<form th:action="@{/writeBoard}" th:object="${boardBoardGradeVo}" method="post" >
+ 					 	카테고리 : <div id="selectCategoryForBoard"></div>
+		
+ 						게시판 : <input type="text" th:field="$*{boardVO.getBoardName()}" placeholder="게시판 이름" ><br>
 						
 						읽기 등급 : <div id="selectReadGrade" ></div>
 
@@ -91,8 +90,8 @@
 							<button type="submit"> 저장 </button>
 						</div>
 					</form>
-				</div> -->
- 
+				</div>
+  -->
 				
 				<!-- 게시판 수정 -->
 				<!-- https://mingggu.tistory.com/118 -->
@@ -135,7 +134,7 @@
 	//게시판 추가
 	//컨트롤러 접근해서 값 받아올 ajax
 
-/* 		function selectList() {
+/*  		function selectList() {
 
 			$.ajax({
 				url : "/selectList",
@@ -157,7 +156,7 @@
 			$('#writeCategory').hide();
 			$('#writeBoard').appendTo('#Blank');
 			$('#writeBoard').show();
-
+			
 			//함수 호출?
 			let list = selectList();
 
@@ -165,11 +164,13 @@
 			$("#writeBoard").html("");
 
 			for (let i = 0; i < list.length; i++) {
-				list[i];
+ 				list[i];
 				<select id="categoryList" th:field="*{categoryName}" required>
 				<option th:each="category : ${categoryList}" th:value="${category.categoryNo}" th:text="${category.categoryName}">
 				</option>
 				</select>
+				
+				console.log(list);
 				//list로 받아서	 
 			}
 			$('#selectCategoryForBoard').html(list);

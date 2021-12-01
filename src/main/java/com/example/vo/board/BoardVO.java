@@ -33,7 +33,6 @@ public class BoardVO {
 	}
 
 	public BoardVO(int boardNo, String boardName, int boardkind) {
-		
 		this.boardNo = boardNo;
 		this.boardName = boardName;
 		this.boardkind = boardkind;
