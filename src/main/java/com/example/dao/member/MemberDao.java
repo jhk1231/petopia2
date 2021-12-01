@@ -1,9 +1,10 @@
 package com.example.dao.member;
 
-import java.util.ArrayList;
-
 import org.springframework.stereotype.Repository;
 import com.example.vo.member.MemberVO;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface MemberDao {
 	public void test();
@@ -14,9 +15,21 @@ public interface MemberDao {
 
 	public void updateLastDdate(int no) throws Exception;
 
-	// 검색에 해당된 회원 조회
-	ArrayList<MemberVO> selectSearchMember(int startRow, int memberPerPage, String keyfield, String keyword);
+	// 회원 가입
+	void insertMember(MemberVO mVo);
+	void insertMemberNo(HashMap<String, Object> mVo);
+	
+	// 회원가입 시 이메일 중복확인
+	String selectEmail(String email);
 
-	// 검색에 해당된 회원의 총 수
-	int selectTotalSearchMember(String keyfield, String keyword);
+	MemberVO selectMember(String email);
+
+	MemberVO selectMemberProfile(int member_no);
+
+	void updatePassword(int memNo, String newPassword);
+
+	void updateMember(int memberNo, String password);
+
+	boolean selectNickname(String nickname);
+
 }

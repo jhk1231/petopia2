@@ -1,12 +1,16 @@
 package com.example.mapper.member;
 
+import java.util.HashMap;
 import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+
 import com.example.vo.paging.Criteria;
+
 import com.example.vo.member.MemberVO;
+import com.example.vo.member.MembertestVO;
 
 @Repository("memberMapper")
 @Mapper
@@ -26,6 +30,12 @@ public interface MemberMapper {
 	// 해당 회원의 상세 조회
 	MemberVO selectMemberByManager(int no);
 
+	// 회원 가입
+	void insertMember(MemberVO mVo);
+	void insertMemberNo(HashMap<String, Object> mVo);
+	
+	// 회원가입 시 이메일 중복체크
+	String selectEmail(String email);
 	// 정지 기간 7일 업데이트
 	void updateBan7days(int no);
 
