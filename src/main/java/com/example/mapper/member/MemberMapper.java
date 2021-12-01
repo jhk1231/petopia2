@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
-import com.example.paging.Criteria;
+import com.example.vo.paging.Criteria;
 import com.example.vo.member.MemberVO;
 
 @Repository("memberMapper")
