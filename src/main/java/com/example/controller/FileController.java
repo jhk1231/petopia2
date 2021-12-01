@@ -35,6 +35,18 @@ public class FileController {
 		return new UrlResource("file:" + fileManager.getFullPath(filename));
 	}
 
+	// 썸네일 출력
+	@ResponseBody
+	@GetMapping("/thumbnailImages/{filename}")
+	public Resource downLoadThumbnailImage(@PathVariable String filename) throws MalformedURLException{
+		String thumPath = "thumbnail/thumb" + filename;
+		log.info("thumbPath:" +thumPath);
+		log.info("GetPufsflasthumbPath:" + fileManager.getFullPath(thumPath));
+		return new UrlResource("file:" + fileManager.getFullPath(thumPath));
+	}
+	
+	
+
 	// 첨부파일 다운로드
 	@GetMapping("/attach/{fileNo}")
 	public ResponseEntity<Resource> downloadAttach(@PathVariable int fileNo) throws MalformedURLException{

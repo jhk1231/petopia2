@@ -56,6 +56,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	
+	<update id="upViewcount" parameterType="int" statementType="CALLABLE" >
+		{ CALL sp_up_viewcount(#{articleNo}) }
+	</update>
+	
+	
+	
 	<delete id="deleteArticle" parameterType="int" statementType="CALLABLE">
 		{ CALL sp_article_delete(#{articleNo}) }
 	</delete>

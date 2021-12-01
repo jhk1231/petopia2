@@ -24,10 +24,26 @@
 		<result property="originalFileName" javaType="String" column="originalfilename" jdbcType="VARCHAR" />
 		<result property="systemFileName" javaType="String" column="systemfilename" jdbcType="VARCHAR" />
 		<result property="fileSize" javaType="Long" column="filesize" jdbcType="BIGINT" />
+		<result property="fileType" javaType="int" column="filetype" jdbcType="TINYINT"/>
 	</resultMap>
 	
 	<select id="selectFile" parameterType="int" statementType="CALLABLE" resultType="fileVo" resultMap="selectFileMap">
 		{ CALL sp_file_select(#{fileNo}) }
 	</select>
+	
+	<parameterMap type="fileVo" id="thumbMap">
+		<parameter property="articleNo" javaType="int" jdbcType="INTEGER" mode="IN"/>
+		<parameter property="fileType" javaType="int" jdbcType="TINYINT" mode="IN"/>
+	</parameterMap>
+	
+	<select id="selectThumbFile" parameterType="fileVo" statementType="CALLABLE" resultType="fileVo" resultMap="selectFileMap">
+		{ CALL sp_file_select_thumbnail(#{articleNo}, #{fileType}) }
+	</select>
+	
+	
+	
+	
+	
+	
 	
 </mapper>

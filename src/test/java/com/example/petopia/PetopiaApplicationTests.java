@@ -2,45 +2,73 @@ package com.example.petopia;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.example.mapper.board.ArticleMapper;
 import com.example.mapper.board.FileMapper;
+import com.example.mapper.board.ReplyMapper;
 import com.example.service.board.ArticleService;
+import com.example.service.board.ReplyService;
 import com.example.util.FileManager;
+import com.example.vo.board.ReplyVO;
 
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
+import net.minidev.json.JSONObject;
 
 @Slf4j
 @SpringBootTest
 class PetopiaApplicationTests {
-	
-	@Autowired private DataSource dataSource;
-	@Autowired private ArticleMapper articleMapper;
-	@Autowired private FileMapper fileMapper;
-//	@Autowired private ReplyMapper replyMapper;
-	@Autowired private ArticleService articleService;
-	@Autowired private FileManager fileManager;
+
+	@Autowired
+	private DataSource dataSource;
+	@Autowired
+	private ArticleMapper articleMapper;
+	@Autowired
+	private FileMapper fileMapper;
+	@Autowired
+	private ReplyMapper replyMapper;
+	@Autowired
+	private ReplyService replyService;
+	@Autowired
+	private ArticleService articleService;
+	@Autowired
+	private FileManager fileManager;
 
 	@Test
 	@DisplayName("Mapper 생성 test")
 	void createTest() {
 //		assertNotNull(this.dataSource);
-		assertNotNull(this.articleMapper);
+//		assertNotNull(this.articleMapper);
 //		assertNotNull(this.fileMapper);
-//		assertNotNull(this.replyMapper);
+		assertNotNull(this.replyMapper);
 //		assertNotNull(this.articleService);
 //		assertNotNull(this.fileManager);
 	}
-	
+//	@Test
+//	void tt() {
+//		this.replyService.removeReply(65);
+//		
+//	}
+//	@Test
+//	void replyTest() {
+//		List<ReplyVO> re = this.replyService.retrieveAllReply(2);
+//		for (ReplyVO replyVO : re) {
+//			log.info(replyVO.toString());
+//			
+//		}
+//	}
+
 //	@Test
 //	@DisplayName("insert Test")
 //	void insertTest() {
@@ -55,8 +83,6 @@ class PetopiaApplicationTests {
 //		System.out.println("***no****:" + art.getNo());
 //	}
 
-	
-	
 //	@Test
 //	@DisplayName("목록 조회 test")
 //	void test3() {
@@ -70,7 +96,7 @@ class PetopiaApplicationTests {
 //		ArticleVO article = this.articleMapper.selectArticle(10);
 //		log.info(article.toString());
 //	}
-	
+
 //	@Test
 //	void insertFile() {
 //		ArticleVO article = new ArticleVO(1, 2, "일일일", "파첨테테", "파첨테");
@@ -86,7 +112,7 @@ class PetopiaApplicationTests {
 //		FileVO fie = this.fileMapper.selectFile(2);
 //		log.info("파일 찍기={}", fie.toString());
 //	}
-	
+
 //	@Test
 //	void select() {
 //		List<SelectArticleVO> select = this.articleMapper.selectArticle(91);
@@ -95,12 +121,54 @@ class PetopiaApplicationTests {
 //		}
 //		log.info("***************" + select.get(0).getArticle());
 //	}
-	
-	
+
 //	@Test
 //	void te() {
-//	
-//		
+//		FileVO ff = new FileVO();
+//		ff.setArticleNo(5);
+//		ff.setFileType(0);
+//		List<FileVO> fi = this.fileMapper.selectThumbFile(ff);
+//		for (FileVO fileVO : fi) {
+//			log.info(fileVO.toString());
+//			
+//		}
 //	}
-//	
+	
+	
+
+//	@Test
+//	void tt() {
+//		Map<String, String> map = new HashMap<>();
+//		List<ReplyVO> replys = new ArrayList<>();
+//		ReplyVO re = new ReplyVO(1, 2, "sd", "asdasd");
+//		ReplyVO re1 = new ReplyVO(1, 2, "sdd", "asdasddsa");
+//		ReplyVO re2 = new ReplyVO(1, 2, "sdd", "dasdasd");
+//		ReplyVO re3 = new ReplyVO(1, 2, "sddd", "asddasd");
+//		replys.add(re3);
+//		replys.add(re);
+//		replys.add(re1);
+//		replys.add(re2);
+//		replys.add(re3);
+//		List<Map<String, String>> rsList = new ArrayList<>();
+//		JSONArray json = new JSONArray();
+//		for (ReplyVO reply : replys) {
+//			JSONObject jsonobj = new JSONObject();
+//			jsonobj.put("articleNo", reply.getArticleNo());
+//			jsonobj.put("memberNo", reply.getMemberNo());
+//			jsonobj.put("nickname", reply.getNickname());
+//			jsonobj.put("content", reply.getContent());
+//			json.put(jsonobj);
+//		}
+//		for (ReplyVO reply : replys) {
+//			JSONObject jsonobj = new JSONObject();
+//			jsonobj.add("articleNo", reply.getArticleNo());
+//			jsonobj.put("memberNo", reply.getMemberNo());
+//			jsonobj.put("nickname", reply.getNickname());
+//			jsonobj.put("content", reply.getContent());
+//			json.put(jsonobj);
+//		}
+//		log.info(json.toString());
+//	}
+	
+
 }

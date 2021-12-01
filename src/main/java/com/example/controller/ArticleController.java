@@ -17,12 +17,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.service.board.ArticleService;
+import com.example.service.board.FileService;
+import com.example.service.board.ReplyService;
 import com.example.util.FileManager;
 //import com.example.util.FileManager;
 import com.example.vo.board.ArticleVO;
 import com.example.vo.board.BoardVO;
 import com.example.vo.board.FileFormVO;
 import com.example.vo.board.FileVO;
+import com.example.vo.board.ReplyVO;
 import com.example.vo.member.MemberVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -33,23 +36,32 @@ public class ArticleController {
 
 	private ArticleService articleService;
 	private FileManager fileManager;
+	private FileService fileService;
+	private ReplyService replyService;
 	
 	@Autowired
-	public ArticleController(ArticleService articleService, FileManager fileManager) {
+	public ArticleController(ArticleService articleService, FileManager fileManager, FileService fileService, ReplyService replyService) {
 		this.articleService = articleService;
 		this.fileManager = fileManager;
+		this.fileService = fileService;
+		this.replyService = replyService;
 	}
 
 	@GetMapping("/detailArticle/{articleNo}")
 	public String detailArticle(@PathVariable("articleNo") int articleNo, Model model) {
 		// create
+//		this.articleService.upViewcount(articleNo); // 조회수 증가
 		ArticleVO article = this.articleService.retrieveArticle(articleNo);
 		// bind
 		article.setNo(articleNo);
 		log.info("detail Art No" + article.getNo());
-		model.addAttribute("article", article);
+		List<ReplyVO> replys = this.replyService.retrieveAllReply(articleNo);
+		article.setReplyList(replys);
 		// view
+		model.addAttribute("article", article);
+		log.info("detail 넘기는 aritcle: {}", article.toString());
 		model.addAttribute("HomeContent", "/view/board/detailArticle");
+		
 		return "view/home/viewHomeTemplate";
 	}
 
@@ -62,6 +74,7 @@ public class ArticleController {
 		// bind
 		List<BoardVO> boardList = new ArrayList<BoardVO>();
 		boardList.add(new BoardVO(1, "어류"));boardList.add(new BoardVO(2, "조류"));	boardList.add(new BoardVO(3, "영장류"));
+		boardList.add(new BoardVO(11, "썸네일"));
 		// view
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("articleVO", articleVO);
@@ -133,11 +146,20 @@ public class ArticleController {
 		// create
 		List<ArticleVO> articles = this.articleService.retrieveBoard(boardNo);
 		// bind
+		FileVO file = new FileVO();
+		for (ArticleVO article : articles) {
+			file.setArticleNo(article.getNo());
+			file.setFileType(1);
+			FileVO thumbFile = this.fileService.retrieveThumbFile(file);
+			article.setThumbnail(thumbFile);
+			log.info("$$$$$$$$$$$$$$" + article.toString());
+		}
+		
 		model.addAttribute("boardName", boardNo); // 차후 이름으로 변경할것
 		model.addAttribute("articles", articles); // 게시글 정보 전송
 		// view
-		int boardkind = 0;
-		model.addAttribute("boardkind", boardkind);
+		int boardkind = 0; //0 nomal, 1: thumbnail, 2: note
+		model.addAttribute("boardkind", boardkind); // 게시글 유형
 		return "/view/home/viewBoardTemplate";
 	}
 

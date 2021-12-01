@@ -10,4 +10,5 @@ public interface FileService {
 	
 	void uploadFile(ArticleVO article);
 	ArticleVO fileList(ArticleVO article, List<FileVO> files);
+	FileVO retrieveThumbFile(FileVO file);
 }

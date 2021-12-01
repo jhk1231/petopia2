@@ -20,4 +20,6 @@ public interface ArticleMapper {
 	void updateArticle(ArticleVO article); // 수정
 	
 	void deleteArticle(int articleNo); // 삭제
+	
+	void upViewcount(int aritlceNo); // 조회수 증가
 }

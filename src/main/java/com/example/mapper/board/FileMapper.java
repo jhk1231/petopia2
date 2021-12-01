@@ -14,7 +14,7 @@ public interface FileMapper {
 	void insertFile(FileVO fileVO);  // 추가
 	void updateFile(FileVO file); // 수정
 
-	
+	List<FileVO> selectThumbFile(FileVO fileVo);
 	
 	// void delete(int FileNo); // 삭제
 	

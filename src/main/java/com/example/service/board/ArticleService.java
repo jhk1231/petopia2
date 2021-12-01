@@ -17,4 +17,6 @@ public interface ArticleService {
 	void modifyArticle(ArticleVO article); // 수정
 	
 	void removeArticle(int articleNo); // 삭제
+	
+	void upViewcount(int articleNo); // 조회수 up
 }

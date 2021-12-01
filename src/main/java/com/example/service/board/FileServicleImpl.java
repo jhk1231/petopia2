@@ -29,7 +29,7 @@ public class FileServicleImpl implements FileService {
 
 	// 파일 업로드
 	@Override
-	public void uploadFile(ArticleVO article){
+	public void uploadFile(ArticleVO article) {
 		int articleNo = article.getNo();
 
 		if (article.getAttacheFile() != null) { // 첨부파일이 있다면
@@ -52,7 +52,6 @@ public class FileServicleImpl implements FileService {
 		}
 	}
 
-	
 	// 썸네일 생성
 	public void createThumbnail(FileVO thumbFile) throws IOException {
 		String thumPath = this.dirPath + "thumbnail";
@@ -60,7 +59,6 @@ public class FileServicleImpl implements FileService {
 			this.fileManager.createThumbnail(thumbFile.getSystemFileName());
 		}
 	}
-	
 
 	// file 꺼내서 추출, retirveArticle에서 사용됨
 	public ArticleVO fileList(ArticleVO article, List<FileVO> files) {
@@ -94,6 +92,17 @@ public class FileServicleImpl implements FileService {
 			}
 		}
 		return true;
+	}
+
+	@Override
+	public FileVO retrieveThumbFile(FileVO file) {
+		List<FileVO> files = this.fileDao.selectThumbFile(file);
+		if (files.size() > 0) { // 첨부된 이미지 파일이 있으면 FileVO 리턴
+			FileVO thumbnail = files.get(0);
+			return thumbnail;
+		} else {
+			return null;
+		}
 	}
 
 }

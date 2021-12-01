@@ -16,4 +16,6 @@ public interface ArticleDao {
 	void updateArticle(ArticleVO article); // 수정
 	
 	void deleteArticle(int articleNo); // 삭제
+	
+	void upViewcount(int articleNo); // 조회수 up
 }

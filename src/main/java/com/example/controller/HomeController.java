@@ -35,6 +35,12 @@ public class HomeController {
 		return "view/member/login";
 	}
 	
+	@GetMapping("/ga")
+	public String iid() {
+		return "vlew/home/asdmsadpo";
+	}
+	
+	
 	@ResponseBody
 	@PostMapping("/login")
 	public Map<String, String> login(MemberVO user, HttpSession session) {

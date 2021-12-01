@@ -66,6 +66,9 @@ public class ArticleServiceImpl implements ArticleService {
 
 	}
 
-	
+	@Override
+	public void upViewcount(int articleNo) {
+		this.articleDao.upViewcount(articleNo);
+	}
 
 }

@@ -11,14 +11,16 @@
 			</div>
 			<ui>
 				<li th:each="article : ${articles}">
-					<div class="Empty" th:if="{image == null}">
-						<a href="#"><span class="thumb"><img src="기본 이미지" alt=""></span><strong>이미지 제목</strong></a>
-						<p>날짜</p>
+					<div class="notEmpty"></div>
+						<img th:src="|/thumbnailImages/${article.getThumbnail().getSystemFileName()}|">
+						<span class="thumb"><a th:href="|/detailArticle/${article.no}|">
+						<strong th:text="${article.subject}"></strong></a></span>
+						<p th:text="${article.writeDate}"></p>
 					</div>
-					<div class="notEmpty">
+					<!-- <div class="Empty" th:if="{image == null}"></div>
 						<a href="#"><span class="thumb"><img src="이미지 경로" alt=""></span><strong>이미지 제목</strong></a>
 						<p>날짜</p>
-					</div>
+					</div> -->
 				</li>
 			</ui>
 		</div>

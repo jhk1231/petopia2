@@ -16,8 +16,13 @@ public class FileDaoImpl implements FileDao {
 	
 	@Override
 	public FileVO selectFile(int fileNo) {
-		return fileMapper.selectFile(fileNo);
+		return this.fileMapper.selectFile(fileNo);
 	}
+	
+	public List<FileVO> selectThumbFile(FileVO file){
+		return this.fileMapper.selectThumbFile(file);
+	}
+	
 	
 	
 	@Override
