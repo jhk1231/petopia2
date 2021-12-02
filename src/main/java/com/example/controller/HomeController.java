@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.config.SessionConfig;
@@ -41,11 +42,17 @@ public class HomeController {
 		return "view/member/login";
 	}
 	
+
 	@GetMapping("/ga")
 	public String iid() {
 		return "vlew/home/asdmsadpo";
 	}
 	
+	@PostMapping("/")
+	public String selfOut(@RequestParam("memberNo") int no, @RequestParam("password") String password) {
+		this.memberService.modifyMember(no, password);
+		return "redirect:/login";
+	}
 	
 	@ResponseBody
 	@PostMapping("/login")

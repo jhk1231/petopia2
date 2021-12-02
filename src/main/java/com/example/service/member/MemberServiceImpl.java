@@ -24,6 +24,33 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private MemberMapper memberMapper;
 
+
+	@Autowired private MemberMapper memberMapper;
+	
+	
+	@Override // 회원가입
+	public void registerMember(MemberVO mVo) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		this.memberdao.insertMemberNo(map);
+		System.out.println(map.get("no"));
+		mVo.setNo((int)map.get("no"));
+		System.out.println((int)map.get("no"));
+		this.memberdao.insertMember(mVo); //this를 적어주는 이유는 @Autowired 연결 선언해준 memberDao랑 같은 애라는걸 알려주려고 적는 거임 (얘가 얘다)
+		
+	}
+
+	@Override //회원 자진 탈퇴
+	public void modifyMember(int memberNo, String password) {
+		memberdao.updateMember(memberNo, password);	//@Autowired해서 memberdao로 씀.
+
+	}
+	
+	@Override //비밀번호 재설정
+	public void modifyPassword(int memNo, String newPassword) {
+		memberdao.updatePassword(memNo, newPassword);
+
+	}
+	
 	@Override
 	public MemberVO login(String email, String password) throws Exception {
 		MemberVO member = memberdao.selectMember(email, password);
@@ -150,15 +177,16 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 
-	@Override
-	public void modifyMember(int memberNo, String password) {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public boolean retrieveNickname(String nickname) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public ArrayList<MemberVO> retrieveMemberList(int startRow, int memberPerPage) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

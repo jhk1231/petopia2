@@ -60,6 +60,19 @@ public interface MemberMapper {
 	// 댓글 삭제 시 회원의 댓글 수 변동
 	void minusMemberComms(int no);
 
+	//회원 자진 탈퇴
+	void updateMember(int no, String password);
+	
+	//비밀번호 재설정
+	void updatePassword(int memNo, String newPassword);
+
+	// MemberVO selectMember(String email, String password);
+	// MemberVO selectMember(String email);
+	// MemberVO selectMemberProfile(int member_no);
+	// void updateBan(String banSelect, int no);
+	
+	//	boolean selectNickname(String nickname);
+
 	// 이메일 검색에 해당된 회원 조회
 	ArrayList<MemberVO> selectSearchMemberByEmail(Map<String, Object> map);
 
