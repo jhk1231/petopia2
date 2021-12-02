@@ -120,4 +120,10 @@ public class HomeController {
 		model.addAttribute("mVo", mVo); //model은 우편부, addAttribute 누군가에게 붙여주는 행동, "member"는 member가 속한이름, member 우편물 내용
 		return "view/member/register"; // "view/member/register" 이 주소로 보낸다.
 	}
+	
+	
+	@GetMapping("/ChangePwd")
+	public String changepwd() {
+		return "view/member/passwordChange";
+	}
 }
