@@ -13,7 +13,7 @@
       </li>
       
     </ul>
-  </nav> -->
+   -->
 <div id="layoutSidenav_nav">
 	<nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
 		<div class="sb-sidenav-menu">
@@ -25,19 +25,19 @@
 					<table>
 						<th:block th:each="category : ${categoryBoardList}">
 							<tr th:id="${category.getCategoryNo()}">
-								<td class = "nav-link">
+								<td class = "nav-link category-article-header">
 									<div class="sb-nav-link-icon">
 										<i class="fas fa-columns"></i>
 									</div> <span th:text="${category.getCategoryName()}"></span>
-									<div class="sb-sidenav-collapse-arrow">
+									<!-- <div class="sb-sidenav-collapse-arrow">
 										<i class="fas fa-angle-down"></i>
-									</div>
+									</div> -->
 								</td>
 							</tr>
 							<th:block th:if="${category.getBoardList() != null}">
 								<th:block th:each="board : ${category.boardList}">
 									<tr>
-										<td><a th:text="${board.boardName}" th:href = "@{/nListArticlereq/{boardNo}/{boardkind}(boardNo = ${board.boardNo}, boardkind = ${board.boardkind})}"></a></td>
+										<td class="category-board-style"><a th:text="${board.boardName}" th:href = "@{/nListArticlereq/{boardNo}/{boardkind}(boardNo = ${board.boardNo}, boardkind = ${board.boardkind})}"></a></td>
 									</tr>
 								</th:block>
 							</th:block>
@@ -79,5 +79,6 @@
 
 			</div>
 		</div>
+		</nav>
 </div>
 </html>
