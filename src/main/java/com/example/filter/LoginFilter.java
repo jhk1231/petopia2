@@ -17,7 +17,7 @@ import lombok.extern.java.Log;
 
 @Log
 public class LoginFilter implements Filter {
-	private static final String[] whitelist = {"/", "/login", "/logout","/join1", "/join"};
+	private static final String[] whitelist = {"/", "/petopialogin","/login", "/logout", "/main", "/join1", "/join"};
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
@@ -33,7 +33,7 @@ public class LoginFilter implements Filter {
              	 			log.info("미인증 사용자 요청 {}" + requestURI);
   					//로그인으로 redirect
   					//httpResponse.sendRedirect("/?redirectURL=" + requestURI);
-             	 	httpResponse.sendRedirect("/");	
+             	 	httpResponse.sendRedirect("/petopialogin");	
   					return; //미인증 사용자는 다음으로 진행하지 않음
  				}
      		 }

@@ -48,8 +48,8 @@
 									</tr>
 									<tr th:if="${article.fileList != null}">
 										<td>
-											<!--이미지 파일들--> <img th:each="imageFile : ${article.fileList}"
-											th:src="|/images/${imageFile.getSystemFileName()}|"
+											<!--이미지 파일들--> 
+											<img th:each="imageFile : ${article.fileList}" th:src="|/images/${imageFile.getSystemFileName()}|"
 											width="200" height="200" />
 										</td>
 									</tr>
@@ -60,8 +60,8 @@
 												value="글쓰기" /> <input type="button"
 												th:onclick="|location.href='@{/nListArticle/{boardNo}(boardNo=${article.boardNo})}'|"
 												value="목록" /> <input type="button" id="rec_update"
-												value="추천" /> <strong><input type="text"
-													id="like_num" value=""></strong></td>
+												value="추천" /> <!-- <strong><input type="text"
+													id="like_num" value=""></strong> --></td>
 										</div>
 
 										<!--본인만 가능-->

@@ -19,21 +19,6 @@
 		<result property="isMember" javaType="int" column="ismember" jdbcType="INTEGER"/>
 	</resultMap>
 	
-		<resultMap type="memberVo" id="loginInfo">
-		<result property="no" javaType="int" column="member_no" jdbcType="INTEGER"/>
-		<result property="email" javaType="string" column="email" jdbcType="VARCHAR"/>
-		<result property="grade" javaType="string" column="name" jdbcType="VARCHAR"/>
-		<result property="gradeNo" javaType="int" column="grade_no" jdbcType="SMALLINT"/>		
-		<result property="nickname" javaType="string" column="nickname" jdbcType="VARCHAR"/>
-		<result property="regDate" javaType="string" column="regdate" jdbcType="VARCHAR"/>
-		<result property="lastDate" javaType="string" column="lastdate" jdbcType="VARCHAR"/>
-		<result property="docs" javaType="int" column="docs" jdbcType="INTEGER"/>
-		<result property="comms" javaType="int" column="comms" jdbcType="INTEGER"/>
-		<result property="visits" javaType="int" column="visits" jdbcType="INTEGER"/>
-		<result property="ban" javaType="string" column="ban" jdbcType="VARCHAR"/>
-		<result property="isMember" javaType="int" column="ismember" jdbcType="INTEGER"/>
-	</resultMap>
-	
 	<resultMap type="memberVo" id="briefMemberInfo">
 		<result property="no" javaType="int" column="member_no" jdbcType="INTEGER"/>
 		<result property="email" javaType="string" column="email" jdbcType="VARCHAR"/>
@@ -45,7 +30,7 @@
 	
 	<select id="selectMemberList" parameterType="criteria" resultType="memberVo" resultMap="briefMemberInfo">
 		SELECT member_no,email, name, regdate, visits, ban
-		FROM Member M RIGHT JOIN Grade G
+		FROM member M RIGHT JOIN grade G
 		ON M.grade_no = G.grade_no
 		WHERE member_no > 0
 		ORDER BY member_no ASC, ismember ASC
@@ -54,68 +39,68 @@
 	
 	<select id="selectTotalMember" resultType="int">
 		SELECT COUNT(*)
-		FROM Member
+		FROM member
 	</select>
 	
 	<select id="selectMemberByManager" parameterType="int" resultType="memberVo" resultMap="detailInfoByManager">
 		SELECT member_no, email, name, nickname, regdate, lastdate, M.docs, M.comms, visits, ban, ismember
-		FROM Member M RIGHT JOIN Grade G
+		FROM member M RIGHT JOIN grade G
 		ON M.grade_no = G.grade_no
 		WHERE member_no = #{no}
 	</select>
 	
 	<update id="updateBan7days" parameterType="int">
-		UPDATE Member
+		UPDATE member
 		SET	ban = DATE_ADD(NOW(), INTERVAL 7 DAY)
 		WHERE member_no = #{no}
 	</update>
 	
 	<update id="updateBan1day" parameterType="int">
-		UPDATE Member
+		UPDATE member
 		SET	ban = DATE_ADD(NOW(), INTERVAL 1 DAY)
 		WHERE member_no = #{no}
 	</update>
 	
 	<update id="updateBan1minute" parameterType="int">
-		UPDATE Member
+		UPDATE member
 		SET	ban = DATE_ADD(NOW(), INTERVAL 1 MINUTE)
 		WHERE member_no = #{no}
 	</update>
 	
 	<update id="updateMemberByForce" parameterType="int">
-		UPDATE Member
+		UPDATE member
 		SET ismember = 2
 		WHERE member_no = #{no};
 	</update>
 	
 	<update id="plusMemberDocs" parameterType="int">
-		UPDATE Member
+		UPDATE member
     	SET docs = docs + 1
     	WHERE member_no = #{no};
 	</update>
 	
 	<update id="minusMemberDocs" parameterType="int">
-		UPDATE Member
+		UPDATE member
     	SET docs = docs - 1
     	WHERE member_no = #{no};
 	</update>
 	
 	<update id="plusMemberComms" parameterType="int">
-		UPDATE Member
+		UPDATE member
     	SET comms = comms + 1
     	WHERE member_no = #{no};
 	</update>
 	
     <update id="minusMemberComms" parameterType="int">
-    	UPDATE Member
+    	UPDATE member
     	SET comms = comms - 1
     	WHERE member_no = #{no};
     </update>
 
-    <select id="selectMember_byIDPwd" parameterType="String" resultType="memberVo" resultMap="loginInfo">
+    <select id="selectMember_byIDPwd" parameterType="String" resultType="memberVo" resultMap="detailInfoByManager">
         <!-- SELECT member.member_no, email, nickname -->
-        SELECT member_no, email, name, nickname, regdate, lastdate, M.grade_no, M.docs, M.comms, visits, ban, ismember
-		FROM Member M RIGHT JOIN Grade G
+        SELECT member_no, email, name, nickname, regdate, lastdate, M.docs, M.comms, visits, ban, ismember
+		FROM member M RIGHT JOIN grade G
 		ON M.grade_no = G.grade_no
         WHERE email=#{email} AND password=#{password}
     </select>
@@ -142,38 +127,15 @@
 	<insert id="insertMember"  parameterType="memberVo">   <!-- parameterType(경로)의 괄호 안에 들어간 건 MemberVO에 있는 @Alias("memberVO")과 이름이 
 			일치해야 함 -->
 		INSERT INTO Member(member_no, email, password, nickname)
-		VALUES (#{no}, #{email}, #{password}, #{nickname}) 
-		<!-- #{}안에는 MemberVO에서 선언한 변수명과 일치해야 함 -->
+		VALUES (#{no}, #{email}, #{password}, #{nickname}) <!-- #{}안에는 
+			MemberVO에서 선언한 변수명과 일치해야 함 -->
 	</insert>
 	
 	<!-- 회원가입 시 이메일 중복확인 -->
 	<select id="selectEmail"  parameterType="String"  resultType="String">
 		SELECT email
-		FROM Member
+		FROM member
 		WHERE email = #{email}
 	</select>
-	
-	
-		<!-- 회원 자진 탈퇴-->
-			<insert id="updateMember"  parameterType="int">   
-			<!-- id는  MemberDao의 메소드 명과 일치해야 함 -->
-			<!-- parameterType(경로)의 괄호 안에 들어간 건 MemberVO에 있는 @Alias("memberVo")과 이름이 일치해야 함 -->
-				
-		UPDATE member
-		SET member.out = 1
-		WHERE member_no = #{no}
-		<!-- #{}안에는	MemberVO에서 선언한 변수명과 일치해야 함 -->
-	</insert>
 
-
-		<!-- 비밀번호 재설정-->
-			<insert id="updatePassword"  parameterType="memberVo">   
-			<!-- id는  MemberDao의 메소드 명과 일치해야 함 -->
-			<!-- parameterType(경로)의 괄호 안에 들어간 건 MemberVO에 있는 @Alias("memberVo")과 이름이 일치해야 함 -->
-				
-		UPDATE member
-		SET password = #{password}
-		WHERE member_no = #{no}
-		<!-- #{}안에는	MemberVO에서 선언한 변수명과 일치해야 함 -->
-	</insert>
 </mapper>

@@ -54,8 +54,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</selectKey>
 	</insert>
 	
+	
 	<update id="updateArticle" parameterType="articleVo" statementType="CALLABLE">
-		{ CALL sp_article_update(#{no},#{boardNo}, #{subject}, #{content} ) }
+		{ CALL sp_article_update(#{no},#{subject},#{content}) }
 	</update>
 	
 	

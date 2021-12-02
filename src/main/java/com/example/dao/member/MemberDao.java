@@ -36,5 +36,4 @@ public interface MemberDao {
 
 	boolean selectNickname(String nickname);
 
-
 }

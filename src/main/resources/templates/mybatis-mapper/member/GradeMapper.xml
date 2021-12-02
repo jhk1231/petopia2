@@ -16,24 +16,24 @@
 	</resultMap>
 	
 	<select id="selectGradeList" resultType="gradeVo" resultMap="gradeInfo">
-		SELECT G.grade_no, name, G.docs, G.comms, COUNT(M.grade_no) AS person
-		FROM Member M RIGHT JOIN Grade G
+		SELECT G.grade_no, name, G.docs, G.comms, count(M.grade_no) AS person
+		FROM member M RIGHT JOIN grade G
 		ON M.grade_no = G.grade_no
-		GROUP BY G.grade_no, name, G.docs, G.comms
+		GROUP BY name
 		ORDER BY G.grade_no ASC
 	</select>
 	
 	<update id="rearrangeMemberGrade" statementType="CALLABLE">
-		{ CALL grade_modification() }
+		{ call grade_modification() }
 	</update>
 	
 	<select id="selectReadBoardByGrade" parameterType="int" resultType="boardVO" resultMap="boardNameInfo">
 		SELECT boardName
-		FROM Board
+		FROM board
 		WHERE board_no = 
 		ANY(
 		SELECT board_no
-		FROM Board_Grade BG LEFT JOIN Grade G
+		FROM board_grade BG LEFT JOIN grade G
 		ON BG.grade_no = G.grade_no
 		WHERE (readwrite = 0) AND ((G.grade_no &lt; #{gradeNo}) OR (G.grade_no = #{gradeNo}))
 		)
@@ -41,11 +41,11 @@
 	
 	<select id="selectWriteBoardByGrade" parameterType="int" resultType="boardVO" resultMap="boardNameInfo">
 		SELECT boardName
-		FROM Board
+		FROM board
 		WHERE board_no = 
 		ANY(
 		SELECT board_no
-		FROM Board_Grade BG LEFT JOIN Grade G
+		FROM board_grade BG LEFT JOIN grade G
 		ON BG.grade_no = G.grade_no
 		WHERE (readwrite = 1) AND ((G.grade_no &lt; #{gradeNo}) OR (G.grade_no = #{gradeNo}))
 		)
@@ -59,26 +59,26 @@
 	</parameterMap>
 	
 	<insert id="updateGrade" parameterType="gradeVo" parameterMap="insertVo">
-		INSERT INTO Grade(grade_no, name, docs, comms)
+		INSERT INTO grade(grade_no, name, docs, comms)
 		VALUES (#{gradeNo}, #{name}, #{docs}, #{comms}) 
 		ON DUPLICATE KEY UPDATE name = #{name}, docs = #{docs}, comms = #{comms}   
 	</insert>
 	
 	<update id="rearrangeGrade" parameterType="int" statementType="CALLABLE">
-		{ CALL delete_grade_mod(#{no}) }
+		{ call delete_grade_mod(#{no}) }
 	</update>
 	
 	<delete id="deleteGrade" parameterType="int">
-		DELETE FROM Grade
+		DELETE FROM grade
 		WHERE grade_no = #{no}
 	</delete>
 	
 	<update id="fillEmptyNum" statementType="CALLABLE">
-		{ CALL fill_empty_grade_no() }
+		{ call fill_empty_grade_no() }
 	</update>
 	
 	<update id="standGrade" statementType="CALLABLE">
-		{ CALL sort_grade() }
+		{ call sort_grade() }
 	</update>
 	
 </mapper>

@@ -37,7 +37,7 @@ public class HomeController {
 	@Autowired
 	private CategoryService categoryService;
 	
-	@GetMapping("/")
+	@GetMapping("/petopialogin")
 	public String index() {
 		return "view/member/login";
 	}
@@ -126,5 +126,11 @@ public class HomeController {
 		MemberVO mVo = new MemberVO(); //MemberVO라는 빈칸 양식 종이를 새로 가져올때마다 new 선언
 		model.addAttribute("mVo", mVo); //model은 우편부, addAttribute 누군가에게 붙여주는 행동, "member"는 member가 속한이름, member 우편물 내용
 		return "view/member/register"; // "view/member/register" 이 주소로 보낸다.
+	}
+	
+	
+	@GetMapping("/ChangePwd")
+	public String changepwd() {
+		return "view/member/passwordChange";
 	}
 }

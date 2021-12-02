@@ -1,10 +1,10 @@
 package com.example.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,17 +14,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.service.board.ArticleService;
+import com.example.service.board.BoardService;
+import com.example.service.board.CategoryService;
 import com.example.service.board.FileService;
 import com.example.service.board.ReplyService;
 import com.example.util.FileManager;
 //import com.example.util.FileManager;
 import com.example.vo.board.ArticleVO;
 import com.example.vo.board.BoardVO;
+import com.example.vo.board.CategoryVO;
 import com.example.vo.board.FileFormVO;
 import com.example.vo.board.FileVO;
 import com.example.vo.board.ReplyVO;
@@ -40,31 +41,48 @@ public class ArticleController {
 	private FileManager fileManager;
 	private FileService fileService;
 	private ReplyService replyService;
+	private BoardService boardService;
+	private CategoryService categoryService;
 
 	@Autowired
 	public ArticleController(ArticleService articleService, FileManager fileManager, FileService fileService,
-			ReplyService replyService) {
+			ReplyService replyService,  BoardService boardService, CategoryService categoryService) {
 		this.articleService = articleService;
 		this.fileManager = fileManager;
 		this.fileService = fileService;
 		this.replyService = replyService;
+		this.boardService = boardService;
+		this.categoryService = categoryService;
 	}
 
 	@GetMapping("/detailArticle/{articleNo}")
-	public String detailArticle(@PathVariable("articleNo") int articleNo, Model model) {
+	public String detailArticle(@PathVariable("articleNo") int articleNo,HttpServletRequest request,HttpServletResponse response, Model model) {
 		// create
-//		this.articleService.upViewcount(articleNo); // 조회수 증가
+		HttpSession session = request.getSession();
+		MemberVO member = (MemberVO) session.getAttribute("loginUser");
 		ArticleVO article = this.articleService.retrieveArticle(articleNo);
-		// bind
-		article.setNo(articleNo);
-		log.info("detail Art No" + article.getNo());
-		List<ReplyVO> replys = this.replyService.retrieveAllReply(articleNo);
-		article.setReplyList(replys);
-		// view
-		model.addAttribute("article", article);
-		log.info("detail 넘기는 aritcle: {}", article.toString());
-		model.addAttribute("HomeContent", "/view/board/detailArticle");
-
+		int boardNo = article.getBoardNo();
+		int gradeNo = member.getGradeNo();
+		boolean grade = this.boardService.retrieveAllReadBoard(boardNo, gradeNo);
+		List<CategoryVO> categoryList = this.categoryService.retrieveCategoryBoardList();
+		model.addAttribute("categoryBoardList", categoryList);
+		CategoryVO categoryVo = new CategoryVO();
+		model.addAttribute("categoryVo", categoryVo);
+		// side bar -------------
+		if (grade) {
+			this.articleService.upViewcount(articleNo); // 조회수 증가
+			// bind
+			article.setNo(articleNo);
+			List<ReplyVO> replys = this.replyService.retrieveAllReply(articleNo);
+			article.setReplyList(replys);
+			// view
+			// side bar -------------
+			model.addAttribute("article", article);
+			log.info("detail 넘기는 aritcle: {}", article.toString());
+			model.addAttribute("HomeContent", "/view/board/detailArticle");
+		} else {
+			model.addAttribute("HomeContent", "/view/board/accessDenied");
+		}
 		return "view/home/viewHomeTemplate";
 	}
 
@@ -75,40 +93,29 @@ public class ArticleController {
 		HttpSession session = req.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("loginUser");
 		// bind
-		List<BoardVO> boardList = new ArrayList<BoardVO>();
-		BoardVO b1 = new BoardVO();
-		b1.setBoardNo(1);
-		b1.setBoardName("어류");
-		BoardVO b2 = new BoardVO();
-		b2.setBoardNo(2);
-		b2.setBoardName("양서류");
-		boardList.add(b1);
-		boardList.add(b2);
+		int gradeNo = member.getGradeNo();
+		log.info("writeForm get No::::" + gradeNo);
+		// bind
+		List<BoardVO> boardList = this.boardService.retrieveAllWriteBoard(gradeNo);
 		// view
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("articleVO", articleVO);
-		model.addAttribute("gradeNo", member.getGrade()); // 나중에 seesion member에 접근해서 grade_no 받아올 것
+		model.addAttribute("gradeNo", member.getGradeNo()); // 나중에 seesion member에 접근해서 grade_no 받아올 것
 		model.addAttribute("HomeContent", "/view/board/writeArticleForm");
 		return "view/home/viewHomeTemplate";
 	}
 
 	@GetMapping("/updateArticleForm/{articleNo}")
 	public String writeForm(@PathVariable int articleNo, HttpServletRequest req, Model model) {
-		log.info("updateForm articleNo: " + articleNo);
+//		log.info("updateForm articleNo: " + articleNo);
 		ArticleVO article = this.articleService.retrieveArticle(articleNo); // 게시글 정보 가져오기
 		// create
 		HttpSession session = req.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("loginUser");
+		int gradeNo = member.getGradeNo();
 		// bind
-		List<BoardVO> boardList = new ArrayList<BoardVO>();
-		BoardVO b1 = new BoardVO();
-		b1.setBoardNo(1);
-		b1.setBoardName("어류");
-		BoardVO b2 = new BoardVO();
-		b2.setBoardNo(2);
-		b2.setBoardName("양서류");
-		boardList.add(b1);
-		boardList.add(b2);
+		List<BoardVO> boardList = this.boardService.retrieveAllWriteBoard(gradeNo);
+		log.info("수정으로 넘어온 게시글 번호" +articleNo);
 		// view
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("article", article);
@@ -146,13 +153,49 @@ public class ArticleController {
 		redirectView.setUrl("/detailArticle/" + articleNo);
 		return redirectView;
 	}
+	
+	// 게시글 수정
+	@PostMapping("/updateArticle/{articleNo}")
+	public RedirectView updatetArticle(@ModelAttribute("article") ArticleVO articleVO,
+			@ModelAttribute FileFormVO form,
+			@PathVariable("articleNo") int articleNo,
+			HttpServletRequest request)
+			throws IOException {
+		log.info("update접근");
+		// create
+		RedirectView redirectView = new RedirectView();
+		// 파일 첨부 지정 폴더에 Upload도 동시에 실행
+		FileVO attacheFile = fileManager.uploadFile(form.getImportAttacheFile()); // 첨부 파일
+		List<FileVO> imageFiles = fileManager.uploadFiles(form.getImageFiles()); // 이미지 파일
+		if (imageFiles.size() > 0) {
+			fileManager.createThumbnail(imageFiles.get(0).getSystemFileName()); // 썸네일 생성
+		}
+		// bind
+		articleVO.setNo(articleNo);
+		articleVO.setAttacheFile(attacheFile);
+		articleVO.setFileList(imageFiles);
+		this.articleService.modifyArticle(articleVO);
+//		int articleNo = articleVO.getNo();
+		log.info("**********************: " + articleVO.toString());
+		log.info("**********************: " + articleNo);
+//		log.info("입력 게시글={}", articleVO.toString());
+		// view
+		redirectView.setUrl("/detailArticle/" + articleNo);
+		return redirectView;
+	}
+	
+	
+	
+	
+	
+	
+	
 
 // 게시판 목록 조회
 
-	// 노말 tpye board
 	@GetMapping("/nListArticle/{boardNo}")
 	public String selectAllNomalArticle(@PathVariable("boardNo") int boardNo,
-														@RequestParam("boardkind") int boardkind,
+														HttpServletRequest request,
 														Model model) {
 		// create
 		List<ArticleVO> articles = this.articleService.retrieveBoard(boardNo);
@@ -162,14 +205,25 @@ public class ArticleController {
 			file.setArticleNo(article.getNo());
 			file.setFileType(1);
 			FileVO thumbFile = this.fileService.retrieveThumbFile(file);
-			article.setThumbnail(thumbFile);
+			if(thumbFile != null) {
+				article.setThumbnail(thumbFile);
+			} else {
+				FileVO noFile = new FileVO();
+				noFile.setSystemFileName("noimage.png");
+				article.setThumbnail(noFile);
+			}
 //			log.info("$$$$$$$$$$$$$$" + article.toString());
 		}
+		List<CategoryVO> categoryList = this.categoryService.retrieveCategoryBoardList();
+		model.addAttribute("categoryBoardList", categoryList);
+		CategoryVO categoryVo = new CategoryVO();
+		model.addAttribute("categoryVo", categoryVo);
 
 		model.addAttribute("boardName", boardNo); // 차후 이름으로 변경할것
 		model.addAttribute("articles", articles); // 게시글 정보 전송
+		log.info("%^^^^^^^^^^^^^^^^^6boardKind^^^^^^^^^" + request.getParameter("boardKind"));
 		// view
-//		int boardkind = 0; // 0 nomal, 1: thumbnail, 2: note
+		int boardkind = Integer.parseInt(request.getParameter("boardKind"));
 		model.addAttribute("boardkind", boardkind); // 게시글 유형
 		return "/view/home/viewBoardTemplate";
 	}

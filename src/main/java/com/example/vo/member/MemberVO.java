@@ -3,7 +3,6 @@ package com.example.vo.member;
 import org.apache.ibatis.type.Alias;
 
 import lombok.AllArgsConstructor;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +17,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Alias("memberVo")
-
 public class MemberVO {
 	private @NonNull int no;
 	private @NonNull String email;
@@ -60,7 +58,7 @@ public class MemberVO {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return no + "," + email + "," + nickname + "," + lastDate + "," + grade + "," + visits + "," + ban;
+		return no + "," + email + "," + nickname + "," + lastDate + "," + gradeNo + "," + grade + "," + visits + "," + ban;
 	}
 
 
