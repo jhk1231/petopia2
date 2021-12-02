@@ -12,6 +12,9 @@ import com.example.mapper.member.MemberMapper;
 import com.example.vo.member.MemberVO;
 import com.example.vo.paging.Criteria;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service("memberService") // 얘는 서비스다
 public class MemberServiceImpl implements MemberService {
 
@@ -81,10 +84,13 @@ public class MemberServiceImpl implements MemberService {
 	@Override // 회원 검색 조회
 	public ArrayList<MemberVO> retrieveSearchMember(Criteria crt, String keyfield, String keyword) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		int dataPerPage = crt.getDataPerPage();
+		int pageStart = crt.getPageStart();
 		map.put("keyword", keyword);
-		map.put("crt", crt);
+		map.put("dataPerPage", dataPerPage);
+		map.put("dataPerPage", pageStart);
 
-		if (keyfield == "email") {
+		if (keyfield.equals("email")) {
 			return this.memberMapper.selectSearchMemberByEmail(map);
 		} else {
 			return this.memberMapper.selectSearchMemberByGrade(map);
@@ -93,7 +99,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override // 회원 검색 총 수
 	public int retrieveTotalSearchMember(String keyfield, String keyword) {
-		if(keyfield == "email") {
+		if(keyfield.equals("email")) {
 			return this.memberMapper.selectTotalSearchMemberByEmail(keyword);
 		}
 		else {
