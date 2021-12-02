@@ -17,7 +17,7 @@ public interface MemberService {
     // 해당 회원의 상세 조회
     MemberVO retrieveMemberByManager(int no);
     // 검색에 해당된 회원 조회
-    ArrayList<MemberVO> retrieveSearchMember(int startRow, int memberPerPage, String keyfield, String keyword);
+    ArrayList<MemberVO> retrieveSearchMember(Criteria crt, String keyfield, String keyword);
     // 검색에 해당된 회원의 총 수
     int retrieveTotalSearchMember(String keyfield, String keyword);
     // 정지 기간 업데이트
@@ -33,15 +33,23 @@ public interface MemberService {
     // 댓글 삭제 시 회원의 댓글 수 변동
     void downMemberComms(int no);
 
-	void registerMember(MemberVO mVo);
+	ArrayList<MemberVO> retrieveMemberList(int startRow, int memberPerPage);
 
+	
+	// 회원가입
+	MemberVO retreiveMemberProfile(int member_no);
+
+	// 회원가입 이메일 중복 확인
+	boolean retrieveEmail(String email);
+	
+	//회원 자진 탈퇴
+	void modifyMember(int memberNo, String password);
+	
+	//비밀번호 재설정
 	void modifyPassword(int memNo, String newPassword);
 
-	void modifyMember(int memberNo, String password);
+	void registerMember(MemberVO mVo);
 
 	boolean retrieveNickname(String nickname);
 
-	MemberVO retreiveMemberProfile(int member_no);
-
-	boolean retrieveEmail(String email);
 }

@@ -2,42 +2,72 @@ package com.example.service.member;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.example.dao.member.MemberDao;
 import com.example.mapper.member.MemberMapper;
 import com.example.vo.member.MemberVO;
 import com.example.vo.paging.Criteria;
 
+import lombok.extern.slf4j.Slf4j;
 
-@Service("memberService") //얘는 서비스다
+@Slf4j
+@Service("memberService") // 얘는 서비스다
 public class MemberServiceImpl implements MemberService {
 
-	@Autowired private MemberDao memberdao;//memberDao랑 연결해주겠다
+	@Autowired
+	private MemberDao memberdao;// memberDao랑 연결해주겠다
 
-	@Autowired private MemberMapper memberMapper;
+	@Autowired
+	private MemberMapper memberMapper;
+	
+	
+	@Override // 회원가입
+	public void registerMember(MemberVO mVo) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		this.memberdao.insertMemberNo(map);
+		System.out.println(map.get("no"));
+		mVo.setNo((int)map.get("no"));
+		System.out.println((int)map.get("no"));
+		this.memberdao.insertMember(mVo); //this를 적어주는 이유는 @Autowired 연결 선언해준 memberDao랑 같은 애라는걸 알려주려고 적는 거임 (얘가 얘다)
+		
+	}
+
+	@Override //회원 자진 탈퇴
+	public void modifyMember(int memberNo, String password) {
+		memberdao.updateMember(memberNo, password);	//@Autowired해서 memberdao로 씀.
+
+	}
+	
+	@Override //비밀번호 재설정
+	public void modifyPassword(int memNo, String newPassword) {
+		memberdao.updatePassword(memNo, newPassword);
+
+	}
 	
 	@Override
 	public MemberVO login(String email, String password) throws Exception {
 		MemberVO member = memberdao.selectMember(email, password);
-		
-		if(member != null)
+
+		if (member != null)
 			memberdao.updateLastDdate(member.getNo());
-		
+
 		return member;
 	}
 
 	@Override
 	public void test() {
-    
+
 	}
-	
+
 	@Override // 회원 목록 조회
-	public ArrayList<MemberVO> retrieveMemberList(Criteria crt) throws Exception{
+	public ArrayList<MemberVO> retrieveMemberList(Criteria crt) throws Exception {
 		return this.memberMapper.selectMemberList(crt);
 	}
-	
+
 	@Override
 	public int retrieveTotalMember() throws Exception {
 		return this.memberMapper.selectTotalMember();
@@ -49,24 +79,38 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override // 회원 검색 조회
-	public ArrayList<MemberVO> retrieveSearchMember(int startRow, int memberPerPage, String keyfield, String keyword) {
-		return this.memberdao.selectSearchMember(startRow, memberPerPage, keyfield, keyword);
+	public ArrayList<MemberVO> retrieveSearchMember(Criteria crt, String keyfield, String keyword) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		int dataPerPage = crt.getDataPerPage();
+		int pageStart = crt.getPageStart();
+		map.put("keyword", keyword);
+		map.put("dataPerPage", dataPerPage);
+		map.put("dataPerPage", pageStart);
+
+		if (keyfield.equals("email")) {
+			return this.memberMapper.selectSearchMemberByEmail(map);
+		} else {
+			return this.memberMapper.selectSearchMemberByGrade(map);
+		}
 	}
 
 	@Override // 회원 검색 총 수
 	public int retrieveTotalSearchMember(String keyfield, String keyword) {
-		return this.memberdao.selectTotalSearchMember(keyfield, keyword);
+		if(keyfield.equals("email")) {
+			return this.memberMapper.selectTotalSearchMemberByEmail(keyword);
+		}
+		else {
+			return this.memberMapper.selectTotalSearchMemberByGrade(keyword);
+		}
 	}
 
 	@Override // 회원의 정지기간 업데이트
 	public void modifyBan(String banSelect, int no) {
 		if (banSelect.equals("7d")) {
 			this.memberMapper.updateBan7days(no);
-		}
-		else if (banSelect.equals("1d")) {
+		} else if (banSelect.equals("1d")) {
 			this.memberMapper.updateBan1day(no);
-		}
-		else {
+		} else {
 			this.memberMapper.updateBan1minute(no);
 		}
 	}
@@ -93,9 +137,8 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override // 회원의 댓글 -1
 	public void downMemberComms(int no) {
-    this.memberMapper.minusMemberComms(no);
-  	}
-
+		this.memberMapper.minusMemberComms(no);
+	}
 
 	@Override
 	public MemberVO retreiveMemberProfile(int member_no) {
@@ -103,27 +146,13 @@ public class MemberServiceImpl implements MemberService {
 		return null;
 	}
 
-	@Override // 회원가입
-	public void registerMember(MemberVO mVo) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		this.memberdao.insertMemberNo(map);
-		System.out.println(map.get("no"));
-		mVo.setNo((int)map.get("no"));
-		System.out.println((int)map.get("no"));
-		this.memberdao.insertMember(mVo); //this를 적어주는 이유는 @Autowired 연결 선언해준 memberDao랑 같은 애라는걸 알려주려고 적는 거임 (얘가 얘다)
-		
-	}
+	
 
-	@Override
-	public void modifyPassword(int memNo, String newPassword) {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public boolean retrieveEmail(String email) {
 		String checkEmail = this.memberdao.selectEmail(email);
-		
+
 		if (checkEmail != null) {
 			return true;
 		} else {
@@ -131,15 +160,16 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 
-	@Override
-	public void modifyMember(int memberNo, String password) {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public boolean retrieveNickname(String nickname) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public ArrayList<MemberVO> retrieveMemberList(int startRow, int memberPerPage) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

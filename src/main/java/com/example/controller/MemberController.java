@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,18 +32,17 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 	@Autowired
 	private MemberService memberService;
-  @Autowired
+	@Autowired
 	private GradeService gradeService;
 
-	
 //	회원가입
-	@PostMapping("/join")  //이걸 실행하는 값의 주소
-	public String joinMember(MemberVO mVo) { 
+	@PostMapping("/join") // 이걸 실행하는 값의 주소
+	public String joinMember(MemberVO mVo) {
 		this.memberService.registerMember(mVo);
-		return "redirect:/"; //string으로 리턴되는건 html 파일로 넘어감! (회원가입 다음 로그인화면으로 넘어가고 싶다면 templates 안에 있는 로그인 html 파일명 쓰기)
+		return "redirect:/"; // string으로 리턴되는건 html 파일로 넘어감! (회원가입 다음 로그인화면으로 넘어가고 싶다면 templates 안에 있는 로그인
+								// html 파일명 쓰기)
 	}
 
-	
 	@GetMapping("/members")
 	public String viewMemberList(Model model, Criteria crt) {
 		List<MemberVO> lst = null;
@@ -55,31 +55,41 @@ public class MemberController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		model.addAttribute("managerContent", "view/member/memberList");
 		model.addAttribute("lst", lst);
 		model.addAttribute("paging", paging);
-		return "view/member/memberList";
+		return "view/home/viewManagerTemplate";
 	}
-	
-	/*
-	 * @PostMapping("/members")
-	 * 
-	 * @ResponseBody public Object viewSearchList(@RequestParam("keyword") String
-	 * keyword, @RequestParam("keyfield") String keyfield, Model model, Criteria
-	 * crt) { List<MemberVO> lst = null; Paging paging = new Paging(); try { int
-	 * total = this.memberService.retrieveTotalSearchMember(keyfield, keyword);
-	 * paging.setCrt(crt); paging.setTotal(total); lst =
-	 * this.memberService.retrieveSearchMember(crt); } catch (Exception e) {
-	 * e.printStackTrace(); } model.addAttribute(lst); return null; }
-	 */
+
+	@PostMapping("/members")
+	@ResponseBody
+	public Object viewSearchList(@RequestParam("keyword") String keyword, @RequestParam("keyfield") String keyfield,
+			Model model, Criteria crt) {
+		log.info(keyfield);
+		log.info(keyword);
+		List<MemberVO> lst = null;
+		Paging paging = new Paging();
+		try {
+			int total = this.memberService.retrieveTotalSearchMember(keyfield, keyword);
+			paging.setCrt(crt);
+			paging.setTotal(total);
+			lst = this.memberService.retrieveSearchMember(crt, keyfield, keyword);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		model.addAttribute("paging", paging);
+		model.addAttribute("lst", lst);
+		return model;
+	}
 
 	@GetMapping("/members/{no}")
 	public String viewMemberDetail(Model model, @PathVariable int no) {
 		MemberVO member = this.memberService.retrieveMemberByManager(no);
 		log.info(member.toString());
 		model.addAttribute("member", member);
-		model.addAttribute("managerContent", "/fragments/view/ManagerContent");
+		model.addAttribute("managerContent", "view/member/detailMemberByManager");
 		System.out.println(model);
-		return "view/member/detailMemberByManager";
+		return "view/home/viewManagerTemplate";
 	}
 
 	@PostMapping("/members/{no}")
@@ -103,8 +113,34 @@ public class MemberController {
 			e.printStackTrace();
 		}
 		model.addAttribute("grades", grades);
-		return "view/member/gradeList";
+		model.addAttribute("managerContent", "view/member/gradeList");
+		return "view/home/viewManagerTemplate";
 	}
+	
+//	회원 자진 탈퇴
+	@GetMapping("/outForm")  //이걸 실행하는 값의 주소
+	public String outMember(MemberVO mVo, HttpSession session) {
+		log.info("" + session.getAttribute("loginUser"));
+		//this.memberService.modifyMember(member.getNo(), password);
+		return "view/member/out"; 
+	}
+
+	
+	
+//	@GetMapping("/members")
+//	public String callMemberList(Model model) {
+//		List<MemberVO> lst = this.memberService.retrieveMemberList(0, 0);
+//		model.addAttribute(lst);
+//		return "memberList";
+//	}
+//	
+//	@GetMapping("/members/{no}")
+//	public String callMemberDetail(Model model, @PathVariable int no) {
+//		MemberVO member = this.memberService.retrieveMemberByManager(no);
+//		model.addAttribute(member);
+//		model.addAttribute("managerContent","/fragments/view/ManagerContent");
+//		return "view/member/detailMemberByManager";
+//	}
 	
 	@PostMapping("/grades")
 	public String modifyGrade(Model model, HttpServletRequest req) {
@@ -112,16 +148,16 @@ public class MemberController {
 		String[] stringDocs = req.getParameterValues("docs");
 		String[] stringComms = req.getParameterValues("comms");
 		String[] names = req.getParameterValues("name");
-		
+
 		int[] docs = Arrays.stream(stringDocs).mapToInt(Integer::parseInt).toArray();
 		int[] comms = Arrays.stream(stringComms).mapToInt(Integer::parseInt).toArray();
 		int[] gradeNo = Arrays.stream(stringNo).mapToInt(Integer::parseInt).toArray();
-		
+
 		try {
 			int oldGradeSize = this.gradeService.retrieveGradeList().size();
-			int newGradeSize = gradeNo.length;  
+			int newGradeSize = gradeNo.length;
 			for (int i = 0; i < newGradeSize; i++) {
-				gradeNo[i] = i+1;
+				gradeNo[i] = i + 1;
 				GradeVO grade = new GradeVO();
 				grade.setGradeNo(gradeNo[i]);
 				grade.setName(names[i]);
@@ -129,13 +165,13 @@ public class MemberController {
 				grade.setComms(comms[i]);
 				this.gradeService.modifyGrade(grade);
 			}
-			
-			if(oldGradeSize > newGradeSize) {
-				for(int i = newGradeSize; i < oldGradeSize; i++) {
-					this.gradeService.removeGrade(i+1);
+
+			if (oldGradeSize > newGradeSize) {
+				for (int i = newGradeSize; i < oldGradeSize; i++) {
+					this.gradeService.removeGrade(i + 1);
 				}
 			}
-			
+
 			this.gradeService.sortGrade();
 		} catch (Exception e) {
 			e.printStackTrace();

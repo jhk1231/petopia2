@@ -13,10 +13,10 @@
 	<!-- 쪽지 리스트 select -->
 	<select id="selectNoteList" parameterType="noteVO" resultType="noteVo">
 		SELECT Note.note_no, Note.member_no, Note.notecontent_no, Note.counterpart_no, Note.counterpart_nickname, 
-		noteContent.content, Note.sendDate, note.readDate, note.sendrecieve
+		noteContent.content, Note.sendDate, Note.readdate, Note.sendrecieve
 		FROM Note, noteContent
 		WHERE Note.member_no = #{userNo} AND Note.sendrecieve = #{isUserReciever} 
-		AND Note.notecontent_no = notecontent.notecontent_no
+		AND Note.notecontent_no = noteContent.notecontent_no
 		ORDER BY note_no DESC
 		LIMIT #{pageSize} OFFSET #{startOffset}
 	</select>
@@ -32,7 +32,7 @@
 	<!-- 쪽지 상세 조회 select -->
 	<select id="selectNote" resultType="noteVo">
 		SELECT Note.note_no, noteContent.notecontent_no, Note.counterpart_no, Note.counterpart_nickname, noteContent.content,
-		Note.sendDate, Note.readDate, Note.sendrecieve  
+		Note.sendDate, Note.readdate, Note.sendrecieve  
 		FROM Note, noteContent 
 		WHERE Note.note_no = #{noteNo} AND Note.notecontent_no = noteContent.notecontent_no 
 	</select>
@@ -40,13 +40,13 @@
 	<!-- 쪽지 읽음 update -->
 	<update id="updateRead_member">
 		UPDATE Note
-		SET readDate = NOW()
-		WHERE note.notecontent_no = #{noteNo} AND member_no = #{userNo} AND note.sendrecieve = #{isRecieve}
+		SET readdate = NOW()
+		WHERE Note.notecontent_no = #{noteNo} AND member_no = #{userNo} AND Note.sendrecieve = #{isRecieve}
 	</update>
 	<update id="updateRead_counterpart">
 		UPDATE Note
-		SET readDate = NOW()
-		WHERE note.notecontent_no = #{noteNo} and counterpart_no = #{userNo} and note.sendrecieve = #{isRecieve}
+		SET readdate = NOW()
+		WHERE Note.notecontent_no = #{noteNo} and counterpart_no = #{userNo} and Note.sendrecieve = #{isRecieve}
 	</update>
 	
 	<!-- 쪽지 insert -->
