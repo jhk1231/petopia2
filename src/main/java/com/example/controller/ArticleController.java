@@ -70,7 +70,7 @@ public class ArticleController {
 		model.addAttribute("categoryVo", categoryVo);
 		// side bar -------------
 		if (grade) {
-	//		this.articleService.upViewcount(articleNo); // 조회수 증가
+			this.articleService.upViewcount(articleNo); // 조회수 증가
 			// bind
 			article.setNo(articleNo);
 			List<ReplyVO> replys = this.replyService.retrieveAllReply(articleNo);
