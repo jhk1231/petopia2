@@ -2,42 +2,45 @@ package com.example.service.member;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.example.dao.member.MemberDao;
 import com.example.mapper.member.MemberMapper;
 import com.example.vo.member.MemberVO;
 import com.example.vo.paging.Criteria;
 
-
-@Service("memberService") //얘는 서비스다
+@Service("memberService") // 얘는 서비스다
 public class MemberServiceImpl implements MemberService {
 
-	@Autowired private MemberDao memberdao;//memberDao랑 연결해주겠다
+	@Autowired
+	private MemberDao memberdao;// memberDao랑 연결해주겠다
 
-	@Autowired private MemberMapper memberMapper;
-	
+	@Autowired
+	private MemberMapper memberMapper;
+
 	@Override
 	public MemberVO login(String email, String password) throws Exception {
 		MemberVO member = memberdao.selectMember(email, password);
-		
-		if(member != null)
+
+		if (member != null)
 			memberdao.updateLastDdate(member.getNo());
-		
+
 		return member;
 	}
 
 	@Override
 	public void test() {
-    
+
 	}
-	
+
 	@Override // 회원 목록 조회
-	public ArrayList<MemberVO> retrieveMemberList(Criteria crt) throws Exception{
+	public ArrayList<MemberVO> retrieveMemberList(Criteria crt) throws Exception {
 		return this.memberMapper.selectMemberList(crt);
 	}
-	
+
 	@Override
 	public int retrieveTotalMember() throws Exception {
 		return this.memberMapper.selectTotalMember();
@@ -49,24 +52,35 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override // 회원 검색 조회
-	public ArrayList<MemberVO> retrieveSearchMember(int startRow, int memberPerPage, String keyfield, String keyword) {
-		return this.memberdao.selectSearchMember(startRow, memberPerPage, keyfield, keyword);
+	public ArrayList<MemberVO> retrieveSearchMember(Criteria crt, String keyfield, String keyword) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("keyword", keyword);
+		map.put("crt", crt);
+
+		if (keyfield == "email") {
+			return this.memberMapper.selectSearchMemberByEmail(map);
+		} else {
+			return this.memberMapper.selectSearchMemberByGrade(map);
+		}
 	}
 
 	@Override // 회원 검색 총 수
 	public int retrieveTotalSearchMember(String keyfield, String keyword) {
-		return this.memberdao.selectTotalSearchMember(keyfield, keyword);
+		if(keyfield == "email") {
+			return this.memberMapper.selectTotalSearchMemberByEmail(keyword);
+		}
+		else {
+			return this.memberMapper.selectTotalSearchMemberByGrade(keyword);
+		}
 	}
 
 	@Override // 회원의 정지기간 업데이트
 	public void modifyBan(String banSelect, int no) {
 		if (banSelect.equals("7d")) {
 			this.memberMapper.updateBan7days(no);
-		}
-		else if (banSelect.equals("1d")) {
+		} else if (banSelect.equals("1d")) {
 			this.memberMapper.updateBan1day(no);
-		}
-		else {
+		} else {
 			this.memberMapper.updateBan1minute(no);
 		}
 	}
@@ -93,9 +107,8 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override // 회원의 댓글 -1
 	public void downMemberComms(int no) {
-    this.memberMapper.minusMemberComms(no);
-  	}
-
+		this.memberMapper.minusMemberComms(no);
+	}
 
 	@Override
 	public MemberVO retreiveMemberProfile(int member_no) {
@@ -108,10 +121,10 @@ public class MemberServiceImpl implements MemberService {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		this.memberdao.insertMemberNo(map);
 		System.out.println(map.get("no"));
-		mVo.setNo((int)map.get("no"));
-		System.out.println((int)map.get("no"));
-		this.memberdao.insertMember(mVo); //this를 적어주는 이유는 @Autowired 연결 선언해준 memberDao랑 같은 애라는걸 알려주려고 적는 거임 (얘가 얘다)
-		
+		mVo.setNo((int) map.get("no"));
+		System.out.println((int) map.get("no"));
+		this.memberdao.insertMember(mVo); // this를 적어주는 이유는 @Autowired 연결 선언해준 memberDao랑 같은 애라는걸 알려주려고 적는 거임 (얘가 얘다)
+
 	}
 
 	@Override
@@ -123,7 +136,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public boolean retrieveEmail(String email) {
 		String checkEmail = this.memberdao.selectEmail(email);
-		
+
 		if (checkEmail != null) {
 			return true;
 		} else {

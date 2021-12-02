@@ -16,15 +16,15 @@
 	</resultMap>
 	
 	<select id="selectGradeList" resultType="gradeVo" resultMap="gradeInfo">
-		SELECT G.grade_no, name, G.docs, G.comms, count(M.grade_no) AS person
+		SELECT G.grade_no, name, G.docs, G.comms, COUNT(M.grade_no) AS person
 		FROM Member M RIGHT JOIN Grade G
 		ON M.grade_no = G.grade_no
-		GROUP BY name
+		GROUP BY G.grade_no, name, G.docs, G.comms
 		ORDER BY G.grade_no ASC
 	</select>
 	
 	<update id="rearrangeMemberGrade" statementType="CALLABLE">
-		{ call grade_modification() }
+		{ CALL grade_modification() }
 	</update>
 	
 	<select id="selectReadBoardByGrade" parameterType="int" resultType="boardVO" resultMap="boardNameInfo">
@@ -65,7 +65,7 @@
 	</insert>
 	
 	<update id="rearrangeGrade" parameterType="int" statementType="CALLABLE">
-		{ call delete_grade_mod(#{no}) }
+		{ CALL delete_grade_mod(#{no}) }
 	</update>
 	
 	<delete id="deleteGrade" parameterType="int">
@@ -74,11 +74,11 @@
 	</delete>
 	
 	<update id="fillEmptyNum" statementType="CALLABLE">
-		{ call fill_empty_grade_no() }
+		{ CALL fill_empty_grade_no() }
 	</update>
 	
 	<update id="standGrade" statementType="CALLABLE">
-		{ call sort_grade() }
+		{ CALL sort_grade() }
 	</update>
 	
 </mapper>
