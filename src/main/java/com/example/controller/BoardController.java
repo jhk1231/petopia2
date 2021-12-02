@@ -86,7 +86,7 @@ public class BoardController {
 	public String deleteCategory(@ModelAttribute("categoryVo") CategoryVO categoryVo) {
 		log.info("----------------------------------" + categoryVo.getCategoryNo());
 		this.categoryService.removeCategory(categoryVo.getCategoryNo());
-		return "redirect:board";
+		return "redirect:boardManager";
 	}
 	
 	
@@ -96,11 +96,13 @@ public class BoardController {
 		//카테고리 목록
 		log.info(this.categoryService.retrieveCategoryList().toString());
 		
+		//게시판 종류 목록
+		log.info(this.boardService.retrieveBoardkind().toString());
+		
 		//등급 목록
 		log.info(this.gradeService.retrieveGradeList().toString());
 		
-		//게시판 종류 목록
-		log.info(this.boardService.retrieveBoardkind().toString());
+		
 		
 		return null;
 	}
