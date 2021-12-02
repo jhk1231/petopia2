@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.service.board.BoardService;
 import com.example.service.board.CategoryService;
-import com.example.vo.board.BoardBoardGradeVO;
 import com.example.vo.board.CategoryVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -108,14 +108,15 @@ public class BoardController {
 //		this.boardService.registerBoard(boardBoardGradeVo.getBoardVo(), boardBoardGradeVo.getBoardGradeVo());
 //		return "redirect:boardManager";
 //	}
-	
-	
+
 	
 	@GetMapping("/nListArticlereq/{boardNo}/{boardkind}")
-	public String amuguna(@PathVariable("boardNo") int boardNo, @PathVariable("boardkind") int boardkind, HttpServletRequest request) {
+	public RedirectView amuguna(@PathVariable("boardNo") int boardNo, @PathVariable("boardkind") int boardkind, HttpServletRequest request) {
+		RedirectView rv = new RedirectView();
 		request.setAttribute("boardNo", boardNo);
-		request.setAttribute("boardkind", boardkind);
-		return "forward:nListArticle";
+		rv.addStaticAttribute("boardKind", boardkind);
+		rv.setUrl("/nListArticle/" + boardNo);
+		return rv;
 	}
 	
 }

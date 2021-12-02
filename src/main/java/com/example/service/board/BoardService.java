@@ -23,6 +23,10 @@ public interface BoardService {
 	
 	public ArrayList<BoardBoardGradeVO> retrieveAllBoard();
 	
+	public List<BoardVO> retrieveAllWriteBoard(int gradeNo);
+	
+	public boolean retrieveAllReadBoard(int boardNo, int gradeNo);
+	
 //	public int retrieveDuplicateBoard(String boardName);
 //	
 //	public void registerFavoriteBoard(BoardVO boardVo);

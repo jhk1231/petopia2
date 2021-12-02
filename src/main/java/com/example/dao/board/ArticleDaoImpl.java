@@ -39,8 +39,7 @@ public class ArticleDaoImpl implements ArticleDao {
 	
 	@Override
 	public void updateArticle(ArticleVO article) {
-		// TODO Auto-generated method stub
-
+		this.articleMapper.updateArticle(article);
 	}
 
 	@Override
