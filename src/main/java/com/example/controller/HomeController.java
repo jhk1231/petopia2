@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.config.SessionConfig;
+import com.example.service.board.ArticleService;
 import com.example.service.board.CategoryService;
 import com.example.service.member.MemberService;
+import com.example.vo.board.ArticleVO;
 import com.example.vo.board.CategoryVO;
 import com.example.vo.member.MemberVO;
 
@@ -35,6 +37,9 @@ public class HomeController {
 	
 	@Autowired
 	private CategoryService categoryService;
+	
+	@Autowired
+	private ArticleService articleService;
 	
 	@GetMapping("/")
 	public String index() {
@@ -99,6 +104,8 @@ public class HomeController {
 	
 	@GetMapping("/main")
 	public String petopiaMain(Model model) {
+		List<ArticleVO> allArticleList = this.articleService.retrieveAllArticle();
+		model.addAttribute("articleList", allArticleList);
 		model.addAttribute("HomeContent","fragments/viewMainContent");
 		List<CategoryVO> categoryList = this.categoryService.retrieveCategoryBoardList();
 		model.addAttribute("categoryBoardList", categoryList);

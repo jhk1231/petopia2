@@ -52,6 +52,11 @@ public class ArticleDaoImpl implements ArticleDao {
 	public void upViewcount(int articleNo) {
 		this.articleMapper.upViewcount(articleNo);
 	}
+	
+	@Override
+	public List<ArticleVO> selectAllArticle() {
+		return this.articleMapper.selectAllArticle();
+	}
 
 //	// 추천
 //	@Override

@@ -72,6 +72,13 @@ public class ArticleServiceImpl implements ArticleService {
 	public void upViewcount(int articleNo) {
 		this.articleDao.upViewcount(articleNo);
 	}
+	
+	@Override
+	public List<ArticleVO> retrieveAllArticle() {
+		return this.articleDao.selectAllArticle();
+	}
+	
+	
 
 //	@Override
 //	public void recUpdate(int memberNo, int articleNo) {
