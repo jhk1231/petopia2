@@ -36,7 +36,7 @@ public class HomeController {
 	@Autowired
 	private CategoryService categoryService;
 	
-	@GetMapping("/")
+	@GetMapping("/petopialogin")
 	public String index() {
 		return "view/member/login";
 	}

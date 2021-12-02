@@ -23,13 +23,13 @@ public class ManagerController {
 	@Autowired
 	TotalStatisticsServiceImpl totalServiceImpl;
 
-	@GetMapping("/manager")
+	@GetMapping("/petopia-manager")
 	public String manager(Model model) {
 		model.addAttribute("managerContent", "fragments/MemberContent");
 		return "view/home/viewManagerTemplate";
 	}
 
-	@GetMapping("/manager/daily")
+	@GetMapping("/petopia-manager/daily")
 	public String managerDaily(Model model) {
 
 		DailyStatisticsVO dailyVo = dailyServiceImpl.retrieve();
@@ -45,7 +45,7 @@ public class ManagerController {
 		return "view/home/viewManagerTemplate";
 	}
 
-	@GetMapping("/manager/total")
+	@GetMapping("/petopia-manager/total")
 	public String managerTotal(Model model) {
 
 		totalServiceImpl.registerAndmodifyTotal();

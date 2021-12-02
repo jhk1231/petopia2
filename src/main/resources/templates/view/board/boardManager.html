@@ -73,8 +73,10 @@
 				</div>
 				
    				<!-- 게시판 추가 -->
- 				<div id="writeBoard"  style="display: none;">
-					<form th:action="@{/writeBoard}"  method="post" >
+
+<!--  				<div id="writeBoard"  style="display: none;">
+					<form th:action="@{/writeBoard}" th:object="${boardBoardGradeVo}}" method="post" >
+
  					 	카테고리 : <div id="selectCategoryForBoard"></div>
 		
  						게시판 : <input id="boardNameInWriteBoard" type="text" placeholder="게시판 이름" ><br>
@@ -90,7 +92,7 @@
 							<button type="submit"> 저장 </button>
 						</div>
 					</form>
-				</div>
+				</div> -->
 
 				
 				<!-- 게시판 수정 -->
@@ -149,7 +151,7 @@
 	
 	
 	//게시판 추가
-	function addBoard() {
+/* 	function addBoard() {
 
 		$('#modifyCategory').hide();
 		$('#writeCategory').hide();
@@ -167,7 +169,7 @@
 			}
 		})
 
-	}
+	} */
 
 	//게시판 수정
 
