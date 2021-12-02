@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,11 +12,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.view.RedirectView;
+
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.service.board.BoardService;
 import com.example.service.board.CategoryService;
+import com.example.service.member.GradeService;
+import com.example.vo.board.BoardBoardGradeVO;
+import com.example.vo.board.BoardVO;
+
+import org.springframework.web.servlet.view.RedirectView;
+
 import com.example.vo.board.CategoryVO;
+import com.example.vo.member.GradeVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,8 +38,8 @@ public class BoardController {
 	@Autowired
 	private CategoryService categoryService;
 	
-	//@Autowired
-	//private GradeService gradeService;
+	@Autowired
+	private GradeService gradeService;
 
 //	@GetMapping("/main")
 //	public String petopiaMain(Model model) {
@@ -58,8 +67,6 @@ public class BoardController {
 		return "view/home/viewManagerTemplate";
 	}
 	
-
-	
 	
 	//카테고리 추가
 	@PostMapping("/writeCategory")
@@ -72,7 +79,7 @@ public class BoardController {
 	//카테고리 수정
 	@PostMapping("/modifyCategory")
 	public String modifyCategory(@ModelAttribute("categoryVo") CategoryVO categoryVo) {
-		System.out.println("-----------------------------------------------" + categoryVo.toString());
+		log.info("-----------------------------------------------" + categoryVo.toString());
 		int categoryNo = categoryVo.getCategoryNo();
 		String categoryName = categoryVo.getCategoryName();
 		System.out.println(categoryNo + " " + categoryName);
@@ -80,36 +87,58 @@ public class BoardController {
 		return "redirect:boardManager";
 	}
 	
+	//카테고리 삭제
+	@PostMapping("/deleteCategory")
+	public String deleteCategory(@ModelAttribute("categoryVo") CategoryVO categoryVo) {
+		log.info("----------------------------------" + categoryVo.getCategoryNo());
+		this.categoryService.removeCategory(categoryVo.getCategoryNo());
+		return "redirect:board";
+	}
 	
-//	//게시판 추가 - 목록 조회
-//	@PostMapping("/selectList")
-//	public String writeBoardForm(Model model) throws Exception {
-//		List<CategoryVO> categoryList = this.categoryService.retrieveCategoryBoardList();
-//		//ArrayList<GradeVO> gradeList = this.gradeService.retrieveGradeList();
-//		//List<BoardVO> boardkindList = this.boardService.retrieveBoardkind();
-//
-//		model.addAttribute("categoryList", categoryList);
-//		//model.addAttribute("gradeList", gradeList);
-//		//model.addAttribute("boardkindList", boardkindList);
-//		return "/boardManager";
-//	}
-//
-//	
-//	//게시판 추가
+	
+	
+// 	//게시판 추가 - 카테고리, 등급, 게시판 종류 목록 조회
+// 	@PostMapping("/selectList")
+// 	public String writeBoardForm(Model model) throws Exception  {
+		
+
+		
+// 		ArrayList<CategoryVO> categoryList = this.categoryService.retrieveCategoryList();
+// 		ArrayList<BoardBoardGradeVO> boardList = this.boardService.retrieveAllBoard();
+// 		model.addAttribute("categoryList", categoryList);
+// 		model.addAttribute("boardList", boardList);
+		
+// 		log.info("-------------------------------------------------categoryList" + categoryList.toString());
+// 		log.info("-------------------------------------------------boardList" + boardList.toString());
+// 		return "redirect:boardManager";
+// 	}
+
+	
+	//게시판 추가 - 저장
 //	@PostMapping("/writeBoard")
-//	public String writeBoard(@ModelAttribute("boardBoardGradeVo") BoardBoardGradeVO boardBoardGradeVo) {
+////	public String writeBoard(@ModelAttribute("boardBoardGradeVo") BoardBoardGradeVO boardBoardGradeVo) {
 //	
+//			@RequestParam("categoryNo") int categoryNo,
+//			@RequestParam("boardName") String boardName,
+//			@RequestParam("boardkind") int boardkind,
+//			@RequestParam("readGrade") int readGrade,
+//			@RequestParam("writeGrade") int writeGrade) {
+//		
+//		BoardBoardGradeVO boardBoardGradeVo = new BoardBoardGradeVO();
 //		//게시판 저장 목록
-//		boardBoardGradeVo.getBoardVo().getCategoryNo();
-//		boardBoardGradeVo.getBoardVo().getBoardName();
-//		boardBoardGradeVo.getBoardVo().getBoardkind();
-//		boardBoardGradeVo.getBoardGradeVo().getReadGrade();
-//		boardBoardGradeVo.getBoardGradeVo().getWriteGrade();
+//		categoryNo = boardBoardGradeVo.getBoardVo().getCategoryNo();
+//		boardName = boardBoardGradeVo.getBoardVo().getBoardName();
+//		boardkind = boardBoardGradeVo.getBoardVo().getBoardkind();
+//		readGrade = boardBoardGradeVo.getBoardGradeVo().getReadGrade();
+//		writeGrade = boardBoardGradeVo.getBoardGradeVo().getWriteGrade();
+//		
+//		log.info("BoardController CategoryNo----------------------- " + boardBoardGradeVo.getBoardVo().getCategoryNo());
+//		log.info("BoardController ReadGrade ----------------------- " + boardBoardGradeVo.getBoardGradeVo().getReadGrade());
+//		
 //		this.boardService.registerBoard(boardBoardGradeVo.getBoardVo(), boardBoardGradeVo.getBoardGradeVo());
 //		return "redirect:boardManager";
 //	}
 
-	
 	@GetMapping("/nListArticlereq/{boardNo}/{boardkind}")
 	public RedirectView amuguna(@PathVariable("boardNo") int boardNo, @PathVariable("boardkind") int boardkind, HttpServletRequest request) {
 		RedirectView rv = new RedirectView();

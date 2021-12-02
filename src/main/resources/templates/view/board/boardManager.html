@@ -64,20 +64,20 @@
 						<input id="categoryName" type="text" th:field="*{categoryName}">
 						<input id="categoryNo" type="hidden" th:field="*{categoryNo}">
 						<div>
-							<button type="button" id="removeCategoryBtn" name=""> 삭제 </button>
+							<!-- <button type="button" id="removeCategoryBtn" onclick="removeCategory()"> 삭제 </button> -->
+							<button type="button" id="removeCategoryBtn" onclick="removeCategory()"> 삭제 </button>
 							<button type="reset"> 취소 </button>
 							<button type="submit"> 저장 </button>
 						</div>
 					</form>
 				</div>
 				
-
-<!--   				게시판 추가
- 				<div id="writeBoard" >
-					<form th:action="@{/writeBoard}" th:object="${boardBoardGradeVo}" method="post" >
+   				<!-- 게시판 추가 -->
+ 				<div id="writeBoard"  style="display: none;">
+					<form th:action="@{/writeBoard}" th:object="${boardBoardGradeVo}}" method="post" >
  					 	카테고리 : <div id="selectCategoryForBoard"></div>
 		
- 						게시판 : <input type="text" th:field="$*{boardVO.getBoardName()}" placeholder="게시판 이름" ><br>
+ 						게시판 : <input id="boardNameInWriteBoard" type="text" th:field="*{boardName}" placeholder="게시판 이름" ><br>
 						
 						읽기 등급 : <div id="selectReadGrade" ></div>
 
@@ -91,7 +91,7 @@
 						</div>
 					</form>
 				</div>
-  -->
+
 				
 				<!-- 게시판 수정 -->
 				<!-- https://mingggu.tistory.com/118 -->
@@ -119,67 +119,61 @@
 		console.log($(e).closest("tr").attr("id")); //가장 가까운 부모인 "tr"의 "id" 갖고 오기
 		console.log($(e).text());
 
-
-
 		$('#writeCategory').hide();
 		$('#modifyCategory').appendTo('#Blank');
 		$('#modifyCategory').show(); 
 
 		$('#categoryNo').val($(e).closest("tr").attr("id"));
 	}
-	
+
+
 	//카테고리 삭제
+	function removeCategory() {
+		let categoryNo = $("#categoryNo").val();
+		console.log("categoryNo : " + categoryNo);
+
+		$.ajax({
+				url : "/deleteCategory",
+				type : "POST",
+				data : {categoryNo},
+
+				success : function(categoryNo) {
+					console.log(categoryNo.categoryNo);
+					alert(categoryNo.categoryNo);					
+					resolve(categoryNo);
+				},
+				error : function() {
+				}
+			});
+	}
 	
 	
 	//게시판 추가
-	//컨트롤러 접근해서 값 받아올 ajax
+	function addBoard() {
 
-/*  		function selectList() {
+		$('#modifyCategory').hide();
+		$('#writeCategory').hide();
+		$('#writeBoard').appendTo('#Blank');		
+		$('#writeBoard').show();
 
-			$.ajax({
-				url : "/selectList",
-				type : "POST",
 
-				success : function(data) {
-					alert("!!!");
-					resolve(data);
-				},
-				error : function() {
-					alert("error!");
-				}
-			});
-		}
-
-		function addBoard() {
-
-			$('#modifyCategory').hide();
-			$('#writeCategory').hide();
-			$('#writeBoard').appendTo('#Blank');
-			$('#writeBoard').show();
-			
-			//함수 호출?
-			let list = selectList();
-
-			//id writeBoard 인 곳에 list에 담긴 값 전달
-			$("#writeBoard").html("");
-
-			for (let i = 0; i < list.length; i++) {
- 				list[i];
-				<select id="categoryList" th:field="*{categoryName}" required>
-				<option th:each="category : ${categoryList}" th:value="${category.categoryNo}" th:text="${category.categoryName}">
-				</option>
-				</select>
-				
-				console.log(list);
-				//list로 받아서	 
+		$.ajax({
+			url : "/selectList",
+			type : "POST",
+			success : function(data) {
+				resolve(data);
+			},
+			error : function() {
 			}
-			$('#selectCategoryForBoard').html(list);
+		})
 
-		} */
+	}
 
-		//게시판 수정
+	//게시판 수정
 
-		//게시판 삭제
+	//게시판 삭제
+	
+
 	</script>
 
 
