@@ -28,6 +28,7 @@ public class ArticleServiceImpl implements ArticleService {
 	@Transactional
 	public ArticleVO retrieveArticle(int articleNo) { // 세부 조회
 		List<SelectArticleVO> results = this.articleDao.selectArticle(articleNo);
+		System.out.println("results : " + results.size());
 		ArticleVO article = results.get(0).getArticle(); // 게시글 정보 출력
 		List<FileVO> fileList = new ArrayList<FileVO>();	
 			if(results.get(0).getFile() != null) { // 파일이 있을 때
@@ -69,7 +70,6 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Override
 	public void upViewcount(int articleNo) {
-		
 		this.articleDao.upViewcount(articleNo);
 	}
 

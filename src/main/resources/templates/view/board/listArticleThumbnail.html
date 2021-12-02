@@ -9,24 +9,21 @@
 			<div class="row mt-3 mb-5">
 				<h1><span>썸네일 게시판</span></h1>
 			</div>
-			<ui>
+			<ui style="list-style: none;">
 				<li th:each="article : ${articles}">
-					<div class="notEmpty"></div>
+					<!-- <div class="notEmpty" th:if="{article.getThumbnail() == null}"></div> -->
+					<div class="card"></div>
 						<img th:src="|/thumbnailImages/${article.getThumbnail().getSystemFileName()}|">
 						<span class="thumb"><a th:href="|/detailArticle/${article.no}|">
 						<strong th:text="${article.subject}"></strong></a></span>
 						<p th:text="${article.writeDate}"></p>
 					</div>
-					<!-- 썸네일 이미지가 없을 때 -->
-					<div class="Empty" th:if="{image == null}"></div>
-						<img th:src="|/thumbnailImages/noimage.png|">
-						<span class="thumb"><a th:href="|/detailArticle/${article.no}|">
-						<strong th:text="${article.subject}"></strong></a></span>
-						<p th:text="${article.writeDate}"></p>
-						<p>날짜</p>
-					</div>
 				</li>
 			</ui>
+			<div class="write_article_btn">
+				<button id="writeForm_btn" th:onclick="|location.href='@{/writeArticleForm}'|"
+					type="button">글쓰기</button>
+			</div>
 		</div>
 	</main>
 </div>

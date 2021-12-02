@@ -58,7 +58,7 @@ public class MemberVO {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return no + "," + email + "," + nickname + "," + lastDate + "," + grade + "," + visits + "," + ban;
+		return no + "," + email + "," + nickname + "," + lastDate + "," + gradeNo + "," + grade + "," + visits + "," + ban;
 	}
 
 
