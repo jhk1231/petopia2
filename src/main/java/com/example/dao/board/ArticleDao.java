@@ -20,7 +20,9 @@ public interface ArticleDao {
 	
 	void upViewcount(int articleNo); // 조회수 up
 	
-//	// 추천 --
+	List<ArticleVO> selectAllArticle();
+	
+// 추천 --
 //	LikeVO selectLike(LikeVO likeVO);
 //	
 //	void insertLike(LikeVO likeVO);

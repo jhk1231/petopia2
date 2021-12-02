@@ -55,15 +55,18 @@ public class MemberController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		model.addAttribute("managerContent", "view/member/memberList");
 		model.addAttribute("lst", lst);
 		model.addAttribute("paging", paging);
-		return "view/member/memberList";
+		return "view/home/viewManagerTemplate";
 	}
 
 	@PostMapping("/members")
 	@ResponseBody
 	public Object viewSearchList(@RequestParam("keyword") String keyword, @RequestParam("keyfield") String keyfield,
 			Model model, Criteria crt) {
+		log.info(keyfield);
+		log.info(keyword);
 		List<MemberVO> lst = null;
 		Paging paging = new Paging();
 		try {
@@ -84,9 +87,9 @@ public class MemberController {
 		MemberVO member = this.memberService.retrieveMemberByManager(no);
 		log.info(member.toString());
 		model.addAttribute("member", member);
-		model.addAttribute("managerContent", "/fragments/view/ManagerContent");
+		model.addAttribute("managerContent", "view/member/detailMemberByManager");
 		System.out.println(model);
-		return "view/member/detailMemberByManager";
+		return "view/home/viewManagerTemplate";
 	}
 
 	@PostMapping("/members/{no}")
@@ -110,7 +113,8 @@ public class MemberController {
 			e.printStackTrace();
 		}
 		model.addAttribute("grades", grades);
-		return "view/member/gradeList";
+		model.addAttribute("managerContent", "view/member/gradeList");
+		return "view/home/viewManagerTemplate";
 	}
 	
 //	회원 자진 탈퇴
