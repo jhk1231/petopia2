@@ -74,10 +74,10 @@
 				
    				<!-- 게시판 추가 -->
  				<div id="writeBoard"  style="display: none;">
-					<form th:action="@{/writeBoard}" th:object="${boardBoardGradeVo}}" method="post" >
+					<form th:action="@{/writeBoard}"  method="post" >
  					 	카테고리 : <div id="selectCategoryForBoard"></div>
 		
- 						게시판 : <input id="boardNameInWriteBoard" type="text" th:field="*{boardName}" placeholder="게시판 이름" ><br>
+ 						게시판 : <input id="boardNameInWriteBoard" type="text" placeholder="게시판 이름" ><br>
 						
 						읽기 등급 : <div id="selectReadGrade" ></div>
 

@@ -1,6 +1,5 @@
 package com.example.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,19 +11,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.service.board.BoardService;
 import com.example.service.board.CategoryService;
 import com.example.service.member.GradeService;
 import com.example.vo.board.BoardBoardGradeVO;
-import com.example.vo.board.BoardVO;
-
-import org.springframework.web.servlet.view.RedirectView;
-
 import com.example.vo.board.CategoryVO;
-import com.example.vo.member.GradeVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -96,6 +90,22 @@ public class BoardController {
 	}
 	
 	
+	//게시판 추가 - 카테고리, 등급, 게시판 종류 조회
+	@PostMapping("/selectList")
+	public String selectList(Model model) throws Exception {
+		//카테고리 목록
+		log.info(this.categoryService.retrieveCategoryList().toString());
+		
+		//등급 목록
+		log.info(this.gradeService.retrieveGradeList().toString());
+		
+		//게시판 종류 목록
+		log.info(this.boardService.retrieveBoardkind().toString());
+		
+		return null;
+	}
+	
+	
 	
 // 	//게시판 추가 - 카테고리, 등급, 게시판 종류 목록 조회
 // 	@PostMapping("/selectList")
@@ -116,7 +126,7 @@ public class BoardController {
 	
 	//게시판 추가 - 저장
 //	@PostMapping("/writeBoard")
-////	public String writeBoard(@ModelAttribute("boardBoardGradeVo") BoardBoardGradeVO boardBoardGradeVo) {
+//	public String writeBoard(@ModelAttribute("boardBoardGradeVo") BoardBoardGradeVO boardBoardGradeVo) {
 //	
 //			@RequestParam("categoryNo") int categoryNo,
 //			@RequestParam("boardName") String boardName,
@@ -139,6 +149,9 @@ public class BoardController {
 //		return "redirect:boardManager";
 //	}
 
+			
+			
+			
 	@GetMapping("/nListArticlereq/{boardNo}/{boardkind}")
 	public RedirectView amuguna(@PathVariable("boardNo") int boardNo, @PathVariable("boardkind") int boardkind, HttpServletRequest request) {
 		RedirectView rv = new RedirectView();
