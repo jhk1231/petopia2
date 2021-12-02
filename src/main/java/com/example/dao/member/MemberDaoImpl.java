@@ -87,17 +87,6 @@ public class MemberDaoImpl implements MemberDao {
 		this.mapper.insertMemberNo(mVo);
 	}
 	
-	@Override
-	public ArrayList<MemberVO> selectSearchMember(int startRow, int memberPerPage, String keyfield, String keyword) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int selectTotalSearchMember(String keyfield, String keyword) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public MemberVO selectMemberProfile(int member_no) {

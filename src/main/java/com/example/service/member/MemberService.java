@@ -17,7 +17,7 @@ public interface MemberService {
     // 해당 회원의 상세 조회
     MemberVO retrieveMemberByManager(int no);
     // 검색에 해당된 회원 조회
-    ArrayList<MemberVO> retrieveSearchMember(int startRow, int memberPerPage, String keyfield, String keyword);
+    ArrayList<MemberVO> retrieveSearchMember(Criteria crt, String keyfield, String keyword);
     // 검색에 해당된 회원의 총 수
     int retrieveTotalSearchMember(String keyfield, String keyword);
     // 정지 기간 업데이트
