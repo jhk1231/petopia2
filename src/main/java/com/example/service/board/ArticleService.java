@@ -18,7 +18,7 @@ public interface ArticleService {
 	
 	void removeArticle(int articleNo); // 삭제
 	
-	
+	List<ArticleVO> retrieveAllArticle(); // 전체글 조회
 	
 	void upViewcount(int articleNo); // 조회수 up
 //	

@@ -24,6 +24,7 @@ import com.example.service.board.ReplyService;
 import com.example.util.FileManager;
 //import com.example.util.FileManager;
 import com.example.vo.board.ArticleVO;
+import com.example.vo.board.BoardBoardGradeVO;
 import com.example.vo.board.BoardVO;
 import com.example.vo.board.CategoryVO;
 import com.example.vo.board.FileFormVO;
@@ -185,17 +186,11 @@ public class ArticleController {
 	}
 	
 	
-	
-	
-	
-	
-	
 
 // 게시판 목록 조회
 
 	@GetMapping("/nListArticle/{boardNo}")
 	public String selectAllNomalArticle(@PathVariable("boardNo") int boardNo,
-														HttpServletRequest request,
 														Model model) {
 		// create
 		List<ArticleVO> articles = this.articleService.retrieveBoard(boardNo);
@@ -212,18 +207,18 @@ public class ArticleController {
 				noFile.setSystemFileName("noimage.png");
 				article.setThumbnail(noFile);
 			}
-//			log.info("$$$$$$$$$$$$$$" + article.toString());
 		}
 		List<CategoryVO> categoryList = this.categoryService.retrieveCategoryBoardList();
-		model.addAttribute("categoryBoardList", categoryList);
 		CategoryVO categoryVo = new CategoryVO();
-		model.addAttribute("categoryVo", categoryVo);
 
-		model.addAttribute("boardName", boardNo); // 차후 이름으로 변경할것
+		BoardBoardGradeVO bbgVO = this.boardService.retrieveOneBoard(boardNo);
+		String boardName = bbgVO.getBoardVo().getBoardName();
+		int boardkind = bbgVO.getBoardVo().getBoardkind();
+		
+		model.addAttribute("categoryBoardList", categoryList);
+		model.addAttribute("categoryVo", categoryVo);
+		model.addAttribute("boardName", boardName); // 차후 이름으로 변경할것
 		model.addAttribute("articles", articles); // 게시글 정보 전송
-		log.info("%^^^^^^^^^^^^^^^^^6boardKind^^^^^^^^^" + request.getParameter("boardKind"));
-		// view
-		int boardkind = Integer.parseInt(request.getParameter("boardKind"));
 		model.addAttribute("boardkind", boardkind); // 게시글 유형
 		return "/view/home/viewBoardTemplate";
 	}

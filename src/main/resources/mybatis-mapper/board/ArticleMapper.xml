@@ -17,6 +17,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectBoard" parameterType="Integer" statementType="CALLABLE" resultType="articleVo" resultMap="articleVOResult">
 		{ CALL sp_article_select_board(#{boardNo}) }
 	</select>
+	
+	<select id="selectAllArticle" resultType="articleVo" resultMap="articleVOResult">
+		SELECT * FROM Article ORDER BY writedate DESC
+	</select>
+	
 
 	<resultMap type="articleVo" id="detailArticleVOResult">
 		<result property="boardNo" javaType="int" column="board_no" jdbcType="INTEGER"/>
@@ -24,6 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="nickname" javaType="String" column="nickname"  jdbcType="VARCHAR"/>
 		<result property="writeDate" javaType="String" column="writedate" jdbcType="VARCHAR"/>
 		<result property="content" javaType="String" column="content" jdbcType="VARCHAR"/>
+		<result property="viewcount" javaType="int" column="viewcount" jdbcType="INTEGER"/>
 	</resultMap>
 	
 	<resultMap type="fileVo" id="detailFileVOResult">

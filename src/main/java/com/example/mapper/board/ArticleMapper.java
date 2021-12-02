@@ -24,6 +24,8 @@ public interface ArticleMapper {
 	
 	void upViewcount(int aritlceNo); // 조회수 증가
 	
+	List<ArticleVO> selectAllArticle();
+	
 //	LikeVO selectLike(LikeVO likeVO);
 //	
 //	void insertLike(LikeVO likeVO);

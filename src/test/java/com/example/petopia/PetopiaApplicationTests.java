@@ -2,7 +2,6 @@ package com.example.petopia;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -24,8 +23,8 @@ import com.example.service.board.BoardService;
 import com.example.service.board.CategoryService;
 import com.example.service.board.ReplyService;
 import com.example.util.FileManager;
-import com.example.vo.board.CategoryVO;
-
+import com.example.vo.board.ArticleVO;
+import com.example.vo.board.SelectArticleVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -110,8 +109,19 @@ class PetopiaApplicationTests {
 	
 	@Test
 	void tasdo() {
-		List<CategoryVO> categoryList = this.categoryService.retrieveCategoryBoardList();
-		categoryList.forEach(catte -> log.info("***: " + catte));
+//		List<CategoryVO> categoryList = this.categoryService.retrieveCategoryBoardList();
+//		categoryList.forEach(catte -> log.info("***: " + catte));
+		
+//		int articleNo = this.articleMapper.selectViewCount(14);
+//		System.out.println("saddasddasad" + articleNo);
+//		for (SelectArticleVO selectArticleVO : artVO) {
+//			log.info(selectArticleVO.toString());
+//		}
+		
+//		List<ArticleVO> artList = this.articleMapper.selectAllArticle();
+//		for (ArticleVO articleVO : artList) {
+//			log.info(articleVO.toString());
+//		}
 	}
 	
 	

@@ -29,6 +29,7 @@
 							</select>
 						</div>
 
+
 						<div id="write_area" class="write-area-style">
 							<!-- 개발 후 display:none 풀기 -->
 							<div class="write_options" style="display: none;">
@@ -40,6 +41,7 @@
 										name="displayNotice" value=0>
 
 									<!-- 관리자면 활성화 -->
+
 									<p id="noticeCheck" th:if="${gradeNo}==1" style="width: 50%;">공지등록</p>
 									<select id="displayNotice" th:if="${gradeNo}==1"
 										th:field="*{displayNotice}">
@@ -47,6 +49,7 @@
 										<option value="1">게시판</option>
 										<option value="2">전체</option>
 									</select>
+
 
 								</div>
 
