@@ -11,6 +11,9 @@ import com.example.vo.board.BoardVO;
 import com.example.vo.board.CategoryBoardVO;
 import com.example.vo.board.CategoryVO;
 
+import lombok.extern.java.Log;
+
+@Log
 @Repository("categoryService")
 public class CategoryServiceImpl implements CategoryService {
 
@@ -43,6 +46,7 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public ArrayList<CategoryVO> retrieveCategoryList() {
 		ArrayList<CategoryVO> categoryList = this.categoryDao.selectCategoryList();
+		log.info("Service ----------------------------------------" + categoryList.toString());
 		return categoryList;
 	}
 

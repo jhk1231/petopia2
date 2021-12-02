@@ -1,8 +1,6 @@
 package com.example.dao.board;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -11,7 +9,10 @@ import com.example.mapper.board.CategoryMapper;
 import com.example.vo.board.CategoryBoardVO;
 import com.example.vo.board.CategoryVO;
 
+import lombok.extern.java.Log;
 
+
+@Log
 @Repository("categoryDao")
 public class CategoryDaoImpl implements CategoryDao {
 
@@ -43,6 +44,8 @@ public class CategoryDaoImpl implements CategoryDao {
 	@Override
 	public ArrayList<CategoryVO> selectCategoryList() {
 		ArrayList<CategoryVO> categoryList = this.categoryMapper.selectCategoryList();
+		log.info("Dao ----------------------------------------" + categoryList.toString());
+		
 		return categoryList;
 	}
 	
