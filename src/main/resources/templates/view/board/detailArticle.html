@@ -48,8 +48,8 @@
 									</tr>
 									<tr th:if="${article.fileList != null}">
 										<td>
-											<!--이미지 파일들--> <img th:each="imageFile : ${article.fileList}"
-											th:src="|/images/${imageFile.getSystemFileName()}|"
+											<!--이미지 파일들--> 
+											<img th:each="imageFile : ${article.fileList}" th:src="|/images/${imageFile.getSystemFileName()}|"
 											width="200" height="200" />
 										</td>
 									</tr>
