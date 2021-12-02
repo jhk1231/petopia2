@@ -59,4 +59,16 @@ public interface MemberMapper {
 	// 댓글 삭제 시 회원의 댓글 수 변동
 	void minusMemberComms(int no);
 
+	//회원 자진 탈퇴
+	void updateMember(int no, String password);
+	
+	//비밀번호 재설정
+	void updatePassword(int memNo, String newPassword);
+
+	// MemberVO selectMember(String email, String password);
+	// MemberVO selectMember(String email);
+	// MemberVO selectMemberProfile(int member_no);
+	// void updateBan(String banSelect, int no);
+	
+	//	boolean selectNickname(String nickname);
 }

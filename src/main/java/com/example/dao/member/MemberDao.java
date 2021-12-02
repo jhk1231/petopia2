@@ -22,21 +22,19 @@ public interface MemberDao {
 
 	// 회원가입 시 이메일 중복확인
 	String selectEmail(String email);
+	
+	//회원 자진 탈퇴
+	void updateMember(int memberNo, String password);
+	
+	//비밀번호 재설정
+	void updatePassword(int memNo, String newPassword);
 
 	MemberVO selectMember(String email);
 
 	MemberVO selectMemberProfile(int member_no);
 
-	void updatePassword(int memNo, String newPassword);
-
-	void updateMember(int memberNo, String password);
 
 	boolean selectNickname(String nickname);
 
-	// 검색에 해당된 회원 조회
-	ArrayList<MemberVO> selectSearchMember(int startRow, int memberPerPage, String keyfield, String keyword);
-
-	// 검색에 해당된 회원의 총 수
-	int selectTotalSearchMember(String keyfield, String keyword);
 
 }

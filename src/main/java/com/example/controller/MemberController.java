@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.service.member.GradeService;
 import com.example.service.member.MemberService;
@@ -105,6 +105,31 @@ public class MemberController {
 		model.addAttribute("grades", grades);
 		return "view/member/gradeList";
 	}
+	
+//	회원 자진 탈퇴
+	@GetMapping("/outForm")  //이걸 실행하는 값의 주소
+	public String outMember(MemberVO mVo, HttpSession session) {
+		log.info("" + session.getAttribute("loginUser"));
+		//this.memberService.modifyMember(member.getNo(), password);
+		return "view/member/out"; 
+	}
+
+	
+	
+//	@GetMapping("/members")
+//	public String callMemberList(Model model) {
+//		List<MemberVO> lst = this.memberService.retrieveMemberList(0, 0);
+//		model.addAttribute(lst);
+//		return "memberList";
+//	}
+//	
+//	@GetMapping("/members/{no}")
+//	public String callMemberDetail(Model model, @PathVariable int no) {
+//		MemberVO member = this.memberService.retrieveMemberByManager(no);
+//		model.addAttribute(member);
+//		model.addAttribute("managerContent","/fragments/view/ManagerContent");
+//		return "view/member/detailMemberByManager";
+//	}
 	
 	@PostMapping("/grades")
 	public String modifyGrade(Model model, HttpServletRequest req) {
