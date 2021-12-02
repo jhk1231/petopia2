@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.service.board.BoardService;
@@ -19,6 +20,9 @@ import com.example.service.board.CategoryService;
 import com.example.service.member.GradeService;
 import com.example.vo.board.BoardBoardGradeVO;
 import com.example.vo.board.BoardVO;
+
+import org.springframework.web.servlet.view.RedirectView;
+
 import com.example.vo.board.CategoryVO;
 import com.example.vo.member.GradeVO;
 
@@ -93,21 +97,21 @@ public class BoardController {
 	
 	
 	
-	//게시판 추가 - 카테고리, 등급, 게시판 종류 목록 조회
-	@PostMapping("/selectList")
-	public String writeBoardForm(Model model) throws Exception  {
+// 	//게시판 추가 - 카테고리, 등급, 게시판 종류 목록 조회
+// 	@PostMapping("/selectList")
+// 	public String writeBoardForm(Model model) throws Exception  {
 		
 
 		
-		ArrayList<CategoryVO> categoryList = this.categoryService.retrieveCategoryList();
-		ArrayList<BoardBoardGradeVO> boardList = this.boardService.retrieveAllBoard();
-		model.addAttribute("categoryList", categoryList);
-		model.addAttribute("boardList", boardList);
+// 		ArrayList<CategoryVO> categoryList = this.categoryService.retrieveCategoryList();
+// 		ArrayList<BoardBoardGradeVO> boardList = this.boardService.retrieveAllBoard();
+// 		model.addAttribute("categoryList", categoryList);
+// 		model.addAttribute("boardList", boardList);
 		
-		log.info("-------------------------------------------------categoryList" + categoryList.toString());
-		log.info("-------------------------------------------------boardList" + boardList.toString());
-		return "redirect:boardManager";
-	}
+// 		log.info("-------------------------------------------------categoryList" + categoryList.toString());
+// 		log.info("-------------------------------------------------boardList" + boardList.toString());
+// 		return "redirect:boardManager";
+// 	}
 
 	
 	//게시판 추가 - 저장
@@ -134,17 +138,14 @@ public class BoardController {
 //		this.boardService.registerBoard(boardBoardGradeVo.getBoardVo(), boardBoardGradeVo.getBoardGradeVo());
 //		return "redirect:boardManager";
 //	}
-//	
-//	@PostMapping("/writeBoard")
-//	public String writeBoard( @ModelAttribute("categoryVo") CategoryVO categoryVo,
-//	
-//	
-//	
+
 	@GetMapping("/nListArticlereq/{boardNo}/{boardkind}")
-	public String amuguna(@PathVariable("boardNo") int boardNo, @PathVariable("boardkind") int boardkind, HttpServletRequest request) {
+	public RedirectView amuguna(@PathVariable("boardNo") int boardNo, @PathVariable("boardkind") int boardkind, HttpServletRequest request) {
+		RedirectView rv = new RedirectView();
 		request.setAttribute("boardNo", boardNo);
-		request.setAttribute("boardkind", boardkind);
-		return "forward:nListArticle";
+		rv.addStaticAttribute("boardKind", boardkind);
+		rv.setUrl("/nListArticle/" + boardNo);
+		return rv;
 	}
 	
 }

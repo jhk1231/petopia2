@@ -17,6 +17,7 @@ import lombok.ToString;
 @ToString
 @Alias("boardVO")
 public class BoardVO {
+
 	private int categoryNo;
 	
 	private int boardNo;
@@ -37,5 +38,6 @@ public class BoardVO {
 		this.boardName = boardName;
 		this.boardkind = boardkind;
 	}
+
 }
 
