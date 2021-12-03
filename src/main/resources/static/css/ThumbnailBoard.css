@@ -73,4 +73,7 @@ a:hover,a:active,a:focus{text-decoration: underline;}
     color: #767676;
     font-size: 1em;
 }
-
+.fixed_img_col li img{
+    width: 100%;
+    height: 80%;
+ }

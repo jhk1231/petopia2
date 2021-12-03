@@ -21,13 +21,16 @@ public interface ArticleDao {
 	void upViewcount(int articleNo); // 조회수 up
 	
 	List<ArticleVO> selectAllArticle();
+
+	int likeCheck(ArticleVO articleVO);
 	
-// 추천 --
-//	LikeVO selectLike(LikeVO likeVO);
+	void insertLike(ArticleVO articleVO);
 //	
-//	void insertLike(LikeVO likeVO);
+	void deleteLike(ArticleVO articleVO);  // 추천 삭제
 //	
-//	void deleteLike(int likeNo); // 추천 삭제 
-//	
-//	int totalRecCount(int totalRecCount);
+	int totalRecCount(int totalRecCount);
+	
+	void upLikecount(int articleNo);
+	
+	void downLikecount(int articleNo);
 }

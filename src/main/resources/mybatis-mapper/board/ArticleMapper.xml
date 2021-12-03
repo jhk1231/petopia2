@@ -24,6 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 
 	<resultMap type="articleVo" id="detailArticleVOResult">
+		<result property="memberNo" javaType="int" column="member_no" jdbcType="INTEGER"/>
 		<result property="boardNo" javaType="int" column="board_no" jdbcType="INTEGER"/>
 		<result property="subject" javaType="String" column="subject"  jdbcType="VARCHAR"/>
 		<result property="nickname" javaType="String" column="nickname"  jdbcType="VARCHAR"/>
@@ -64,6 +65,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		{ CALL sp_article_update(#{no},#{boardNo}, #{subject}, #{content} ) }
 	</update>
 	
+	<update id="upLikecount" parameterType="int" statementType="CALLABLE">
+		{ CALL  sp_up_article_likecount(#{articleNo}) }
+	</update>
+	
+	<update id="downLikecount" parameterType="int" statementType="CALLABLE">
+		{ CALL  sp_down_article_likecount(#{articleNo}) }
+	</update>
 	
 	
 	<update id="upViewcount" parameterType="int" statementType="CALLABLE" >
@@ -80,7 +88,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 추천 -->
 	
 	<insert id="insertLike" parameterType="likeVo" statementType="CALLABLE">
-		{ CALL sp_insert_like(#{memberNo}, #{articleNo}) }
+		{ CALL sp_insert_like(#{memberNo}, #{no}) }
 	</insert>
 	
 	<resultMap type="likeVo" id="selectLikeMap">
@@ -90,15 +98,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	
 	<select id="selectLike" parameterType="likeVo" statementType="CALLABLE" resultMap="selectLikeMap">
-		{ CALL sp_select_like( #{memberNo}, #{articleNo}) }
+		{ CALL sp_select_like( #{memberNo}, #{no}) }
 	</select>
 	
-	<delete id="deleteLike" parameterType="int"  statementType="CALLABLE">
-		{ CALL sp_delete_like( #{no} ) }
+	<delete id="deleteLike" parameterType="articleVo"  statementType="CALLABLE">
+		DELETE FROM ArticleRecommend WHERE member_no = #{memberNo} AND article_no = #{no}
 	</delete>
 	
 	
-	<select id="totalLikeCount" statementType="CALLABLE" parameterType="int" resultType="int">
+	<select id="likeCheck" parameterType="articleVo" resultType="int" >
+		SELECT COUNT(*) FROM ArticleRecommend WHERE member_no = #{memberNo} AND article_no = #{no}
+	</select>
+	
+	
+	<select id="totalLikeCount" statementType="CALLABLE" parameterType="int" resultType="INTEGER">
 			{ CALL sp_totalcount_like(#{articleNo} ) }
 	</select>
 	

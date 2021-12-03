@@ -24,7 +24,7 @@
 	</select>
 	
 	<update id="rearrangeMemberGrade" statementType="CALLABLE">
-		{ CALL grade_modification() }
+		{ CALL sp_member_grade_modification() }
 	</update>
 	
 	<select id="selectReadBoardByGrade" parameterType="int" resultType="boardVO" resultMap="boardNameInfo">
@@ -65,7 +65,7 @@
 	</insert>
 	
 	<update id="rearrangeGrade" parameterType="int" statementType="CALLABLE">
-		{ CALL delete_grade_mod(#{no}) }
+		{ CALL sp_before_delete_grade(#{no}) }
 	</update>
 	
 	<delete id="deleteGrade" parameterType="int">
@@ -78,7 +78,7 @@
 	</update>
 	
 	<update id="standGrade" statementType="CALLABLE">
-		{ CALL sort_grade() }
+		{ CALL sp_sort_grade() }
 	</update>
 	
 </mapper>

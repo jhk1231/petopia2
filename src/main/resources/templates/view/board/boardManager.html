@@ -1,95 +1,97 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
 
-
+<link th:href="@{../css/boardManagerStyle.css}" rel="stylesheet" />
 <div id="layoutSidenav_content">
 	<main>
 		<div class="container-fluid px-4">
-
-			<div class="row mt-3 mb-5">
-
-
+			<div class="row mt-5 mb-5">
 				<!-- 관리버튼 -->
-				<div class="btns">
+				<div class="btns boardManager-btn-style">
 					<div>
 						<!-- <input value="카테고리추가" type="button" onclick="addCategory()" id="addCategory"> -->
-						<button type="button" onclick="addCategory()" id="addCategoryBtn">카테고리</button>
+						<button type="button" onclick="addCategory()" id="addCategoryBtn">
+							카테고리 추가</button>
 					</div>
 					<div>
-						<button type="button" onclick="addBoard()" id="addBoardBtn">게시판</button>
+						<button type="button" onclick="addBoard()" id="addBoardBtn">
+							게시판 추가</button>
 					</div>
 				</div>
 
 				<!-- 카테고리 + 게시판 리스트 -->
 				<!-- https://github.com/Fidget278/petopia/blob/develop/WebContent/viewDetailArticleContent.jsp
 				342 -->
-				<div id="categoryBoardList">
-					<table>
-						<th:block th:each="category : ${categoryBoardList}">
+				<div class="categoryList-content-style">
+					<div id="categoryBoardList" class="categoryList-list-style">
+						<table>
+							<th:block th:each="category : ${categoryBoardList}">
+								<tr th:id="${category.getCategoryNo()}">
+									<td th:onclick="modifyCategory(this)">
+										<div class="list-category-style"
+											th:text="${category.getCategoryName()}"></div>
+									</td>
+								</tr>
 
-							<tr th:id="${category.getCategoryNo()}">
-								<td th:onclick="modifyCategory(this)">
-									<div th:text="${category.getCategoryName()}"></div>
-								</td>
-							</tr>
-							
-							<th:block th:if="${category.getBoardList() != null}">
-
-								<th:block th:each="board : ${category.boardList}">
-
-									<tr th:id="${board.getBoardNo()}">
-										<td th:onclick="modifyBoard(this)">
-											<div th:text="${board.boardName}"></div>
-										</td>
-									</tr>
-									
+								<th:block th:if="${category.getBoardList() != null}">
+									<th:block th:each="board : ${category.boardList}">
+										<tr th:id="${board.getBoardNo()}">
+											<td th:onclick="modifyBoard(this)">
+												<div class="list-board-style" th:text="${board.boardName}"></div>
+											</td>
+										</tr>
+									</th:block>
 								</th:block>
 							</th:block>
+						</table>
+					</div>
 
-						</th:block>
-					</table>
-				</div>
+					<div class="categoryList-input-style">
+						<!-- 빈페이지 -->
+						<div id="Blank" class="categoryList-blank-style"></div>
 
-
-				<!-- 빈페이지 -->
-				<div id="Blank">
-				</div>
-
-				<!-- 카테고리 추가 -->
-				<div id="writeCategory" style="display: none;">
-					<form th:action="@{/writeCategory}" th:object="${categoryVo}" method="post">
-						<input type="text" th:field="*{categoryName}" placeholder="카테고리 이름">
-						<div>
-							<button type="reset"> 취소 </button>
-							<button type="submit"> 저장 </button>
+						<!-- 카테고리 추가 -->
+						<div id="writeCategory" style="display: none">
+							<form th:action="@{/writeCategory}" th:object="${categoryVo}"
+								method="post">
+								<input type="text" th:field="*{categoryName}"
+									placeholder="카테고리 이름" />
+								<div>
+									<button type="reset">취소</button>
+									<button type="submit">저장</button>
+								</div>
+							</form>
 						</div>
-					</form>
-				</div>
 
-				<!-- 카테고리 수정 -->
-				<div id="modifyCategory" style="display: none;">
-					<form th:action="@{/modifyCategory}" th:object="${categoryVo}" method="post">
-						<input id="categoryName" type="text" th:field="*{categoryName}" placeholder="수정할 카테고리 이름">
-						<input id="categoryNo" type="hidden" th:field="*{categoryNo}">
-						<div>
-							<!-- <button type="button" id="removeCategoryBtn" onclick="removeCategory()"> 삭제 </button> -->
-							<button type="button" id="removeCategoryBtn" onclick="removeCategory(this.form)"> 삭제 </button>
-							<button type="reset"> 취소 </button>
-							<button type="submit"> 저장 </button>
+						<!-- 카테고리 수정 -->
+						<div id="modifyCategory" style="display: none">
+							<form th:action="@{/modifyCategory}" th:object="${categoryVo}"
+								method="post">
+								<input id="categoryName" type="text" th:field="*{categoryName}"
+									placeholder="수정할 카테고리 이름" /> <input id="categoryNo"
+									type="hidden" th:field="*{categoryNo}" />
+								<div>
+									<!-- <button type="button" id="removeCategoryBtn" onclick="removeCategory()"> 삭제 </button> -->
+									<button type="button" id="removeCategoryBtn"
+										onclick="removeCategory(this.form)">삭제</button>
+									<button type="reset">취소</button>
+									<button type="submit">저장</button>
+								</div>
+							</form>
 						</div>
-					</form>
-				</div>
 
-				<!-- 게시판 추가 -->
-				<div id="writeBoard" style="display: none;">
-					<form th:action="@{/writeBoard}" method="post">
-						<div id="addBoardForm"></div>
-						
-						<div>
-							<button type="reset"> 취소 </button>
-							<button type="submit"> 저장 </button>
+						<!-- 게시판 추가 -->
+						<div id="writeBoard" style="display: none">
+							<form th:action="@{/writeBoard}" method="post">
+								<div id="addBoardForm"></div>
+
+								<div>
+									<button type="reset">취소</button>
+									<button type="submit">저장</button>
+								</div>
+							</form>
 						</div>
-					</form>
-				</div>
+
 
 				<!-- 게시판 수정 -->
 				<div id="modifyBoard" style="display: none;">
@@ -101,13 +103,13 @@
 							<button type="button" id="removeBoardBtn" onclick="removeBoard(this.form)"> 삭제 </button>
 							<button type="reset"> 취소 </button>
 							<button type="submit"> 저장 </button>
+
 						</div>
-					</form>
+					</div>
 				</div>
-
-
 			</div>
 		</div>
+
 	</main>
 
 	<!-- ajax -->
@@ -344,13 +346,5 @@
 
 	</script>
 
-
-
-
-
-
-
 </div>
-
-
 </html>

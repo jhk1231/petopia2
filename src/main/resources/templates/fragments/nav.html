@@ -42,6 +42,7 @@
 										<td class="category-board-style">
 
 
+
 											<div th:if="${board.boardkind == 0}">
 												<span> <i class="far fa-list-alt"></i>
 												</span> <a th:text="${board.boardName}"
@@ -53,9 +54,7 @@
 													th:href="@{/nListArticlereq/{boardNo}/{boardkind}(boardNo = ${board.boardNo}, boardkind = ${board.boardkind})}"></a>
 											</div>
 
-										</td>
-
-
+										
 									</tr>
 								</th:block>
 							</th:block>

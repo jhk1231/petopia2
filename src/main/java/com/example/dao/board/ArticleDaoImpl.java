@@ -58,30 +58,35 @@ public class ArticleDaoImpl implements ArticleDao {
 		return this.articleMapper.selectAllArticle();
 	}
 
-//	// 추천
-//	@Override
-//	public void insertLike(LikeVO likeVO) {
-//		this.articleMapper.insertLike(likeVO);
-//	}
+	// 추천
+	@Override
+	public void insertLike(ArticleVO articleVO) {
+		this.articleMapper.insertLike(articleVO);
+	}
 //	
 //	// 추천 취소
-//	@Override
-//	public void deleteLike(int likeNo) {
-//		this.articleMapper.deleteLike(likeNo);
-//	}
+	@Override
+	public void deleteLike(ArticleVO articleVO) {
+		this.articleMapper.deleteLike(articleVO);
+	}
 //	
-//	
-//	// pk값
-//	@Override
-//	public LikeVO selectLike(LikeVO likeVO) {
-//		return this.articleMapper.selectLike(likeVO);
-//	}
-//	
-//	@Override
-//	public int totalRecCount(int articleNo) {
-//		return this.articleMapper.totalLikeCount(articleNo);
-//	}
+	@Override
+	public int totalRecCount(int articleNo) {
+		return this.articleMapper.totalLikeCount(articleNo);
+	}
 	
+	public int likeCheck(ArticleVO articleVO) {
+		return this.articleMapper.likeCheck(articleVO);
+	}
 	
+	@Override
+	public void upLikecount(int articleNo) {
+		this.articleMapper.upLikecount(articleNo);
+	}
+	
+	@Override
+	public void downLikecount(int articleNo) {
+		this.articleMapper.downLikecount(articleNo);
+	}
 	
 }
