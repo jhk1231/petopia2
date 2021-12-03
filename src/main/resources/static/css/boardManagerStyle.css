@@ -98,7 +98,6 @@
 
 .categoryList-input-style div input{
 	padding: 7px 10px;
-	border-radius: 10px;
 }
 
 .categoryList-input-style div form div{
@@ -108,4 +107,23 @@
 }
 .categoryList-input-style div form div button {
 	width: 30%;
+}
+
+.categoryList-blank-style table td{
+	border: 1px solid #cccccc;
+}
+
+.categoryList-blank-style table tr td:first-child {
+	background-color: #caffce;
+	padding: 10px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.categoryList-blank-style table tr td:last-child {
+	text-align: center;
+}
+.categoryList-blank-style table tr td:last-child select{
+	width: 100%;
+	padding: 10px 0; 
 }
