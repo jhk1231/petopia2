@@ -1,14 +1,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 
+<link th:href="@{../css/detailArticleStyle.css}" rel="stylesheet" />
+
 <div id="layoutSidenav_content">
 	<main>
 		<div class="container-fluid px-4">
 
 			<div class="row mt-3 mb-5">
-				<div class="inner">
+				<div class="detailArticle-content-style">
 					<h3>게시글 세부 조회</h3>
-					<div>
+					<div class="detailArticle-table-style">
 						<h1>
 							<input type="hidden" id="article_no" th:value="${article.no}">
 							<input type="hidden" id="board_no" th:value="${article.boardNo}">
@@ -37,6 +39,8 @@
 									<tr>
 										<th>내용</th>
 										<td th:text="${article.content}" th:field="*{content}"></td>
+										<th></th>
+										<td></td>
 									</tr>
 									<tr>
 										<th>첨부파일</th>
@@ -45,32 +49,31 @@
 											th:href="|/attach/${article.getAttacheFile().getNo()}|"
 											th:text="${article.getAttacheFile().getSystemFileName()}|"></a>
 										</td>
+										<th></th>
+										<td></td>
 									</tr>
 									<tr th:if="${article.fileList != null}">
-										<td>
-											<!--이미지 파일들--> 
-											<img th:each="imageFile : ${article.fileList}" th:src="|/images/${imageFile.getSystemFileName()}|"
+										<td colspan="4">
+											<!--이미지 파일들--> <img th:each="imageFile : ${article.fileList}"
+											th:src="|/images/${imageFile.getSystemFileName()}|"
 											width="200" height="200" />
+
 										</td>
 									</tr>
 									<tr>
-										<div style="display: inline;">
-											<td colspan="2"><input type="button"
-												th:onclick="|location.href='@{/writeArticleForm}'|"
-												value="글쓰기" /> <input type="button"
-												th:onclick="|location.href='@{/nListArticle/{boardNo}(boardNo=${article.boardNo})}'|"
-												value="목록" /> <input type="button" id="rec_update"
-												value="추천" /> <!-- <strong><input type="text"
+										<td colspan="2"><input type="button"
+											th:onclick="|location.href='@{/writeArticleForm}'|"
+											value="글쓰기" /> <input type="button"
+											th:onclick="|location.href='@{/nListArticle/{boardNo}(boardNo=${article.boardNo})}'|"
+											value="목록" /> <input type="button" id="rec_update"
+											value="추천" /> <!-- <strong><input type="text"
 													id="like_num" value=""></strong> --></td>
-										</div>
 
 										<!--본인만 가능-->
-										<div style="float: right;">
-											<td><input type="button"
-												th:onclick="|location.href='@{/updateArticleForm/{articleNo}(articleNo=${article.no})}'|"
-												value="수정" /> <input type="button" id="remove_article_btn"
-												value="삭제" /></td>
-										</div>
+										<td colspan="2"><input type="button"
+											th:onclick="|location.href='@{/updateArticleForm/{articleNo}(articleNo=${article.no})}'|"
+											value="수정" /> <input type="button" id="remove_article_btn"
+											value="삭제" /></td>
 									</tr>
 
 								</tbody>
@@ -79,9 +82,9 @@
 					</div>
 					<!-- 댓글 -->
 
-					<div id="writeReplyForm">
-						<textarea id="write_content" name="write_content" rwos="5"
-							cols="50" placeholder="댓글을 입력해주세요."></textarea>
+					<div id="writeReplyForm" class="detailArticle-reply-style">
+						<textarea id="write_content" name="write_content" rwos="10"
+							cols="75" placeholder="댓글을 입력해주세요."></textarea>
 						<button type="button" id="write_reply_btn">등록</button>
 					</div>
 
@@ -89,29 +92,37 @@
 						<div class="reply_list"
 							th:each="reply : ${article.getReplyList()}">
 							<table th:id="${reply.getNo()}">
+								<colgroup>
+									<col width="15%">
+									<col width="35%">
+								</colgroup>
 								<tbody>
 									<tr>
+										<th>내용</th>
 										<td class="Content" th:text="${reply.content}"></td>
 									</tr>
 									<tr>
+										<th>닉네임</th>
 										<td th:text="${reply.nickname}"></td>
 									</tr>
 									<tr>
+										<th>작성 날짜</th>
 										<td th:text="${reply.writeDate}"></td>
 									</tr>
 								</tbody>
 								<tfoot>
 									<tr>
-										<td><input type="button" class="modify_Reply_Form_Btn"
-											value="수정" /> <input type="button" class="remove_Reply_Btn"
-											value="삭제" /></td>
+										<td colspan="2"><input type="button"
+											class="modify_Reply_Form_Btn" value="수정" /> <input
+											type="button" class="remove_Reply_Btn" value="삭제" /></td>
 									</tr>
 								</tfoot>
 							</table>
 						</div>
 					</div>
 					<!-- 수정 폼 -->
-					<div id="modify_reply_form" style="display: none;">
+					<div id="modify_reply_form" style="display: none;"
+						class="detailArticle-replyModify-style">
 						<div id="writeReplyForm">
 							<input type="hidden" id="no" />
 							<textarea id="reply_content" rwos="5" cols="50" placeholder=""></textarea>
