@@ -1,5 +1,6 @@
 package com.example.config;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -10,23 +11,48 @@ import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-import org.springframework.stereotype.Component;
+import com.example.vo.member.MemberVO;
 
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 
 @WebListener
 @Slf4j
 public class SessionConfig implements HttpSessionListener, HttpSessionAttributeListener {
 
-	private static final Map<String, HttpSession> sessions = new ConcurrentHashMap<>();
+	private static Map<String, HttpSession> sessions = new ConcurrentHashMap<>();
 
+	public static Map<String, HttpSession> getSessions(){
+		return sessions;
+	}
+	
+	public static ArrayList<MemberVO> makeUserList() {
+		ArrayList<MemberVO> userList = new ArrayList<MemberVO>();
+		for(String key : sessions.keySet())
+		{
+			HttpSession session = sessions.get(key);
+			MemberVO member = (MemberVO) session.getAttribute("loginUser");
+			System.out.println(member.toString());
+			userList.add(member);
+		}
+		return userList;
+	}
+	
 	@Override
 	public void sessionCreated(HttpSessionEvent se) {
 		// HttpSessionListener.super.sessionCreated(se);
 		System.out.println("session created");
 		sessions.put(se.getSession().getId(), se.getSession());
 		log.info("로그인 유저 : " + se.getSession().getAttribute("loginUser"));
+		
+		for(String key : sessions.keySet())
+		{
+			HttpSession session = sessions.get(key);
+			MemberVO member = (MemberVO) session.getAttribute("loginUser");
+			System.out.println(member.toString());
+		}
+//		sessions.forEach((key, value) -> {
+//			System.out.println( (HttpSession)value.getAttribute("loginUser"));
+//		});
 	}
 
 	@Override
@@ -35,6 +61,15 @@ public class SessionConfig implements HttpSessionListener, HttpSessionAttributeL
 		//HttpSessionAttributeListener.super.attributeAdded(se);
 		log.info("Session Attribute Added");
 		log.info("로그인 유저 : " + se.getSession().getAttribute("loginUser"));
+		for(String key : sessions.keySet())
+		{
+			HttpSession session = sessions.get(key);
+			MemberVO member = (MemberVO) session.getAttribute("loginUser");
+			System.out.println(member.toString());
+		}
+//		sessions.forEach((key, value) -> {
+//			System.out.println( ((MemberVO)((HttpSession)value).getAttribute("loginUser")).toString());
+//		});
 	}
 
 	@Override

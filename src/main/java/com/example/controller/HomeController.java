@@ -2,6 +2,7 @@ package com.example.controller;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -120,6 +121,20 @@ public class HomeController {
 		model.addAttribute("categoryBoardList", categoryList);
 		CategoryVO categoryVo = new CategoryVO();
 		model.addAttribute("categoryVo", categoryVo);
+		
+		Map<String, HttpSession> sessionmap = SessionConfig.getSessions();
+		System.out.println(sessionmap);
+		ArrayList<MemberVO> userList = SessionConfig.makeUserList();
+		//ArrayList<MemberVO> userList = new ArrayList<MemberVO>();
+//		for(String key : sessionmap.keySet())
+//		{
+//			HttpSession session = sessionmap.get(key);
+//			MemberVO member = (MemberVO) session.getAttribute("loginUser");
+//			userList.add(member);
+//		}
+		
+		model.addAttribute("userList", userList);
+		userList.forEach( m -> m.toString());
 		return "view/home/viewHomeTemplate";
 	}
 	

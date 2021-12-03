@@ -76,15 +76,10 @@
 				<div class="sb-sidenav-menu-heading">실시간 접속자</div>
 				<div class="login-user-box">
 					<ul class="scrollable-ul">
-						<li>Item</li>
-						<li>Item</li>
-						<li>Item</li>
-						<li>Item</li>
-						<li>Item</li>
-						<li>Item</li>
-
+						<th:block th:each="user : ${userList}">
+						<li th:text = "${user.email}"></li>
+						</th:block>
 					</ul>
-
 				</div>
 
 				<div class="sb-sidenav-footer">
