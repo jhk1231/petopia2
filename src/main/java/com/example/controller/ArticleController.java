@@ -105,6 +105,11 @@ public class ArticleController {
 		HttpSession session = req.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("loginUser");
 		// bind
+		List<CategoryVO> categoryList = this.categoryService.retrieveCategoryBoardList();
+		model.addAttribute("categoryBoardList", categoryList);
+		CategoryVO categoryVo = new CategoryVO();
+		model.addAttribute("categoryVo", categoryVo);
+		
 		int gradeNo = member.getGradeNo();
 		List<CategoryVO> categoryList = this.categoryService.retrieveCategoryBoardList();
 		model.addAttribute("categoryBoardList", categoryList);
@@ -133,6 +138,7 @@ public class ArticleController {
 		model.addAttribute("categoryBoardList", categoryList);
 		CategoryVO categoryVo = new CategoryVO();
 		model.addAttribute("categoryVo", categoryVo);
+
 		// bind
 		List<BoardVO> boardList = this.boardService.retrieveAllWriteBoard(gradeNo);
 		log.info("수정으로 넘어온 게시글 번호" +articleNo);

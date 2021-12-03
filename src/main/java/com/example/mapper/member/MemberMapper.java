@@ -19,6 +19,23 @@ public interface MemberMapper {
 
 	public MemberVO test();
 
+	// 연주 ----------------------------------------
+	// 회원 가입
+	void insertMember(MemberVO mVo);
+	void insertMemberNo(HashMap<String, Object> mVo);
+
+	// 회원가입 시 이메일 중복체크
+	String selectEmail(String email);
+
+	// 회원 자진 탈퇴
+//	void updateMember(int no, String password);
+	void updateMember(MemberVO memberVO);
+	//void updateMember(int no);
+
+	// 비밀번호 재설정
+	void updatePassword(int memNo, String newPassword);
+	// 끝 -----------------------------------------------
+
 	// 회원 목록 조회
 	ArrayList<MemberVO> selectMemberList(Criteria crt) throws Exception;
 
@@ -27,14 +44,6 @@ public interface MemberMapper {
 
 	// 해당 회원의 상세 조회
 	MemberVO selectMemberByManager(int no);
-
-	// 회원 가입
-	void insertMember(MemberVO mVo);
-
-	void insertMemberNo(HashMap<String, Object> mVo);
-
-	// 회원가입 시 이메일 중복체크
-	String selectEmail(String email);
 
 	// 정지 기간 7일 업데이트
 	void updateBan7days(int no);
@@ -62,28 +71,24 @@ public interface MemberMapper {
 	
 	public int updateTempPassword(MemberVO mVo) throws Exception;
 
-	//회원 자진 탈퇴
-	void updateMember(int no, String password);
-	
-	//비밀번호 재설정
-	void updatePassword(int memNo, String newPassword);
-
 	// MemberVO selectMember(String email, String password);
 	// MemberVO selectMember(String email);
 	// MemberVO selectMemberProfile(int member_no);
 	// void updateBan(String banSelect, int no);
-	
-	//	boolean selectNickname(String nickname);
+
+	// boolean selectNickname(String nickname);
 
 	// 이메일 검색에 해당된 회원 조회
-	ArrayList<MemberVO> selectSearchMemberByEmail(Map<String, Object> map);
+	ArrayList<MemberVO> selectSearchMemberByEmail(String keyword);
 
 	// 이메일 검색에 해당된 회원 조회
-	ArrayList<MemberVO> selectSearchMemberByGrade(Map<String, Object> map);
+	ArrayList<MemberVO> selectSearchMemberByGrade(String keyword);
 
 	// 이메일 검색에 해당된 회원의 총 수
 	int selectTotalSearchMemberByEmail(String keyword);
 
 	// 등급 검색에 해당된 회원의 총 수
 	int selectTotalSearchMemberByGrade(String keyword);
+	
+	void updatePassword(MemberVO memberVo);
 }

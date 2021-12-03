@@ -2,6 +2,7 @@ package com.example.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +40,7 @@ public class MemberController {
 	@PostMapping("/join") // 이걸 실행하는 값의 주소
 	public String joinMember(MemberVO mVo) {
 		this.memberService.registerMember(mVo);
-		return "redirect:/"; // string으로 리턴되는건 html 파일로 넘어감! (회원가입 다음 로그인화면으로 넘어가고 싶다면 templates 안에 있는 로그인
+		return "redirect:/petopialogin"; // string으로 리턴되는건 html 파일로 넘어감! (회원가입 다음 로그인화면으로 넘어가고 싶다면 templates 안에 있는 로그인
 								// html 파일명 쓰기)
 	}
 
@@ -63,23 +64,24 @@ public class MemberController {
 
 	@PostMapping("/members")
 	@ResponseBody
-	public Object viewSearchList(@RequestParam("keyword") String keyword, @RequestParam("keyfield") String keyfield,
+	public Map<String, Object> viewSearchList(@RequestParam("keyword") String keyword, @RequestParam("keyfield") String keyfield,
 			Model model, Criteria crt) {
-		log.info(keyfield);
-		log.info(keyword);
+		Map<String, Object> map = new HashMap<String, Object>();
 		List<MemberVO> lst = null;
 		Paging paging = new Paging();
 		try {
 			int total = this.memberService.retrieveTotalSearchMember(keyfield, keyword);
 			paging.setCrt(crt);
 			paging.setTotal(total);
-			lst = this.memberService.retrieveSearchMember(crt, keyfield, keyword);
+			lst = this.memberService.retrieveSearchMember(keyfield, keyword);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		model.addAttribute("paging", paging);
-		model.addAttribute("lst", lst);
-		return model;
+		map.put("keyfield", keyfield);
+		map.put("keyword", keyword);
+		map.put("paging", paging);
+		map.put("lst", lst);
+		return map;
 	}
 
 	@GetMapping("/members/{no}")
@@ -117,12 +119,19 @@ public class MemberController {
 		return "view/home/viewManagerTemplate";
 	}
 	
-//	회원 자진 탈퇴
+//	회원 자진 탈퇴 화면으로 이동
 	@GetMapping("/outForm")  //이걸 실행하는 값의 주소
-	public String outMember(MemberVO mVo, HttpSession session) {
-		log.info("" + session.getAttribute("loginUser"));
+	public String outForm(MemberVO mVo) {
 		//this.memberService.modifyMember(member.getNo(), password);
 		return "view/member/out"; 
+	}
+	
+//	회원 자진 탈퇴 로직 실행 =
+	@PostMapping("/outMember")  //이걸 실행하는 값의 주소
+	public String outMember(@RequestParam String password, HttpSession session) {
+		MemberVO member =  (MemberVO) session.getAttribute("loginUser");
+		this.memberService.modifyMember(member.getNo(), password);
+		return "redirect:logout"; 
 	}
 
 	
@@ -191,8 +200,21 @@ public class MemberController {
 		}
 	}
 	
+
+	@PostMapping("/passwordChange")
+	public String passwordChange(@RequestParam("password")  String password, HttpSession session) {
+		System.out.println(password);
+		
+		MemberVO mVo = new MemberVO();
+		mVo.setNo(((MemberVO) session.getAttribute("loginUser")).getNo());
+		mVo.setPassword(password);
+		this.memberService.updatePassword(mVo);
+		return "redirect:main";
+  }
+  
 	@GetMapping("/findPWD")
 	public String findPassword() {
 		return "view/member/findPassword";
+
 	}
 }

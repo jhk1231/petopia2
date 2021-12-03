@@ -65,20 +65,20 @@
 	const colors = [ "red", "yellow", "blue", "#c3e6cb", "#dc3545", "#6c757d" ];
 	var chBar = document.getElementById("myChart");
 	var chartData = {
-		labels : [ "[[ ${dailyList[0].dailyDate} ]]",
+		labels : [ "[[ ${dailyList[2].dailyDate} ]]",
 				"[[ ${dailyList[1].dailyDate} ]]",
-				"[[ ${dailyList[2].dailyDate} ]]", ],
+				"[[ ${dailyList[0].dailyDate} ]]", ],
 		datasets : [
 				{
-					data : [ "[[ ${dailyList[0].dailyArticle} ]]",
+					data : [ "[[ ${dailyList[2].dailyArticle} ]]",
 							"[[ ${dailyList[1].dailyArticle} ]]",
-							"[[ ${dailyList[2].dailyArticle} ]]", ],
+							"[[ ${dailyList[0].dailyArticle} ]]", ],
 					backgroundColor : colors[0],
 				},
 				{
-					data : [ "[[ ${dailyList[0].dailyVisits} ]]",
+					data : [ "[[ ${dailyList[2].dailyVisits} ]]",
 							"[[ ${dailyList[1].dailyVisits} ]]",
-							"[[ ${dailyList[2].dailyVisits} ]]", ],
+							"[[ ${dailyList[0].dailyVisits} ]]", ],
 					backgroundColor : colors[1],
 				}, ],
 	};

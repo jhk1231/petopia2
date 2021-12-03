@@ -44,7 +44,6 @@
 						</tbody>
 					</table>
 				</div>
-
 				<div class="memberList-paging-style">
 					<div id="paging" th:object="${paging}">
 						<span th:if="*{prev == true}"><a
@@ -87,15 +86,42 @@
 					keyfield : keyfield,
 					keyword : keyword
 				},
-
-				success : function(data) {
-					console.log(data);
-				},
-				error : function(err) {
-					console.log(err);
+			success : function(data) {
+				console.log(data.paging);
+				var page = data.paging;
+				$("#memberBody tr").remove();
+				$("#paging").remove();
+				var htmlStr = [];
+				for(let list of data.lst) {
+					htmlStr.push('<tr id=">'+ list.no +'">');
+					htmlStr.push('<td>'+ list.no +'</td>');
+					htmlStr.push('<td><a href=/members/'+ list.no + '>' + list.email +'</a></td>');
+					htmlStr.push('<td>'+ list.grade +'</td>');
+					htmlStr.push('<td>'+ list.regDate +'</td>');
+					htmlStr.push('<td>'+ list.visits +'</td>');
+					htmlStr.push('<td>'+ list.ban +'</td>');
+					htmlStr.push('</tr>');
 				}
-			});
-		})
+				console.log(data.paging);
+
+				$('#memberBody').html(htmlStr.join(""));
+
+				
+				htmlStr = [];
+				htmlStr.push('<button type="button" id="replay">원래대로</button>');
+				$('#pageContent').html(htmlStr.join(""));
+				
+			},
+			error : function(err) {
+				console.log(err);
+			}
+		});
+	}
+	)
+	$(document).on('click', '#replay', function(){
+		location.href = "/members";
 	});
+	
+});
 </script>
 </html>

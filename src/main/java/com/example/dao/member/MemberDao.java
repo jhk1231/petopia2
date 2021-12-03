@@ -17,7 +17,6 @@ public interface MemberDao {
 
 	// 회원 가입
 	void insertMember(MemberVO mVo);
-
 	void insertMemberNo(HashMap<String, Object> mVo);
 
 	// 회원가입 시 이메일 중복확인
@@ -36,10 +35,11 @@ public interface MemberDao {
 
 	boolean selectNickname(String nickname);
 
+	void updatePassword(MemberVO memberVo);
+
+
 	ArrayList<MemberVO> selectSearchMember(int startRow, int memberPerPage, String keyfield, String keyword);
 
-	// 검색에 해당된 회원의 총 수
-//	int selectTotalSearchMember(String keyfield, String keyword);
-
 	int updateTempPassword(MemberVO mVo) throws Exception;
+
 }

@@ -10,8 +10,10 @@ import com.example.mapper.board.BoardMapper;
 import com.example.vo.board.BoardBoardGradeVO;
 import com.example.vo.board.BoardGradeVO;
 import com.example.vo.board.BoardVO;
-import com.example.vo.board.CategoryBoardVO;
 
+import lombok.extern.java.Log;
+
+@Log
 @Repository("boardDao")
 public class BoardDaoImpl implements BoardDao {
 	
@@ -37,8 +39,8 @@ public class BoardDaoImpl implements BoardDao {
 
 	//게시판 종류 조회
 	@Override
-	public List<BoardVO> selectBoardkind() {
-		List<BoardVO> boardkindList = this.boardMapper.selectBoardkind();
+	public ArrayList<BoardVO> selectBoardkind() {
+		ArrayList<BoardVO> boardkindList = this.boardMapper.selectBoardkind();
 		return boardkindList;
 	}
 	
@@ -60,8 +62,8 @@ public class BoardDaoImpl implements BoardDao {
 	@Override
 	public void updateBoard(BoardVO boardVo, BoardGradeVO boardGradeVo) {
 		this.boardMapper.updateBoard(boardVo, boardGradeVo);		
-		System.out.println(boardVo.toString() + "-------------dao");
-		System.out.println(boardGradeVo.toString() + "-------------dao");
+		log.info("-------------moddao" + boardVo.toString());
+		log.info("-------------dao" + boardGradeVo.toString());
 	}
 
 	//게시판 정보 조회

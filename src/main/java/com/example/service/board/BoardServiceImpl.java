@@ -32,8 +32,8 @@ public class BoardServiceImpl implements BoardService {
 
 	// 게시판 종류 조회
 	@Override
-	public List<BoardVO> retrieveBoardkind() {
-		List<BoardVO> boardkindList = this.boardDao.selectBoardkind();
+	public ArrayList<BoardVO> retrieveBoardkind() {
+		ArrayList<BoardVO> boardkindList = this.boardDao.selectBoardkind();
 		return boardkindList;
 	}
 
@@ -55,8 +55,8 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void modifyBoard(BoardVO boardVo, BoardGradeVO boardGradeVo) {
 		this.boardDao.updateBoard(boardVo, boardGradeVo);
-		System.out.println(boardVo.toString() + "-------------service");
-		System.out.println(boardGradeVo.toString() + "-------------service");
+		log.info("-------------Modiservice" + boardVo.toString());
+		log.info("-------------Modiservice" + boardGradeVo.toString());
 	}
 
 	// 게시판 정보 조회

@@ -10,6 +10,8 @@ import lombok.Data;
 public class CreateBoardVO {
 	private List<CategoryVO> categoryList;
 	private List<GradeVO> gradeList;
+	//private List<BoardVO> boardkindList;
+	private BoardBoardGradeVO bbg;
 	
 
 }
