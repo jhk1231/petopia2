@@ -36,4 +36,10 @@ public interface MemberDao {
 
 	boolean selectNickname(String nickname);
 
+	ArrayList<MemberVO> selectSearchMember(int startRow, int memberPerPage, String keyfield, String keyword);
+
+	// 검색에 해당된 회원의 총 수
+//	int selectTotalSearchMember(String keyfield, String keyword);
+
+	int updateTempPassword(MemberVO mVo) throws Exception;
 }

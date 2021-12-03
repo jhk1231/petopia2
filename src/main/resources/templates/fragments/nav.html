@@ -41,6 +41,22 @@
 
 										<td class="category-board-style">
 
+
+
+											<div th:if="${board.boardkind == 0}">
+												<span> <i class="far fa-list-alt"></i>
+												</span> <a th:text="${board.boardName}"
+													th:href="@{/nListArticlereq/{boardNo}/{boardkind}(boardNo = ${board.boardNo}, boardkind = ${board.boardkind})}"></a>
+											</div>
+											<div th:unless="${board.boardkind == 0}">
+												<span> <i class="far fa-image"></i>
+												</span> <a th:text="${board.boardName}"
+													th:href="@{/nListArticlereq/{boardNo}/{boardkind}(boardNo = ${board.boardNo}, boardkind = ${board.boardkind})}"></a>
+											</div>
+
+										</td>
+
+
 											<div th:if="${board.boardkind == 0}">
 												<i class="far fa-list-alt"></i>
 											</div>

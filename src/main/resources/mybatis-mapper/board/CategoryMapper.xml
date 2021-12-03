@@ -44,7 +44,7 @@
 	</select>
 
 	<!-- 카테고리 목록 조회 -->
-	<select id="selectCategoryList" resultType="categoryVO">
+	<select id="selectCategoryList" resultType="categoryVO" resultMap="selectCategoryResultMap">
 		SELECT category_no, categoryname 
 		FROM Category 
 		GROUP BY category_no;
