@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.example.service.board.BoardService;
 import com.example.service.board.CategoryService;
 import com.example.service.member.GradeService;
+import com.example.vo.board.BoardBoardGradeVO;
 import com.example.vo.board.BoardGradeVO;
 import com.example.vo.board.BoardVO;
 import com.example.vo.board.CategoryVO;
@@ -98,20 +101,44 @@ public class BoardController {
 	}
 	
 
-	
-	
-	//게시판 추가 - 카테고리, 등급, 게시판 종류 조회
 	@ResponseBody
-	@PostMapping("/selectList")
-	public CreateBoardVO selectList() throws Exception {
+	@PostMapping("/selectListAdd")
+	public CreateBoardVO selectListAdd() throws Exception {
 		CreateBoardVO cbVO = new CreateBoardVO();
 		//카테고리 목록
 		ArrayList<CategoryVO> categoryList = this.categoryService.retrieveCategoryList();
 		//등급 목록
 		ArrayList<GradeVO> gradeList = this.gradeService.retrieveGradeList();
 		
+		//ArrayList<BoardVO> boardkindList = this.boardService.retrieveBoardkind();
+		
+		//cbVO.setBoardkindList(boardkindList);
 		cbVO.setCategoryList(categoryList);
 		cbVO.setGradeList(gradeList);
+		return cbVO;
+	}
+	
+	
+	//게시판 수정 - 카테고리, 등급, 게시판 종류 조회
+	@ResponseBody
+	@PostMapping("/selectListModify")
+	public CreateBoardVO selectListModify(@RequestBody HashMap<String, Object> map ) throws Exception {
+		CreateBoardVO cbVO = new CreateBoardVO();
+		//카테고리 목록
+		ArrayList<CategoryVO> categoryList = this.categoryService.retrieveCategoryList();
+		//등급 목록
+		ArrayList<GradeVO> gradeList = this.gradeService.retrieveGradeList();
+		
+		int boardNo = Integer.parseInt((String) map.get("boardNo"));
+		
+		BoardBoardGradeVO bbg = this.boardService.retrieveOneBoard(boardNo);
+		
+		
+		cbVO.setBbg(bbg);
+		cbVO.setCategoryList(categoryList);
+		cbVO.setGradeList(gradeList);
+		
+		log.info("------------------asdfaf : " + cbVO.toString());
 		return cbVO;
 	}
 	
@@ -158,7 +185,7 @@ public class BoardController {
 	
 	
 	// 게시판 수정
-	@PostMapping("/modifyBoard/{boardNo}")
+	@PostMapping("/modifyBoard")
 	public String modifyBoard(
 			@RequestParam("boardNo") int boardNo,
 			@RequestParam("category") int categoryNo,
@@ -170,12 +197,16 @@ public class BoardController {
 		BoardVO boardVo = new BoardVO();
 		BoardGradeVO boardGradeVo = new BoardGradeVO();
 		//게시판 저장 목록
+		
 		boardVo.setBoardNo(boardNo);
 		boardVo.setCategoryNo(categoryNo);
 		boardVo.setBoardName(boardName);
 		boardVo.setBoardkind(boardkind);
 		boardGradeVo.setReadGrade(readGrade);
 		boardGradeVo.setWriteGrade(writeGrade);
+		
+		System.out.println("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz : " + readGrade);
+		System.out.println("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz : " + writeGrade);
 		this.boardService.modifyBoard(boardVo, boardGradeVo);
 		return "redirect:boardManager";
 	}
