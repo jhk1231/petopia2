@@ -169,4 +169,10 @@ public class MemberServiceImpl implements MemberService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void updatePassword(MemberVO memberVo) {
+		// TODO Auto-generated method stub
+		this.memberdao.updatePassword(memberVo);
+	}
 }

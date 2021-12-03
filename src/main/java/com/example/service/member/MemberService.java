@@ -51,5 +51,7 @@ public interface MemberService {
 	void registerMember(MemberVO mVo);
 
 	boolean retrieveNickname(String nickname);
+	
+	public void updatePassword(MemberVO memberVo);
 
 }

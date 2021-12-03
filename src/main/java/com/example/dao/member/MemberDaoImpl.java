@@ -42,13 +42,16 @@ public class MemberDaoImpl implements MemberDao { // @Autowired가 속해 있는
 	// 회원 자진 탈퇴
 	@Override
 	public void updateMember(int memberNo, String password) {
-		this.mapper.updateMember(memberNo, password);
+		MemberVO memberVo = new MemberVO();
+		memberVo.setNo(memberNo);
+		memberVo.setPassword(password);
+		this.mapper.updateMember(memberVo);
 	}
 
 	// 비밀번호 재설정
 	@Override
 	public void updatePassword(int memNo, String newPassword) {
-		
+		this.mapper.updatePassword(memNo, newPassword);
 	}
 
 	public void test() {
@@ -97,6 +100,12 @@ public class MemberDaoImpl implements MemberDao { // @Autowired가 속해 있는
 	public void insertMemberNo(HashMap<String, Object> mVo) {
 		// TODO Auto-generated method stub
 		this.mapper.insertMemberNo(mVo);
+	}
+
+	@Override
+	public void updatePassword(MemberVO memberVo) {
+		// TODO Auto-generated method stub
+		this.mapper.updatePassword(memberVo);
 	}
 
 }

@@ -17,7 +17,6 @@ public interface MemberDao {
 
 	// 회원 가입
 	void insertMember(MemberVO mVo);
-
 	void insertMemberNo(HashMap<String, Object> mVo);
 
 	// 회원가입 시 이메일 중복확인
@@ -35,5 +34,5 @@ public interface MemberDao {
 
 
 	boolean selectNickname(String nickname);
-
+	void updatePassword(MemberVO memberVo);
 }
