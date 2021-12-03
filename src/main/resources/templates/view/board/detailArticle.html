@@ -1,15 +1,22 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+
+<link th:href="@{../css/detailArticleStyle.css}" rel="stylesheet" />
+
 
 <div id="layoutSidenav_content">
 	<main>
 		<div class="container-fluid px-4">
 
 			<div class="row mt-3 mb-5">
-				<div class="inner">
+				<div class="detailArticle-content-style">
 					<h3>게시글 세부 조회</h3>
-					<div>
+					<div class="detailArticle-table-style">
 						<h1>
+							<input type="hidden" id="login_no" th:value="${loginMemberNo}">
+							<input type="hidden" id="member_no" th:value="${article.memberNo}">
 							<input type="hidden" id="article_no" th:value="${article.no}">
 							<input type="hidden" id="board_no" th:value="${article.boardNo}">
 						</h1>
@@ -37,41 +44,63 @@
 									<tr>
 										<th>내용</th>
 										<td th:text="${article.content}" th:field="*{content}"></td>
+										<th></th>
+										<td></td>
 									</tr>
 									<tr>
 										<th>첨부파일</th>
 										<td th:if="${article.attacheFile == null}">첨부된 파일이 없습니다.</td>
 										<td th:unless="${article.attacheFile == null}"><a
-											th:href="|/attach/${article.getAttacheFile().getNo()}|"
-											th:text="${article.getAttacheFile().getSystemFileName()}|"></a>
+												th:href="|/attach/${article.getAttacheFile().getNo()}|"
+												th:text="${article.getAttacheFile().getSystemFileName()}|"></a>
 										</td>
+										<th></th>
+										<td></td>
 									</tr>
 									<tr th:if="${article.fileList != null}">
+
 										<td>
-											<!--이미지 파일들--> 
-											<img th:each="imageFile : ${article.fileList}" th:src="|/images/${imageFile.getSystemFileName()}|"
-											width="200" height="200" />
+											<!--이미지 파일들-->
+											<img th:each="imageFile : ${article.fileList}"
+												th:src="|/images/${imageFile.getSystemFileName()}|" width="200"
+												height="200" />
 										</td>
 									</tr>
 									<tr>
 										<div style="display: inline;">
 											<td colspan="2"><input type="button"
-												th:onclick="|location.href='@{/writeArticleForm}'|"
-												value="글쓰기" /> <input type="button"
-												th:onclick="|location.href='@{/nListArticle/{boardNo}(boardNo=${article.boardNo})}'|"
-												value="목록" /> <input type="button" id="rec_update"
+													th:onclick="|location.href='@{/writeArticleForm}'|" value="글쓰기" />
+												<input type="button"
+													th:onclick="|location.href='@{/nListArticle/{boardNo}(boardNo=${article.boardNo})}'|"
+													value="목록" />
+												<div id="like_area">
+													<!-- <button th:if="${article.likeCheck eq 0}" type="button"  id="add_like_btn"
+														value="추천" /><i class="far fa-heart"></i></button>
+													<button type="button" th:unless="${article.likeCheck eq 0}" id="del_like_btn"><i
+															class="fas fa-heart"></i></button> -->
 
-												value="추천" /> <!-- <strong><input type="text"
-													id="like_num" value=""></strong> --></td>
+													<div th:if="${article.likeCheck eq 0}">
+														<button type="button" id="add_like_btn" value="추천" /><i
+															class="far fa-heart"></i></button>
+													</div>
+													<div th:unless="${article.likeCheck eq 0}">
+														<button type="button" id="del_like_btn"><i
+																class="fas fa-heart"></i></button>
+													</div>
+
+													<strong th:text="${article.likecount}"></strong>
+												</div>
+											</td>
 										</div>
 
 										<!--본인만 가능-->
-										<div style="float: right;">
+										<div th:if="${loginMemberNo == article.memberNo}" style="float: right;">
 											<td><input type="button"
-												th:onclick="|location.href='@{/updateArticleForm/{articleNo}(articleNo=${article.no})}'|"
-												value="수정" /> <input type="button" id="remove_article_btn"
-												value="삭제" /></td>
+													th:onclick="|location.href='@{/updateArticleForm/{articleNo}(articleNo=${article.no})}'|"
+													value="수정" /> <input type="button" id="remove_article_btn"
+													value="삭제" /></td>
 										</div>
+
 									</tr>
 
 								</tbody>
@@ -80,39 +109,48 @@
 					</div>
 					<!-- 댓글 -->
 
-					<div id="writeReplyForm">
-						<textarea id="write_content" name="write_content" rwos="5"
-							cols="50" placeholder="댓글을 입력해주세요."></textarea>
+
+					<div id="writeReplyForm" class="detailArticle-reply-style">
+						<textarea id="write_content" name="write_content" rwos="10"
+							cols="75" placeholder="댓글을 입력해주세요."></textarea>
+
 						<button type="button" id="write_reply_btn">등록</button>
 					</div>
 
 					<div id="replys">
-						<div class="reply_list"
-							th:each="reply : ${article.getReplyList()}">
+						<div class="reply_list" th:each="reply : ${article.getReplyList()}">
 							<table th:id="${reply.getNo()}">
+								<colgroup>
+									<col width="15%">
+									<col width="35%">
+								</colgroup>
 								<tbody>
 									<tr>
+										<th>내용</th>
 										<td class="Content" th:text="${reply.content}"></td>
 									</tr>
 									<tr>
+										<th>닉네임</th>
 										<td th:text="${reply.nickname}"></td>
 									</tr>
 									<tr>
+										<th>작성 날짜</th>
 										<td th:text="${reply.writeDate}"></td>
 									</tr>
 								</tbody>
 								<tfoot>
-									<tr>
-										<td><input type="button" class="modify_Reply_Form_Btn"
-											value="수정" /> <input type="button" class="remove_Reply_Btn"
-											value="삭제" /></td>
-									</tr>
+
+										<tr th:if="${loginMemberNo == reply.memberNo}">
+											<td colspan="2"><input type="button" class="modify_Reply_Form_Btn" value="수정" /> <input
+													type="button" class="remove_Reply_Btn" value="삭제" /></td>
+										</tr>
 								</tfoot>
 							</table>
 						</div>
 					</div>
 					<!-- 수정 폼 -->
-					<div id="modify_reply_form" style="display: none;">
+					<div id="modify_reply_form" style="display: none;"
+						class="detailArticle-replyModify-style">
 						<div id="writeReplyForm">
 							<input type="hidden" id="no" />
 							<textarea id="reply_content" rwos="5" cols="50" placeholder=""></textarea>
@@ -129,50 +167,55 @@
 <script th:src="@{../js/jquery-3.6.0.min.js}"></script>
 <script>
 	$(document).ready(function () {
-	
-		$('#remove_article_btn').on('click',function(){
+
+		$('#remove_article_btn').on('click', function () {
 			const boardNo = $("#board_no").val();
 			const articleNo = $("#article_no").val();
-			location.href='/removeArticle/' +   articleNo + '/' + boardNo; 
+			location.href = '/removeArticle/' + articleNo + '/' + boardNo;
 		})
-		/* // 추천 버튼 클릭시
-		$('#rec_update').click(function () {
-			$.ajax({
-				url: "/RecUpdate",
-				type: "POST",
-				data: {
-					// 게시글을 추천 했는지 안했는지 확인.
-					articleNo: $("#article_no").val(),
-					memberNo: '${sessionScope.user.no }'
-				},
-				success: function (count) {
-					$("#rec_count").val(JSON.parse(count).totalCount);					
-					// $("#rec_count").html(JSON.parse(count).totalCount);
-					//recCount();
-				},
-			})
-		})
+		// // 추천 버튼 클릭시
+		// $('#rec_update').click(function () {
+		// 	$.ajax({
+		// 		url: "/RecUpdate",
+		// 		type: "POST",
+		// 		data: {
+		// 			// 게시글을 추천 했는지 안했는지 확인.
+		// 			articleNo: $("#article_no").val(),
+		// 			memberNo: $("#member_no").val()
+		// 		},
+		// 		success: function (data) {
+		// 			let like = "";
+		// 			if(data.check == 1){ // 추천 성공
 
-		// 게시글 추천수
-		function recCount() {
-			$.ajax({
-				url: "/RecCount.do",
-				type: "POST",
-				data: {
-					// 게시글의 총 추천수만 구하면 되니 게시글 번호만 넘겨준다.
-					articleNo: $("#article_no").val()
-				},
-				success: function (count) {
-					// rec_count 내용을 비우고 count로 갱신
-					$("#rec_count").val(JSON.parse(count).totalCount);
-					$(".rec_count").html(JSON.parse(count).totalCount); 
-				},
-			})
-			// 맨처음 시작시 호출
-		// recCount();
-		}; 
-		*/
-		
+		// 			}
+		// 			like += 
+		// 			like += "<strong>" + data.count + "</strong>"
+		// 			$("#like_count").html(like);					
+
+		// 		},
+		// 	})
+		// })
+
+		// // 게시글 추천수
+		// function recCount() {
+		// 	$.ajax({
+		// 		url: "/RecCount.do",
+		// 		type: "POST",
+		// 		data: {
+		// 			// 게시글의 총 추천수만 구하면 되니 게시글 번호만 넘겨준다.
+		// 			articleNo: $("#article_no").val()
+		// 		},
+		// 		success: function (count) {
+		// 			// rec_count 내용을 비우고 count로 갱신
+		// 			$("#rec_count").val(JSON.parse(count).totalCount);
+		// 			$(".rec_count").html(JSON.parse(count).totalCount); 
+		// 		},
+		// 	})
+		// 	// 맨처음 시작시 호출
+		// // recCount();
+		// }; 
+		// */
+
 
 
 		/*-------------------댓글 ------------------ */
@@ -251,10 +294,12 @@
 					htmlStr.push('</tr>');
 					htmlStr.push('</tbody>');
 					htmlStr.push('<tfoot>');
-					htmlStr.push('<tr>');
-					htmlStr.push('<td><input type="button" class="modify_Reply_Form_Btn" value="수정" />&nbsp;');
-					htmlStr.push('<input type="button" class="remove_Reply_Btn" value="삭제" /></td>');
-					htmlStr.push('</tr>');
+					if (replyList[i].memberNo == $('#login_no').val()) {
+						htmlStr.push("<tr>");
+						htmlStr.push('<td><input type="button" class="modify_Reply_Form_Btn" value="수정" />&nbsp;');
+						htmlStr.push('<input type="button" class="remove_Reply_Btn" value="삭제" /></td>');
+						htmlStr.push('</tr>');
+					}
 					htmlStr.push('</tfoot>');
 					htmlStr.push('</table>');
 					htmlStr.push('</div>');
@@ -326,7 +371,56 @@
 
 
 
+		$(document).on('click', '#add_like_btn', function () {
+			$.ajax({
+				url: '/addLike',
+				method: 'POST',
+				dataType: 'json',
+				contentType: 'application/json',
+				data: JSON.stringify({
+					"articleNo": $("#article_no").val()
+				}),
+				success: function (data) {
+					let count = data.totalcount; // 총 추천 수
+					//let count = JSON.parse(data).totalCount;
+					// alert(count);
+					let likecount = [];
+					likecount += "<button type='button' id='del_like_btn'><i class='fas fa-heart'></i> </button>";
+					likecount += "<strong>" + count + "</strong>";
+					$('#like_area').html("");
+					$('#like_area').html(likecount);
+				},
+				error: function (e) {
+					console.trace();
+					reject(e);
+				}
+			});
+		});
 
+
+		$(document).on('click', '#del_like_btn', function () {
+			$.ajax({
+				url: "/delLike",
+				method: 'POST',
+				dataType: 'json',
+				contentType: 'application/json',
+				data: JSON.stringify({
+					"articleNo": $("#article_no").val()
+				}),
+				success: function (data) {
+					let count = data.totalcount; // 총 추천 수
+					let likecount = [];
+					likecount += "<button type='button' id='add_like_btn'><i class='far fa-heart'></i></button>";
+					likecount += "<strong>" + count + "</strong>";
+					$('#like_area').html("");
+					$('#like_area').html(likecount);
+				},
+				error: function (e) {
+					console.trace();
+					reject(e);
+				}
+			});
+		})
 
 
 	});

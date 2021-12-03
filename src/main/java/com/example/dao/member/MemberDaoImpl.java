@@ -106,6 +106,13 @@ public class MemberDaoImpl implements MemberDao { // @Autowired가 속해 있는
 	public void updatePassword(MemberVO memberVo) {
 		// TODO Auto-generated method stub
 		this.mapper.updatePassword(memberVo);
+  }
+  
+	public int updateTempPassword(MemberVO mVo) throws Exception {
+		// TODO Auto-generated method stub
+		return this.mapper.updateTempPassword(mVo);
 	}
+
+
 
 }

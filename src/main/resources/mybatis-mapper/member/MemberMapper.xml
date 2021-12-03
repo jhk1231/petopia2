@@ -159,40 +159,38 @@
 		<parameter property="pageStart" javaType="int" jdbcType="INTEGER"/>
 	</parameterMap>
 
-	<select id="selectSearchMemberByEmail" parameterType="Map" parameterMap="map" resultType="memberVo" resultMap="briefMemberInfo">
+	<select id="selectSearchMemberByEmail" parameterType="string" resultType="memberVo" resultMap="briefMemberInfo">
 		SELECT member_no,email, name, regdate, visits, ban
 		FROM Member M RIGHT JOIN Grade G
 		ON M.grade_no = G.grade_no
-		WHERE email LIKE CONCAT('%#{keyword}%')
+		WHERE email LIKE CONCAT('%', #{keyword}, '%')
 		ORDER BY member_no ASC, ismember ASC
-		LIMIT #{pageStart}, #{dataPerPage}
 	</select>
 	
-	<select id="selectSearchMemberByGrade" parameterType="Map" resultType="memberVo" resultMap="briefMemberInfo">
+	<select id="selectSearchMemberByGrade" parameterType="string" resultType="memberVo" resultMap="briefMemberInfo">
 		SELECT member_no,email, name, regdate, visits, ban
 		FROM Member M RIGHT JOIN Grade G
 		ON M.grade_no = G.grade_no
 		WHERE M.grade_no =
-		ANY( SELECT grade_no
-		FROM grade G
-		WHERE name LIKE CONCAT('%#{keyword}%'))
-		ORDER BY member_no ASC
-		LIMIT #{pageStart}, #{dataPerPage}
+		ANY(SELECT grade_no
+		FROM Grade G
+		WHERE name LIKE CONCAT('%', #{keyword}, '%'))
+		ORDER BY member_no ASC, ismember ASC
 	</select>
 	
 	<select id="selectTotalSearchMemberByEmail" parameterType="string" resultType="int">
 		SELECT COUNT(member_no)
 		FROM Member
-		WHERE email = '%#{keyword}%'
+		WHERE email LIKE CONCAT('%', #{keyword}, '%')
 	</select>
 	
 	<select id="selectTotalSearchMemberByGrade" parameterType="string" resultType="int">
 		SELECT COUNT(member_no)
 		FROM Member
 		WHERE grade_no =
-		(SELECT grade_no
-		FROM grade
-		WHERE name = '%#{keyword}%')
+		ANY(SELECT grade_no
+		FROM Grade
+		WHERE name LIKE CONCAT('%', #{keyword}, '%'))
 	</select>
 	
 		<!-- 회원 자진 탈퇴-->
@@ -206,6 +204,11 @@
 		<!-- #{}안에는	MemberVO에서 선언한 변수명과 일치해야 함 -->
 	</update>
 
+	<update id="updateTempPassword" parameterType="memberVo">
+		UPDATE Member
+		SET password = #{password}
+		WHERE email = #{email}
+	</update>
 
 		<!-- 비밀번호 재설정-->
 			<insert id="updatePassword"  parameterType="memberVo">   

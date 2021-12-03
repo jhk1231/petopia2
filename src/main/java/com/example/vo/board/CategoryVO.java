@@ -28,4 +28,8 @@ public class CategoryVO {
 	public void addBoardList(BoardVO board) {
 		this.boardList.add(board);
 	}
+	
+	public void addCategoryList(CategoryVO categoryVo) {
+		this.categoryList.add(categoryVo);
+	}
 }

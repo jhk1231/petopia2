@@ -17,7 +17,7 @@ public interface MemberService {
     // 해당 회원의 상세 조회
     MemberVO retrieveMemberByManager(int no);
     // 검색에 해당된 회원 조회
-    ArrayList<MemberVO> retrieveSearchMember(Criteria crt, String keyfield, String keyword);
+    ArrayList<MemberVO> retrieveSearchMember(String keyfield, String keyword);
     // 검색에 해당된 회원의 총 수
     int retrieveTotalSearchMember(String keyfield, String keyword);
     // 정지 기간 업데이트
@@ -39,9 +39,6 @@ public interface MemberService {
 	// 회원가입
 	MemberVO retreiveMemberProfile(int member_no);
 
-	// 회원가입 이메일 중복 확인
-	boolean retrieveEmail(String email);
-	
 	//회원 자진 탈퇴
 	void modifyMember(int memberNo, String password);
 	
@@ -51,7 +48,11 @@ public interface MemberService {
 	void registerMember(MemberVO mVo);
 
 	boolean retrieveNickname(String nickname);
-	
+
 	public void updatePassword(MemberVO memberVo);
 
+	boolean retrieveEmail(String email);
+
+
+	int updateTempPassword(MemberVO mVo);
 }

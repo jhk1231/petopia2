@@ -34,5 +34,12 @@ public interface MemberDao {
 
 
 	boolean selectNickname(String nickname);
+
 	void updatePassword(MemberVO memberVo);
+
+
+	ArrayList<MemberVO> selectSearchMember(int startRow, int memberPerPage, String keyfield, String keyword);
+
+	int updateTempPassword(MemberVO mVo) throws Exception;
+
 }

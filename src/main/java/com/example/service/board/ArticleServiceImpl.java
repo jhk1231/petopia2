@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.dao.board.ArticleDao;
+import com.example.mapper.member.MemberMapper;
 import com.example.vo.board.ArticleVO;
 import com.example.vo.board.FileVO;
 import com.example.vo.board.SelectArticleVO;
@@ -17,12 +18,12 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Autowired
 	private ArticleDao articleDao;
-	
 	@Autowired
 	private FileService fileService;
 	@Autowired
 	private ReplyService replyService;
-
+	@Autowired
+	private MemberMapper memberMapper;
 
 	@Override
 	@Transactional
@@ -50,6 +51,7 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	@Transactional
 	public void registerArticle(ArticleVO article) {
+		this.memberMapper.plusMemberDocs(article.getMemberNo());
 		this.articleDao.insertArticle(article); // 게시글 추가
 		this.fileService.uploadFile(article);
 	}
@@ -62,7 +64,8 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Override
 	@Transactional
-	public void removeArticle(int articleNo) {
+	public void removeArticle(int articleNo, int memberNo) {
+		this.memberMapper.minusMemberDocs(memberNo);
 		this.fileService.allDelete(articleNo);
 		this.replyService.allDelete(articleNo);
 		this.articleDao.deleteArticle(articleNo);
@@ -79,26 +82,34 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 	
 	
-
-//	@Override
-//	public void recUpdate(int memberNo, int articleNo) {
-//		
-//		LikeVO likeVO = new LikeVO(memberNo, articleNo);
-//		this.articleDao.selectLike(likeVO);
-//		int likeNo = likeVO.getNo();
-//		
-//		if (likeNo == 0) { // 추천x 일 때
-//			this.articleDao.insertLike(likeVO);	
-//		} else { // 추천이 되어 있을 때
-//			this.articleDao.deleteLike(likeNo); // 추천 삭제
-//		}
-//	}
+	// 추천
+	@Override
+	public void recUpdate(int memberNo, int articleNo) {
+		ArticleVO articleVO = new ArticleVO();
+		articleVO.setMemberNo(memberNo);
+		articleVO.setNo(articleNo);
+		this.articleDao.upLikecount(articleNo);
+		this.articleDao.insertLike(articleVO);	
+	}
 //	
-//	@Override
-//	public int totalRecCount(int articleNo) {
-//		return this.articleDao.totalRecCount(articleNo);
-//	}
+	@Override
+	public int totalRecCount(int articleNo) {
+		return this.articleDao.totalRecCount(articleNo);
+	}
 	
-	
+	@Override
+	public void recDelete(ArticleVO articleVO) {
+		this.articleDao.downLikecount(articleVO.getNo());
+		this.articleDao.deleteLike(articleVO);
+	}
+
+	// 추천 여부 체크
+	@Override
+	public int likeCheck(int memberNo, int ArticleNo) {
+		ArticleVO art = new ArticleVO();
+		art.setMemberNo(memberNo);
+		art.setNo(ArticleNo);
+		return this.articleDao.likeCheck(art);
+	}
 	
 }

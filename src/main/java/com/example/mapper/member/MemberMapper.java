@@ -68,6 +68,8 @@ public interface MemberMapper {
 
 	// 댓글 삭제 시 회원의 댓글 수 변동
 	void minusMemberComms(int no);
+	
+	public int updateTempPassword(MemberVO mVo) throws Exception;
 
 	// MemberVO selectMember(String email, String password);
 	// MemberVO selectMember(String email);
@@ -77,10 +79,10 @@ public interface MemberMapper {
 	// boolean selectNickname(String nickname);
 
 	// 이메일 검색에 해당된 회원 조회
-	ArrayList<MemberVO> selectSearchMemberByEmail(Map<String, Object> map);
+	ArrayList<MemberVO> selectSearchMemberByEmail(String keyword);
 
 	// 이메일 검색에 해당된 회원 조회
-	ArrayList<MemberVO> selectSearchMemberByGrade(Map<String, Object> map);
+	ArrayList<MemberVO> selectSearchMemberByGrade(String keyword);
 
 	// 이메일 검색에 해당된 회원의 총 수
 	int selectTotalSearchMemberByEmail(String keyword);

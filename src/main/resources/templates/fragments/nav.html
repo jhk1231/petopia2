@@ -1,4 +1,5 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
 <!--   <nav class="nav-icon-hidden">
     <ul>
       <li class="nav-category">
@@ -29,8 +30,7 @@
 
 									<div class="sb-nav-link-icon">
 										<i class="fas fa-columns"></i>
-									</div> <span th:text="${category.getCategoryName()}"></span>
-									<!-- <div class="sb-sidenav-collapse-arrow">
+									</div> <span th:text="${category.getCategoryName()}"></span> <!-- <div class="sb-sidenav-collapse-arrow">
 										<i class="fas fa-angle-down"></i>
 									</div> -->
 								</td>
@@ -39,18 +39,22 @@
 								<th:block th:each="board : ${category.boardList}">
 									<tr>
 
-											<td class="category-board-style">
+										<td class="category-board-style">
 
-												<div th:if="${board.boardkind == 0}">
-													<i class="far fa-list-alt"></i>
-												</div>
-												<div th:unless="${board.boardkind == 0}">
-													<i class="far fa-image"></i>
-												</div>
-												<a th:text="${board.boardName}"
+
+
+											<div th:if="${board.boardkind == 0}">
+												<span> <i class="far fa-list-alt"></i>
+												</span> <a th:text="${board.boardName}"
 													th:href="@{/nListArticlereq/{boardNo}/{boardkind}(boardNo = ${board.boardNo}, boardkind = ${board.boardkind})}"></a>
-											</td>
+											</div>
+											<div th:unless="${board.boardkind == 0}">
+												<span> <i class="far fa-image"></i>
+												</span> <a th:text="${board.boardName}"
+													th:href="@{/nListArticlereq/{boardNo}/{boardkind}(boardNo = ${board.boardNo}, boardkind = ${board.boardkind})}"></a>
+											</div>
 
+										
 									</tr>
 								</th:block>
 							</th:block>

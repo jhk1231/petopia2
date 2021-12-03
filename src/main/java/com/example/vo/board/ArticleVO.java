@@ -39,4 +39,5 @@ public class ArticleVO {
 	private FileVO thumbnail; // 썸네일
 	private List<FileVO> fileList = new ArrayList<>(); // 이미지 List
 	private List<ReplyVO> replyList = new ArrayList<>(); // 댓글
+	private int likeCheck; // 추천 여부
 }
