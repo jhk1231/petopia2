@@ -4,24 +4,24 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.member.GradeMapper">
 	<resultMap type="gradeVo" id="gradeInfo">
-		<result property="gradeNo" javaType="int" column="grade_no" jdbcType="SMALLINT"/>
-		<result property="name" javaType="string" column="name" jdbcType="VARCHAR"/>
-		<result property="docs" javaType="int" column="docs" jdbcType="INTEGER"/>
-		<result property="comms" javaType="int" column="comms" jdbcType="INTEGER"/>
-		<result property="person" javaType="int" column="person" jdbcType="INTEGER"/>
-	</resultMap>
+      <result property="gradeNo" javaType="int" column="grade_no" jdbcType="SMALLINT"/>
+      <result property="name" javaType="string" column="name" jdbcType="VARCHAR"/>
+      <result property="docs" javaType="int" column="docs" jdbcType="INTEGER"/>
+      <result property="comms" javaType="int" column="comms" jdbcType="INTEGER"/>
+      <result property="person" javaType="int" column="person" jdbcType="INTEGER"/>
+   </resultMap>
 	
 	<resultMap type="boardVO" id="boardNameInfo">
 		<result property="boardName" javaType="string" column="boardname" jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<select id="selectGradeList" resultType="gradeVo" resultMap="gradeInfo">
-		SELECT G.grade_no, name, G.docs, G.comms, count(M.grade_no) AS person
-		FROM member M RIGHT JOIN grade G
-		ON M.grade_no = G.grade_no
-		GROUP BY name
-		ORDER BY G.grade_no ASC
-	</select>
+      SELECT G.grade_no, name, G.docs, G.comms, COUNT(M.grade_no) AS person
+      FROM Member M RIGHT JOIN Grade G
+      ON M.grade_no = G.grade_no
+      GROUP BY G.grade_no, name, G.docs, G.comms
+      ORDER BY G.grade_no ASC
+   </select>
 	
 	<update id="rearrangeMemberGrade" statementType="CALLABLE">
 		{ call grade_modification() }
