@@ -19,7 +19,7 @@ public interface BoardDao {
 	public void insertBoardGrade(BoardGradeVO boardGradeVo);
 	
 	//게시판 종류 조회
-	public List<BoardVO> selectBoardkind();
+	public ArrayList<BoardVO> selectBoardkind();
 	
 	//연결된 게시글 조회
 	public int selectConnectArticle(int boardNo);
