@@ -2,6 +2,8 @@ package com.example.controller;
 
 import java.security.SecureRandom;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -13,6 +15,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.service.member.MemberService;
 import com.example.vo.member.MemberVO;
@@ -26,10 +29,12 @@ public class MailController {
 	@Autowired
 	public MemberService memberService;
 	
+	@ResponseBody
 	@PostMapping("/sendmail")
-	public String sendMail(@RequestParam("email") String email) throws MessagingException {
+	public Map<String, String> sendMail(@RequestParam("email") String email) throws MessagingException {
 		
-		System.out.println(email);
+		Map<String, String> map = new HashMap<String, String>();
+		
 		char[] charSet = new char[] {
 				'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
 				'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
@@ -50,17 +55,26 @@ public class MailController {
 		}
 		
 		MemberVO mVo = new MemberVO(email, sb.toString());
-		this.memberService.updateTempPassword(mVo);
-		MimeMessage message = javaMailSender.createMimeMessage();
-		message.setFrom(new InternetAddress("studydev1234@naver.com"));
-		message.setSubject("페토피아 임시 비밀번호 발급");
-		message.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
-		message.setText("임시 비밀번호 : " + sb.toString());
-		message.setSentDate(new Date());
+		if( this.memberService.updateTempPassword(mVo) == 1) {
+			MimeMessage message = javaMailSender.createMimeMessage();
+			message.setFrom(new InternetAddress("studydev1234@naver.com"));
+			message.setSubject("페토피아 임시 비밀번호 발급");
+			message.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
+			message.setText("임시 비밀번호 : " + sb.toString());
+			message.setSentDate(new Date());
+			
+			javaMailSender.send(message);
+			
+			map.put("isSuccess", "1");
+			map.put("resultText", "임시 비밀번호를 발송했습니다.");
+		} else {
+			map.put("isSuccess", "0");
+			map.put("resultText", "존재하지 않거나 탈퇴한 아이디입니다.");
+		}
 		
-		javaMailSender.send(message);
 		
-		return "redirect:petopialogin";
+		
+		return map;
 	}
 	
 }

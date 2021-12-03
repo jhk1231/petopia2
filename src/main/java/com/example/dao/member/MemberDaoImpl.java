@@ -106,9 +106,9 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public void updateTempPassword(MemberVO mVo) {
+	public int updateTempPassword(MemberVO mVo) throws Exception {
 		// TODO Auto-generated method stub
-		this.mapper.updateTempPassword(mVo);
+		return this.mapper.updateTempPassword(mVo);
 	}
 
 }

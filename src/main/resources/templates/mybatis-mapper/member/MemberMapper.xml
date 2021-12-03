@@ -30,7 +30,7 @@
 	
 	<select id="selectMemberList" parameterType="criteria" resultType="memberVo" resultMap="briefMemberInfo">
 		SELECT member_no,email, name, regdate, visits, ban
-		FROM member M RIGHT JOIN grade G
+		FROM Member M RIGHT JOIN grade G
 		ON M.grade_no = G.grade_no
 		WHERE member_no > 0
 		ORDER BY member_no ASC, ismember ASC
@@ -39,60 +39,60 @@
 	
 	<select id="selectTotalMember" resultType="int">
 		SELECT COUNT(*)
-		FROM member
+		FROM Member
 	</select>
 	
 	<select id="selectMemberByManager" parameterType="int" resultType="memberVo" resultMap="detailInfoByManager">
 		SELECT member_no, email, name, nickname, regdate, lastdate, M.docs, M.comms, visits, ban, ismember
-		FROM member M RIGHT JOIN grade G
+		FROM Member M RIGHT JOIN grade G
 		ON M.grade_no = G.grade_no
 		WHERE member_no = #{no}
 	</select>
 	
 	<update id="updateBan7days" parameterType="int">
-		UPDATE member
+		UPDATE Member
 		SET	ban = DATE_ADD(NOW(), INTERVAL 7 DAY)
 		WHERE member_no = #{no}
 	</update>
 	
 	<update id="updateBan1day" parameterType="int">
-		UPDATE member
+		UPDATE Member
 		SET	ban = DATE_ADD(NOW(), INTERVAL 1 DAY)
 		WHERE member_no = #{no}
 	</update>
 	
 	<update id="updateBan1minute" parameterType="int">
-		UPDATE member
+		UPDATE Member
 		SET	ban = DATE_ADD(NOW(), INTERVAL 1 MINUTE)
 		WHERE member_no = #{no}
 	</update>
 	
 	<update id="updateMemberByForce" parameterType="int">
-		UPDATE member
+		UPDATE Member
 		SET ismember = 2
 		WHERE member_no = #{no};
 	</update>
 	
 	<update id="plusMemberDocs" parameterType="int">
-		UPDATE member
+		UPDATE Member
     	SET docs = docs + 1
     	WHERE member_no = #{no};
 	</update>
 	
 	<update id="minusMemberDocs" parameterType="int">
-		UPDATE member
+		UPDATE Member
     	SET docs = docs - 1
     	WHERE member_no = #{no};
 	</update>
 	
 	<update id="plusMemberComms" parameterType="int">
-		UPDATE member
+		UPDATE Member
     	SET comms = comms + 1
     	WHERE member_no = #{no};
 	</update>
 	
     <update id="minusMemberComms" parameterType="int">
-    	UPDATE member
+    	UPDATE Member
     	SET comms = comms - 1
     	WHERE member_no = #{no};
     </update>
@@ -100,7 +100,7 @@
     <select id="selectMember_byIDPwd" parameterType="String" resultType="memberVo" resultMap="detailInfoByManager">
         <!-- SELECT member.member_no, email, nickname -->
         SELECT member_no, email, name, nickname, regdate, lastdate, M.docs, M.comms, visits, ban, ismember
-		FROM member M RIGHT JOIN grade G
+		FROM Member M RIGHT JOIN grade G
 		ON M.grade_no = G.grade_no
         WHERE email=#{email} AND password=#{password}
     </select>
@@ -134,13 +134,13 @@
 	<!-- 회원가입 시 이메일 중복확인 -->
 	<select id="selectEmail"  parameterType="String"  resultType="String">
 		SELECT email
-		FROM member
+		FROM Member
 		WHERE email = #{email}
 	</select>
 	
 	<update id="updateTempPassword"  parameterType="memberVo">    
-      UPDATE member
+      UPDATE Member
       SET password = #{password}
-      WHERE email = #{email}
+      WHERE email = #{email} AND ismember = 0
    </update>
 </mapper>

@@ -144,8 +144,16 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void updateTempPassword(MemberVO mVo) {
+	public int updateTempPassword(MemberVO mVo) {
 		// TODO Auto-generated method stub
-		this.memberdao.updateTempPassword(mVo);
+		
+		int result = 0;
+		try {
+			result = this.memberdao.updateTempPassword(mVo);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			return result;
+		}
+		return result;
 	}
 }
