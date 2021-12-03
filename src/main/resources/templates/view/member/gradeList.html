@@ -1,10 +1,68 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Document</title>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<link th:href="@{../css/gradeManagerStyle.css}" rel="stylesheet" />
+
+<div id="layoutSidenav_content">
+	<main>
+		<div class="container-fluid px-4">
+			<div class="row mt-5 mb-5">
+				<form th:action="@{/grades}" method="POST">
+
+					<div class="gradeList-table-style">
+						<table id="Grade">
+							<colgroup>
+								<col width="10%" />
+								<col width="20%" />
+								<col width="10%" />
+								<col width="20%" />
+								<col width="15%" />
+								<col width="15%" />
+								<col width="10%" />
+							</colgroup>
+							<thead>
+								<tr>
+									<th>번호</th>
+									<th>등급 이름</th>
+									<th>열람 가능</th>
+									<th>게시글 갯수</th>
+									<th>댓글 갯수</th>
+									<th>등급 회원 수</th>
+									<th>비고</th>
+								</tr>
+							</thead>
+
+							<tbody th:each="grade : ${grades}">
+								<tr>
+									<td><input type="text" th:placeholder="${grade.gradeNo}"
+										name="gradeNo" th:value="${grade.gradeNo}"></td>
+									<td><input type="text" th:placeholder="${grade.name}"
+										name="name" th:value="${grade.name}"></td>
+									<td><button type="button" th:value="${grade.gradeNo}"
+											id="checkBtn">확인</button></td>
+									<td><input type="text" th:placeholder="${grade.docs}"
+										name="docs" th:value="${grade.docs}"></td>
+									<td><input type="text" th:placeholder="${grade.comms}"
+										name="comms" th:value="${grade.comms}"></td>
+									<td th:text="${grade.person} + '명'"></td>
+									<td><button type="button" th:value="${grade.gradeNo}"
+											id="deleteBtn" onclick="delRow(this)">삭제</button></td>
+								</tr>
+							</tbody>
+
+
+						</table>
+					</div>
+					<div class="gradeList-btn-style">
+						<button type="button" id="addBtn" onclick="addRow()">등급
+							추가</button>
+						<button type="submit" id="submitBtn">저장</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</main>
+</div>
 <script th:src="@{/js/jquery-3.6.0.min.js}"></script>
 <script>
 	$("#checkBtn").click(function() {
@@ -56,44 +114,4 @@
 		}
 	}
 </script>
-</head>
-<body>
-	<div class="content">
-	<form th:action="@{/grades}" method="POST">
-		<button type="button" id="addBtn" onclick="addRow()">등급 추가</button>
-		<table id="Grade">
-			<thead>
-				<tr>
-					<th>번호</th>
-					<th>등급 이름</th>
-					<th>열람 가능</th>
-					<th>게시글 갯수</th>
-					<th>댓글 갯수</th>
-					<th>등급 회원 수</th>
-					<th>비고</th>
-				</tr>
-			</thead>
-
-			<tbody th:each="grade : ${grades}">
-				<tr>
-					<td><input type="text" th:placeholder="${grade.gradeNo}"
-						name="gradeNo" th:value="${grade.gradeNo}"></td>
-					<td><input type="text" th:placeholder="${grade.name}"
-						name="name" th:value="${grade.name}"></td>
-					<td><button type="button" th:value="${grade.gradeNo}"
-							id="checkBtn">확인</button></td>
-					<td><input type="text" th:placeholder="${grade.docs}"
-						name="docs" th:value="${grade.docs}"></td>
-					<td><input type="text" th:placeholder="${grade.comms}"
-						name="comms" th:value="${grade.comms}"></td>
-					<td th:text="${grade.person} + '명'"></td>
-					<td><button type="button" th:value="${grade.gradeNo}"
-							id="deleteBtn" onclick="delRow(this)">삭제</button></td>
-				</tr>
-			</tbody>
-			<button type="submit" id="submitBtn">저장</button>
-		</table>
-		</form>
-	</div>
-</body>
 </html>

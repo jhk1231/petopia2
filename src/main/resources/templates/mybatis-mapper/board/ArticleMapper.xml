@@ -26,6 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="content" javaType="String" column="content" jdbcType="VARCHAR"/>
 	</resultMap>
 	
+	
 	<resultMap type="fileVo" id="detailFileVOResult">
 		<result property="no" javaType="int" column="file_no" jdbcType="INTEGER" />
 		<result property="articleNo" javaType="int" column="article_no" jdbcType="INTEGER" />
@@ -44,7 +45,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		{ CALL sp_article_select_detail(#{articleNo}) }
 	</select>
 
-	
+	<select id="selectViewCount" parameterType="Integer" resultType="int">
+		SELECT viewcount FROM Article WHERE article_no = #{articleNo}
+	</select>	
 	
 	<insert id="insertArticle" statementType="CALLABLE" parameterType="articleVo">
 		{ CALL sp_article_insert(#{memberNo}, #{boardNo}, #{nickname}, #{subject}, #{content}) }

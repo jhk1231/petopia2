@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,15 +55,18 @@ public class MemberController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		model.addAttribute("managerContent", "view/member/memberList");
 		model.addAttribute("lst", lst);
 		model.addAttribute("paging", paging);
-		return "view/member/memberList";
+		return "view/home/viewManagerTemplate";
 	}
 
 	@PostMapping("/members")
 	@ResponseBody
 	public Object viewSearchList(@RequestParam("keyword") String keyword, @RequestParam("keyfield") String keyfield,
 			Model model, Criteria crt) {
+		log.info(keyfield);
+		log.info(keyword);
 		List<MemberVO> lst = null;
 		Paging paging = new Paging();
 		try {
@@ -82,9 +87,9 @@ public class MemberController {
 		MemberVO member = this.memberService.retrieveMemberByManager(no);
 		log.info(member.toString());
 		model.addAttribute("member", member);
-		model.addAttribute("managerContent", "/fragments/view/ManagerContent");
+		model.addAttribute("managerContent", "view/member/detailMemberByManager");
 		System.out.println(model);
-		return "view/member/detailMemberByManager";
+		return "view/home/viewManagerTemplate";
 	}
 
 	@PostMapping("/members/{no}")
@@ -108,9 +113,35 @@ public class MemberController {
 			e.printStackTrace();
 		}
 		model.addAttribute("grades", grades);
-		return "view/member/gradeList";
+		model.addAttribute("managerContent", "view/member/gradeList");
+		return "view/home/viewManagerTemplate";
+	}
+	
+//	회원 자진 탈퇴
+	@GetMapping("/outForm")  //이걸 실행하는 값의 주소
+	public String outMember(MemberVO mVo, HttpSession session) {
+		log.info("" + session.getAttribute("loginUser"));
+		//this.memberService.modifyMember(member.getNo(), password);
+		return "view/member/out"; 
 	}
 
+	
+	
+//	@GetMapping("/members")
+//	public String callMemberList(Model model) {
+//		List<MemberVO> lst = this.memberService.retrieveMemberList(0, 0);
+//		model.addAttribute(lst);
+//		return "memberList";
+//	}
+//	
+//	@GetMapping("/members/{no}")
+//	public String callMemberDetail(Model model, @PathVariable int no) {
+//		MemberVO member = this.memberService.retrieveMemberByManager(no);
+//		model.addAttribute(member);
+//		model.addAttribute("managerContent","/fragments/view/ManagerContent");
+//		return "view/member/detailMemberByManager";
+//	}
+	
 	@PostMapping("/grades")
 	public String modifyGrade(Model model, HttpServletRequest req) {
 		String[] stringNo = req.getParameterValues("gradeNo");
