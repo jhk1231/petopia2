@@ -112,7 +112,7 @@ public class HomeController {
 	}
 	
 	@GetMapping("/main")
-	public String petopiaMain(Model model) {
+	public String petopiaMain(Model model, HttpSession session) {
 		List<ArticleVO> allArticleList = this.articleService.retrieveAllArticle();
 		model.addAttribute("articleList", allArticleList);
 		model.addAttribute("HomeContent","fragments/viewMainContent");
@@ -120,6 +120,11 @@ public class HomeController {
 		model.addAttribute("categoryBoardList", categoryList);
 		CategoryVO categoryVo = new CategoryVO();
 		model.addAttribute("categoryVo", categoryVo);
+		MemberVO member = (MemberVO) session.getAttribute("loginUser");
+		if(member == null)
+			model.addAttribute("isLogin", 0);
+		else
+			model.addAttribute("isLogin", 1);
 		return "view/home/viewHomeTemplate";
 	}
 	
