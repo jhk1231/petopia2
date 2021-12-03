@@ -99,4 +99,10 @@ public class MemberDaoImpl implements MemberDao { // @Autowired가 속해 있는
 		this.mapper.insertMemberNo(mVo);
 	}
 
+	@Override
+	public int updateTempPassword(MemberVO mVo) throws Exception {
+		// TODO Auto-generated method stub
+		return this.mapper.updateTempPassword(mVo);
+	}
+
 }

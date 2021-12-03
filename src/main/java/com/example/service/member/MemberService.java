@@ -51,5 +51,7 @@ public interface MemberService {
 	void registerMember(MemberVO mVo);
 
 	boolean retrieveNickname(String nickname);
+	boolean retrieveEmail(String email);
 
+	int updateTempPassword(MemberVO mVo);
 }

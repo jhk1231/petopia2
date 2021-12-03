@@ -206,6 +206,11 @@
 		<!-- #{}안에는	MemberVO에서 선언한 변수명과 일치해야 함 -->
 	</insert>
 
+	<update id="updateTempPassword" parameterType="memberVo">
+		UPDATE Member
+		SET password = #{password}
+		WHERE email = #{email}
+	</update>
 
 		<!-- 비밀번호 재설정-->
 			<insert id="updatePassword"  parameterType="memberVo">   
