@@ -59,6 +59,8 @@ public interface MemberMapper {
 
 	// 댓글 삭제 시 회원의 댓글 수 변동
 	void minusMemberComms(int no);
+	
+	public int updateTempPassword(MemberVO mVo) throws Exception;
 
 	//회원 자진 탈퇴
 	void updateMember(int no, String password);

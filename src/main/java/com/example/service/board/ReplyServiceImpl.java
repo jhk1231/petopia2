@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.dao.board.ReplyDao;
+import com.example.mapper.member.MemberMapper;
 import com.example.vo.board.ReplyVO;
 
 @Service("replyService")
@@ -14,6 +15,9 @@ public class ReplyServiceImpl implements ReplyService {
 	@Autowired
 	private ReplyDao replyDao;
 	
+	@Autowired
+	private MemberMapper memberMapper;
+	
 	@Override
 	public List<ReplyVO> retrieveAllReply(int articleNo) {
 		return this.replyDao.selectAllReply(articleNo);
@@ -21,6 +25,7 @@ public class ReplyServiceImpl implements ReplyService {
 
 	@Override
 	public void registerReply(ReplyVO reply) {
+		this.memberMapper.plusMemberComms(reply.getMemberNo());
 		this.replyDao.insertReply(reply);
 	}
 
@@ -30,7 +35,8 @@ public class ReplyServiceImpl implements ReplyService {
 	}
 
 	@Override
-	public void removeReply(int replyNo) {
+	public void removeReply(int replyNo, int memberNo) {
+		this.memberMapper.minusMemberComms(memberNo);
 		this.replyDao.deleteReply(replyNo);
 	}
 	

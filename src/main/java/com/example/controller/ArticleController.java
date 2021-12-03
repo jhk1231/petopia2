@@ -1,7 +1,9 @@
 package com.example.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.service.board.ArticleService;
@@ -24,6 +28,7 @@ import com.example.service.board.ReplyService;
 import com.example.util.FileManager;
 //import com.example.util.FileManager;
 import com.example.vo.board.ArticleVO;
+import com.example.vo.board.BoardBoardGradeVO;
 import com.example.vo.board.BoardVO;
 import com.example.vo.board.CategoryVO;
 import com.example.vo.board.FileFormVO;
@@ -68,13 +73,20 @@ public class ArticleController {
 		model.addAttribute("categoryBoardList", categoryList);
 		CategoryVO categoryVo = new CategoryVO();
 		model.addAttribute("categoryVo", categoryVo);
+		
 		// side bar -------------
 		if (grade) {
+			int memberNo = member.getNo();
+			model.addAttribute("loginMemberNo", memberNo);
 			this.articleService.upViewcount(articleNo); // 조회수 증가
 			// bind
-			article.setNo(articleNo);
 			List<ReplyVO> replys = this.replyService.retrieveAllReply(articleNo);
+			int totalCount = this.articleService.totalRecCount(articleNo);
+			int likeCheck = this.articleService.likeCheck(memberNo, articleNo);
+			article.setLikeCheck(likeCheck);
+			article.setNo(articleNo);
 			article.setReplyList(replys);
+			article.setLikecount(totalCount);
 			// view
 			// side bar -------------
 			model.addAttribute("article", article);
@@ -185,17 +197,11 @@ public class ArticleController {
 	}
 	
 	
-	
-	
-	
-	
-	
 
 // 게시판 목록 조회
 
 	@GetMapping("/nListArticle/{boardNo}")
 	public String selectAllNomalArticle(@PathVariable("boardNo") int boardNo,
-														HttpServletRequest request,
 														Model model) {
 		// create
 		List<ArticleVO> articles = this.articleService.retrieveBoard(boardNo);
@@ -212,18 +218,18 @@ public class ArticleController {
 				noFile.setSystemFileName("noimage.png");
 				article.setThumbnail(noFile);
 			}
-//			log.info("$$$$$$$$$$$$$$" + article.toString());
 		}
 		List<CategoryVO> categoryList = this.categoryService.retrieveCategoryBoardList();
-		model.addAttribute("categoryBoardList", categoryList);
 		CategoryVO categoryVo = new CategoryVO();
-		model.addAttribute("categoryVo", categoryVo);
 
-		model.addAttribute("boardName", boardNo); // 차후 이름으로 변경할것
+		BoardBoardGradeVO bbgVO = this.boardService.retrieveOneBoard(boardNo);
+		String boardName = bbgVO.getBoardVo().getBoardName();
+		int boardkind = bbgVO.getBoardVo().getBoardkind();
+		
+		model.addAttribute("categoryBoardList", categoryList);
+		model.addAttribute("categoryVo", categoryVo);
+		model.addAttribute("boardName", boardName); // 차후 이름으로 변경할것
 		model.addAttribute("articles", articles); // 게시글 정보 전송
-		log.info("%^^^^^^^^^^^^^^^^^6boardKind^^^^^^^^^" + request.getParameter("boardKind"));
-		// view
-		int boardkind = Integer.parseInt(request.getParameter("boardKind"));
 		model.addAttribute("boardkind", boardkind); // 게시글 유형
 		return "/view/home/viewBoardTemplate";
 	}
@@ -231,32 +237,46 @@ public class ArticleController {
 	
 	
 	@GetMapping("/removeArticle/{articleNo}/{boardNo}")
-	public RedirectView removeArticle(@PathVariable("articleNo") int articleNo, @PathVariable("boardNo") int boardNo) {
+	public RedirectView removeArticle(@PathVariable("articleNo") int articleNo, HttpServletRequest req,
+			@PathVariable("boardNo") int boardNo) {
 		RedirectView redirectView = new RedirectView();
-		this.articleService.removeArticle(articleNo);
+		HttpSession session = req.getSession();
+		MemberVO member = (MemberVO) session.getAttribute("loginUser");
+		int memberNo = member.getNo();
+		this.articleService.removeArticle(articleNo, memberNo);
 		redirectView.setUrl("/nListArticle/" + boardNo);
 		return redirectView;
 	}
 
-//	// 추천
-//	@PostMapping("/RecUpdate")
-//	@ResponseBody
-//	public int recUpdate(@RequestParam("memberNo") int memberNo, 
-//									@RequestParam("articleNo") int articleNo) {
-//
-//		this.articleService.recUpdate(memberNo, articleNo);
-//
-//		int totalCount = this.articleService.totalRecCount(articleNo);
-//		return totalCount;
-//	}
-//
-//	// 총 추천 수
-//	@PostMapping("/RecUpdate")
-//	@ResponseBody
-//	public int recUpdate(@RequestParam("articleNo") int  articleNo) {
-//
-//		int totalCount = this.articleService.totalRecCount(articleNo);
-//		return totalCount;
-//	}
+	// 추천 
+	@PostMapping("/addLike")
+	@ResponseBody
+	public Map<String, Object> recUpdate(@RequestBody HashMap<String, Object> map, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		MemberVO member = (MemberVO) session.getAttribute("loginUser");
+		int memberNo = member.getNo();
+		int articleNo = Integer.parseInt((String)map.get("articleNo"));
+//		log.info("******articleNO" + map.get("articleNo"));
+		this.articleService.recUpdate(memberNo, articleNo);
+		int totalCount = this.articleService.totalRecCount(articleNo);
+		map.put("totalcount", totalCount);
+		return map;
+	}
+
+	// 추천 취소
+	@PostMapping("/delLike")
+	@ResponseBody
+	public Map<String, Object> recDelete(@RequestBody HashMap<String, Object> map, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		MemberVO member = (MemberVO) session.getAttribute("loginUser");
+		ArticleVO art = new ArticleVO();
+		int articleNo = Integer.parseInt((String)map.get("articleNo"));
+		art.setNo(articleNo);
+		art.setMemberNo(member.getNo());
+		this.articleService.recDelete(art);
+		int totalCount = this.articleService.totalRecCount(articleNo);
+		map.put("totalcount", totalCount);
+		return map;
+	}
 
 }

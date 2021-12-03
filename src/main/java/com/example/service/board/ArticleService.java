@@ -16,13 +16,17 @@ public interface ArticleService {
 	
 	void modifyArticle(ArticleVO article); // 수정
 	
-	void removeArticle(int articleNo); // 삭제
+	void removeArticle(int articleNo,int memberNo); // 삭제
 	
-	
+	List<ArticleVO> retrieveAllArticle(); // 전체글 조회
 	
 	void upViewcount(int articleNo); // 조회수 up
 //	
-//	void recUpdate(int articleNo, int memberNo);
+	void recUpdate(int articleNo, int memberNo);
 //	
-//	int totalRecCount(int articleNo);
+	int totalRecCount(int articleNo);
+	
+	void recDelete(ArticleVO aritcleVO);
+	
+	int likeCheck(int memberNo, int ArticleNo);
 }
