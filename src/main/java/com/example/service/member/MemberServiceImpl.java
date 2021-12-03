@@ -144,9 +144,6 @@ public class MemberServiceImpl implements MemberService {
 		return null;
 	}
 
-	
-
-
 	@Override
 	public boolean retrieveEmail(String email) {
 		String checkEmail = this.memberdao.selectEmail(email);
@@ -172,6 +169,12 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+
+	public void updatePassword(MemberVO memberVo) {
+		// TODO Auto-generated method stub
+		this.memberdao.updatePassword(memberVo);
+  }
+  
 	public int updateTempPassword(MemberVO mVo) {
 		// TODO Auto-generated method stub
 		

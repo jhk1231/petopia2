@@ -55,11 +55,11 @@ public class HomeController {
 		return "vlew/home/asdmsadpo";
 	}
 	
-	@PostMapping("/")
-	public String selfOut(@RequestParam("memberNo") int no, @RequestParam("password") String password) {
-		this.memberService.modifyMember(no, password);
-		return "redirect:/login";
-	}
+//	@PostMapping("/")
+//	public String selfOut(@RequestParam("memberNo") int no, @RequestParam("password") String password) {
+//		this.memberService.modifyMember(no, password);
+//		return "redirect:/login";
+//	}
 	
 	@ResponseBody
 	@PostMapping("/login")

@@ -7,7 +7,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-<title>회원 자진 탈퇴</title>
+<title>회원 탈퇴</title>
 <link href="css/theme_styles.css" rel="stylesheet" />
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
@@ -26,12 +26,11 @@
 								</div>
 								<div class="card-body">
 									<div class="small mb-3 text-muted">비밀번호를 입력해주세요.</div>
-									<form action="/" method="POST">
-										<input type="hidden" name="memberNo" value="${}" />
+									<form action="/outMember" method="POST">
 										 비밀번호 확인 
 										 <input type="password" id="password" name="password" value="${password}">
 										<div id='errmsgpw'></div>
-										<input type="submit" value="회원 탈퇴" id="pwdcheckbtn">
+										<input type="submit" value="회원 탈퇴" id="pwdcheckbtn"  onclick="return confirm('정말 탈퇴 하시겠습니까?')">
 									</form>
 								</div>
 							</div>
