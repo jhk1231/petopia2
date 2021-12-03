@@ -36,18 +36,20 @@
 						</tr>
 					</tbody>
 				</table>
-				<ul id="paging" th:object="${paging}">
-					<li th:if="*{prev == true}"><a
-						th:href="@{/members(currentPageNo=1)}">&laquo;</a></li>
-					<li th:if="*{prev == true}"><a
-						th:href="@{/members(currentPageNo=*{startPage-1})}">&lsquo;</a></li>
-					<li th:each="i : *{#numbers.sequence(startPage, endPage)}"><a
-						th:href="@{/members(currentPageNo=${i})}" th:text="${i}"></a></li>
-					<li th:if="*{next == true}"><a
-						th:href="@{/members(currentPageNo=*{endPage+1})}">&rsquo;</a></li>
-					<li th:if="*{next == true}"><a
-						th:href="@{/members(currentPageNo=*{endNumber})}">&raquo;</a></li>
-				</ul>
+				<div id="pageContent">
+					<ul id="paging" th:object="${paging}">
+						<li th:if="*{prev == true}"><a
+							th:href="@{/members(currentPageNo=1)}">&laquo;</a></li>
+						<li th:if="*{prev == true}"><a
+							th:href="@{/members(currentPageNo=*{startPage-1})}">&lsquo;</a></li>
+						<li th:each="i : *{#numbers.sequence(startPage, endPage)}"><a
+							th:href="@{/members(currentPageNo=${i})}" th:text="${i}"></a></li>
+						<li th:if="*{next == true}"><a
+							th:href="@{/members(currentPageNo=*{endPage+1})}">&rsquo;</a></li>
+						<li th:if="*{next == true}"><a
+							th:href="@{/members(currentPageNo=*{endNumber})}">&raquo;</a></li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</main>
@@ -75,7 +77,31 @@ $(document).ready(function() {
 			},
 
 			success : function(data) {
-				console.log(data);
+				console.log(data.paging);
+				var page = data.paging;
+				$("#memberBody tr").remove();
+				$("#paging").remove();
+				var htmlStr = [];
+				for(let list of data.lst) {
+					htmlStr.push('<tr id=">'+ list.no +'">');
+					htmlStr.push('<td>'+ list.no +'</td>');
+					htmlStr.push('<td><a href=/members/'+ list.no + '>' + list.email +'</a></td>');
+					htmlStr.push('<td>'+ list.grade +'</td>');
+					htmlStr.push('<td>'+ list.regDate +'</td>');
+					htmlStr.push('<td>'+ list.visits +'</td>');
+					htmlStr.push('<td>'+ list.ban +'</td>');
+					htmlStr.push('</tr>');
+				}
+				console.log(data.paging);
+
+				$('#memberBody').html(htmlStr.join(""));
+
+				
+				htmlStr = [];
+				
+				htmlStr.push('<button type="button" id="replay">원래대로</button>');
+				$('#pageContent').html(htmlStr.join(""));
+				
 			},
 			error : function(err) {
 				console.log(err);
@@ -83,6 +109,10 @@ $(document).ready(function() {
 		});
 	}
 	)
+	$(document).on('click', '#replay', function(){
+		location.href = "/members";
+	});
+	
 });
 </script>
 </html>

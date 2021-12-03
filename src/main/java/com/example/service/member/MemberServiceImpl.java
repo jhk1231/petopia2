@@ -79,18 +79,16 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override // 회원 검색 조회
-	public ArrayList<MemberVO> retrieveSearchMember(Criteria crt, String keyfield, String keyword) {
+	public ArrayList<MemberVO> retrieveSearchMember(String keyfield, String keyword) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		int dataPerPage = crt.getDataPerPage();
-		int pageStart = crt.getPageStart();
+	
 		map.put("keyword", keyword);
-		map.put("dataPerPage", dataPerPage);
-		map.put("dataPerPage", pageStart);
+
 
 		if (keyfield.equals("email")) {
-			return this.memberMapper.selectSearchMemberByEmail(map);
+			return this.memberMapper.selectSearchMemberByEmail(keyword);
 		} else {
-			return this.memberMapper.selectSearchMemberByGrade(map);
+			return this.memberMapper.selectSearchMemberByGrade(keyword);
 		}
 	}
 
