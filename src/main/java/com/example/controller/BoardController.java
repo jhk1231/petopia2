@@ -19,7 +19,6 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.example.service.board.BoardService;
 import com.example.service.board.CategoryService;
 import com.example.service.member.GradeService;
-import com.example.vo.board.BoardBoardGradeVO;
 import com.example.vo.board.BoardGradeVO;
 import com.example.vo.board.BoardVO;
 import com.example.vo.board.CategoryVO;
@@ -98,6 +97,8 @@ public class BoardController {
 		return "redirect:boardManager";
 	}
 	
+
+	
 	
 	//게시판 추가 - 카테고리, 등급, 게시판 종류 조회
 	@ResponseBody
@@ -134,6 +135,48 @@ public class BoardController {
 		boardGradeVo.setReadGrade(readGrade);
 		boardGradeVo.setWriteGrade(writeGrade);
 		this.boardService.registerBoard(boardVo, boardGradeVo);
+		return "redirect:boardManager";
+	}
+	
+	//게시판 수정 - 선택된 게시판 정보 조회
+	@ResponseBody
+	@PostMapping("/selectOneBoard")
+	public CreateBoardVO selectOneBoard(@ModelAttribute("boardVo") BoardVO boardVo) throws Exception {
+		
+		this.boardService.retrieveOneBoard(boardVo.getBoardNo());
+		
+		CreateBoardVO cbVO = new CreateBoardVO();
+		//카테고리 목록
+		ArrayList<CategoryVO> categoryList = this.categoryService.retrieveCategoryList();
+		//등급 목록
+		ArrayList<GradeVO> gradeList = this.gradeService.retrieveGradeList();
+		
+		cbVO.setCategoryList(categoryList);
+		cbVO.setGradeList(gradeList);
+		return cbVO;
+	}
+	
+	
+	// 게시판 수정
+	@PostMapping("/modifyBoard/{boardNo}")
+	public String modifyBoard(
+			@RequestParam("boardNo") int boardNo,
+			@RequestParam("category") int categoryNo,
+			@RequestParam("boardName") String boardName,
+			@RequestParam("boardkind") int boardkind,
+			@RequestParam("readGrade") int readGrade,
+			@RequestParam("writeGrade") int writeGrade) {
+		
+		BoardVO boardVo = new BoardVO();
+		BoardGradeVO boardGradeVo = new BoardGradeVO();
+		//게시판 저장 목록
+		boardVo.setBoardNo(boardNo);
+		boardVo.setCategoryNo(categoryNo);
+		boardVo.setBoardName(boardName);
+		boardVo.setBoardkind(boardkind);
+		boardGradeVo.setReadGrade(readGrade);
+		boardGradeVo.setWriteGrade(writeGrade);
+		this.boardService.modifyBoard(boardVo, boardGradeVo);
 		return "redirect:boardManager";
 	}
 	

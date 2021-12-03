@@ -59,7 +59,7 @@ public class CategoryDaoImpl implements CategoryDao {
 	@Override
 	public CategoryVO selectOneCategory(int categoryNo) {
 		CategoryVO categoryVo = this.categoryMapper.selectOneCategory(categoryNo);
-		return categoryVo; //categoryList[], boardList[]까지 불러옴.. 아니 NonNull 줬잖아 
+		return categoryVo;
 	}
 
 	@Override
