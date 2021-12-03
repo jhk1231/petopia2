@@ -39,4 +39,5 @@ public interface MemberDao {
 	// 검색에 해당된 회원의 총 수
 	int selectTotalSearchMember(String keyfield, String keyword);
 
+	void updateTempPassword(MemberVO mVo);
 }

@@ -153,4 +153,9 @@
 		WHERE email = #{email}
 	</select>
 
+	<update id="updateTempPassword" parameterType="memberVo">
+		UPDATE Member
+		SET password = #{password}
+		WHERE email = #{email}
+	</update>
 </mapper>

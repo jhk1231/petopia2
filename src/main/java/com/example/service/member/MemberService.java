@@ -44,4 +44,6 @@ public interface MemberService {
 	MemberVO retreiveMemberProfile(int member_no);
 
 	boolean retrieveEmail(String email);
+
+	void updateTempPassword(MemberVO mVo);
 }

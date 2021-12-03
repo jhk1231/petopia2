@@ -137,5 +137,10 @@
 		FROM member
 		WHERE email = #{email}
 	</select>
-
+	
+	<update id="updateTempPassword"  parameterType="memberVo">    
+      UPDATE member
+      SET password = #{password}
+      WHERE email = #{email}
+   </update>
 </mapper>

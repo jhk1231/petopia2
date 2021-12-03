@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +18,14 @@ import com.example.mapper.board.ArticleMapper;
 import com.example.mapper.board.BoardMapper;
 import com.example.mapper.board.FileMapper;
 import com.example.mapper.board.ReplyMapper;
+import com.example.mapper.member.MemberMapper;
 import com.example.service.board.ArticleService;
 import com.example.service.board.BoardService;
 import com.example.service.board.CategoryService;
 import com.example.service.board.ReplyService;
 import com.example.util.FileManager;
 import com.example.vo.board.CategoryVO;
-
+import com.example.vo.member.MemberVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -54,12 +56,21 @@ class PetopiaApplicationTests {
 	@Autowired
 	private CategoryService categoryService;
 	
-	@Test
+	@Autowired
+	private MemberMapper memberMapper;
+	@Disabled @Test
 	void tasdo() {
 		List<CategoryVO> categoryList = this.categoryService.retrieveCategoryBoardList();
 		categoryList.forEach(catte -> log.info("***: " + catte));
 	}
 	
+	@Test
+	void tesss() {
+		MemberVO vo = new MemberVO();
+		vo.setEmail("yn_du@naver.com");
+		vo.setPassword("1234");
+		this.memberMapper.updateTempPassword(vo);
+	}
 	
 //	@Test
 //	void ttt() {
@@ -89,7 +100,7 @@ class PetopiaApplicationTests {
 //	private GradeMapper gradeMapper;
 //	
 //
-	@Test
+	@Disabled @Test
 	@DisplayName("Mapper 생성 test")
 	void createTest() {
 		assertNotNull(this.dataSource);

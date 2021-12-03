@@ -105,4 +105,10 @@ public class MemberDaoImpl implements MemberDao {
 		return null;
 	}
 
+	@Override
+	public void updateTempPassword(MemberVO mVo) {
+		// TODO Auto-generated method stub
+		this.mapper.updateTempPassword(mVo);
+	}
+
 }

@@ -58,5 +58,7 @@ public interface MemberMapper {
 
 	// 댓글 삭제 시 회원의 댓글 수 변동
 	void minusMemberComms(int no);
+	
+	public void updateTempPassword(MemberVO mVo);
 
 }

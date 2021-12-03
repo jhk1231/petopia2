@@ -142,4 +142,10 @@ public class MemberServiceImpl implements MemberService {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public void updateTempPassword(MemberVO mVo) {
+		// TODO Auto-generated method stub
+		this.memberdao.updateTempPassword(mVo);
+	}
 }

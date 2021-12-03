@@ -154,4 +154,9 @@ public class MemberController {
 			e.printStackTrace();
 		}
 	}
+	
+	@GetMapping("/findPWD")
+	public String findPassword() {
+		return "view/member/findPassword";
+	}
 }
