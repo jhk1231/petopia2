@@ -1,10 +1,14 @@
 @charset "UTF-8";
 
 
+.write-board-style{
+	display: flex;
+	justify-content: center;
+	margin: 0 auto;
+}
+
 .select-board-style {
 	margin-bottom: 10px;
-	
-	
 }
 
 .select-board-style select {

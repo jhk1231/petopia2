@@ -1,7 +1,10 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
 
 
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.12.1/css/all.css"
+	crossorigin="anonymous">
 
 <link th:href="@{../css/detailArticleStyle.css}" rel="stylesheet" />
 
@@ -16,9 +19,10 @@
 					<div class="detailArticle-table-style">
 						<h1>
 							<input type="hidden" id="login_no" th:value="${loginMemberNo}">
-							<input type="hidden" id="member_no" th:value="${article.memberNo}">
-							<input type="hidden" id="article_no" th:value="${article.no}">
-							<input type="hidden" id="board_no" th:value="${article.boardNo}">
+							<input type="hidden" id="member_no"
+								th:value="${article.memberNo}"> <input type="hidden"
+								id="article_no" th:value="${article.no}"> <input
+								type="hidden" id="board_no" th:value="${article.boardNo}">
 						</h1>
 						<form id="detailContent" th:object="${article}" name="article">
 							<table width=100%>
@@ -51,8 +55,8 @@
 										<th>첨부파일</th>
 										<td th:if="${article.attacheFile == null}">첨부된 파일이 없습니다.</td>
 										<td th:unless="${article.attacheFile == null}"><a
-												th:href="|/attach/${article.getAttacheFile().getNo()}|"
-												th:text="${article.getAttacheFile().getSystemFileName()}|"></a>
+											th:href="|/attach/${article.getAttacheFile().getNo()}|"
+											th:text="${article.getAttacheFile().getSystemFileName()}|"></a>
 										</td>
 										<th></th>
 										<td></td>
@@ -60,45 +64,51 @@
 									<tr th:if="${article.fileList != null}">
 
 										<td>
-											<!--이미지 파일들-->
-											<img th:each="imageFile : ${article.fileList}"
-												th:src="|/images/${imageFile.getSystemFileName()}|" width="200"
-												height="200" />
+											<!--이미지 파일들--> <img th:each="imageFile : ${article.fileList}"
+											th:src="|/images/${imageFile.getSystemFileName()}|"
+											width="200" height="200" />
 										</td>
 									</tr>
 									<tr>
-										<div style="display: inline;">
-											<td colspan="2"><input type="button"
-													th:onclick="|location.href='@{/writeArticleForm}'|" value="글쓰기" />
-												<input type="button"
-													th:onclick="|location.href='@{/nListArticle/{boardNo}(boardNo=${article.boardNo})}'|"
-													value="목록" />
-												<div id="like_area">
-													<!-- <button th:if="${article.likeCheck eq 0}" type="button"  id="add_like_btn"
-														value="추천" /><i class="far fa-heart"></i></button>
-													<button type="button" th:unless="${article.likeCheck eq 0}" id="del_like_btn"><i
-															class="fas fa-heart"></i></button> -->
 
+										<td colspan="2">
+											<div class="detailArticle-btn-style">
+												<div class="detailArticle-function-style">
+													<input type="button"
+														th:onclick="|location.href='@{/writeArticleForm}'|"
+														value="글쓰기" /> <input type="button"
+														th:onclick="|location.href='@{/nListArticle/{boardNo}(boardNo=${article.boardNo})}'|"
+														value="목록" />
+												</div>
+												<div id="like_area" class="detailArticle-like-style">
 													<div th:if="${article.likeCheck eq 0}">
-														<button type="button" id="add_like_btn" value="추천" /><i
-															class="far fa-heart"></i></button>
+														<button type="button" id="add_like_btn" value="추천" />
+														<i class="far fa-heart"></i>
+														</button>
 													</div>
 													<div th:unless="${article.likeCheck eq 0}">
-														<button type="button" id="del_like_btn"><i
-																class="fas fa-heart"></i></button>
+														<button type="button" id="del_like_btn">
+															<i class="fas fa-heart"></i>
+														</button>
 													</div>
 
-													<strong th:text="${article.likecount}"></strong>
+													<div>
+														<strong th:text="${article.likecount}"></strong>
+													</div>
 												</div>
-											</td>
+										</td>
 										</div>
 
 										<!--본인만 가능-->
-										<div th:if="${loginMemberNo == article.memberNo}" style="float: right;">
-											<td><input type="button"
-													th:onclick="|location.href='@{/updateArticleForm/{articleNo}(articleNo=${article.no})}'|"
-													value="수정" /> <input type="button" id="remove_article_btn"
-													value="삭제" /></td>
+										<div class="detail-userCheck-style"
+											th:if="${loginMemberNo == article.memberNo}"
+											style="float: right;">
+											<td><div class="detail-userBtn-style">
+													<input type="button"
+														th:onclick="|location.href='@{/updateArticleForm/{articleNo}(articleNo=${article.no})}'|"
+														value="수정" /> <input type="button"
+														id="remove_article_btn" value="삭제" />
+												</div></td>
 										</div>
 
 									</tr>
@@ -118,7 +128,8 @@
 					</div>
 
 					<div id="replys">
-						<div class="reply_list" th:each="reply : ${article.getReplyList()}">
+						<div class="reply_list"
+							th:each="reply : ${article.getReplyList()}">
 							<table th:id="${reply.getNo()}">
 								<colgroup>
 									<col width="15%">
@@ -140,10 +151,11 @@
 								</tbody>
 								<tfoot>
 
-										<tr th:if="${loginMemberNo == reply.memberNo}">
-											<td colspan="2"><input type="button" class="modify_Reply_Form_Btn" value="수정" /> <input
-													type="button" class="remove_Reply_Btn" value="삭제" /></td>
-										</tr>
+									<tr th:if="${loginMemberNo == reply.memberNo}">
+										<td colspan="2"><input type="button"
+											class="modify_Reply_Form_Btn" value="수정" /> <input
+											type="button" class="remove_Reply_Btn" value="삭제" /></td>
+									</tr>
 								</tfoot>
 							</table>
 						</div>
@@ -173,50 +185,6 @@
 			const articleNo = $("#article_no").val();
 			location.href = '/removeArticle/' + articleNo + '/' + boardNo;
 		})
-		// // 추천 버튼 클릭시
-		// $('#rec_update').click(function () {
-		// 	$.ajax({
-		// 		url: "/RecUpdate",
-		// 		type: "POST",
-		// 		data: {
-		// 			// 게시글을 추천 했는지 안했는지 확인.
-		// 			articleNo: $("#article_no").val(),
-		// 			memberNo: $("#member_no").val()
-		// 		},
-		// 		success: function (data) {
-		// 			let like = "";
-		// 			if(data.check == 1){ // 추천 성공
-
-		// 			}
-		// 			like += 
-		// 			like += "<strong>" + data.count + "</strong>"
-		// 			$("#like_count").html(like);					
-
-		// 		},
-		// 	})
-		// })
-
-		// // 게시글 추천수
-		// function recCount() {
-		// 	$.ajax({
-		// 		url: "/RecCount.do",
-		// 		type: "POST",
-		// 		data: {
-		// 			// 게시글의 총 추천수만 구하면 되니 게시글 번호만 넘겨준다.
-		// 			articleNo: $("#article_no").val()
-		// 		},
-		// 		success: function (count) {
-		// 			// rec_count 내용을 비우고 count로 갱신
-		// 			$("#rec_count").val(JSON.parse(count).totalCount);
-		// 			$(".rec_count").html(JSON.parse(count).totalCount); 
-		// 		},
-		// 	})
-		// 	// 맨처음 시작시 호출
-		// // recCount();
-		// }; 
-		// */
-
-
 
 		/*-------------------댓글 ------------------ */
 		const getAjax = function (url, no, content) {
