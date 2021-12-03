@@ -39,9 +39,6 @@ public interface MemberService {
 	// 회원가입
 	MemberVO retreiveMemberProfile(int member_no);
 
-	// 회원가입 이메일 중복 확인
-	boolean retrieveEmail(String email);
-	
 	//회원 자진 탈퇴
 	void modifyMember(int memberNo, String password);
 	

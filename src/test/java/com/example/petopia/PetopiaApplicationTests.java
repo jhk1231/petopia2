@@ -127,13 +127,13 @@ class PetopiaApplicationTests {
 //		}
 	}
 	
-	@Test
-	void tesss() {
-		MemberVO vo = new MemberVO();
-		vo.setEmail("yn_du@naver.com");
-		vo.setPassword("1234");
-		this.memberMapper.updateTempPassword(vo);
-	}
+//	@Test
+//	void tesss() {
+//		//MemberVO vo = new MemberVO();
+//		vo.setEmail("yn_du@naver.com");
+//		vo.setPassword("1234");
+//		this.memberMapper.updateTempPassword(vo);
+//	}
 	
 //	@Test
 //	void ttt() {

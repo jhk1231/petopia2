@@ -105,4 +105,10 @@ public class MemberDaoImpl implements MemberDao { // @Autowired가 속해 있는
 		return this.mapper.updateTempPassword(mVo);
 	}
 
+	@Override
+	public ArrayList<MemberVO> selectSearchMember(int startRow, int memberPerPage, String keyfield, String keyword) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
