@@ -26,11 +26,15 @@ public interface ArticleMapper {
 	
 	List<ArticleVO> selectAllArticle();
 	
-//	LikeVO selectLike(LikeVO likeVO);
+	int likeCheck(ArticleVO articleVO); // 추천 햿는지 체크
+
+	void insertLike(ArticleVO articleVO);
 //	
-//	void insertLike(LikeVO likeVO);
+	void deleteLike(ArticleVO articleVO); // 추천 삭제 
 //	
-//	void deleteLike(int likeNo); // 추천 삭제 
-//	
-//	int totalLikeCount(int articleNo);
+	int totalLikeCount(int articleNo);
+	
+	void upLikecount(int articleNo);
+	
+	void downLikecount(int articleNo);
 }
