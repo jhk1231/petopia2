@@ -65,8 +65,12 @@ public class ReplyController {
 	@ResponseBody
 	@GetMapping("/removeReply")
 	public List<ReplyVO> deleteReply(@RequestParam("no") int replyNo,
-														@RequestParam("articleNo") int articleNo){
-		this.replyService.removeReply(replyNo); // 댓글 삭제
+														@RequestParam("articleNo") int articleNo,
+														HttpServletRequest req){
+		HttpSession session = req.getSession();
+		MemberVO member = (MemberVO) session.getAttribute("loginUser");
+		int memberNo = member.getNo();
+		this.replyService.removeReply(replyNo, memberNo); // 댓글 삭제
 		List<ReplyVO> replyList = this.replyService.retrieveAllReply(articleNo); // 목록 출력
 		
 		return replyList;
