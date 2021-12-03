@@ -106,6 +106,10 @@ public class ArticleController {
 		MemberVO member = (MemberVO) session.getAttribute("loginUser");
 		// bind
 		int gradeNo = member.getGradeNo();
+		List<CategoryVO> categoryList = this.categoryService.retrieveCategoryBoardList();
+		model.addAttribute("categoryBoardList", categoryList);
+		CategoryVO categoryVo = new CategoryVO();
+		model.addAttribute("categoryVo", categoryVo);
 		log.info("writeForm get No::::" + gradeNo);
 		// bind
 		List<BoardVO> boardList = this.boardService.retrieveAllWriteBoard(gradeNo);
@@ -125,6 +129,10 @@ public class ArticleController {
 		HttpSession session = req.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("loginUser");
 		int gradeNo = member.getGradeNo();
+		List<CategoryVO> categoryList = this.categoryService.retrieveCategoryBoardList();
+		model.addAttribute("categoryBoardList", categoryList);
+		CategoryVO categoryVo = new CategoryVO();
+		model.addAttribute("categoryVo", categoryVo);
 		// bind
 		List<BoardVO> boardList = this.boardService.retrieveAllWriteBoard(gradeNo);
 		log.info("수정으로 넘어온 게시글 번호" +articleNo);

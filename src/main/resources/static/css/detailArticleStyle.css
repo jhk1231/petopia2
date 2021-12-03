@@ -26,6 +26,35 @@
 	border: 1px solid #000000;
 }
 
+.detailArticle-btn-style{
+	display: flex;
+}
+
+.detailArticle-function-style{
+	margin-right: 10px;
+}
+
+.detailArticle-like-style{
+	display: flex;
+}
+
+.detailArticle-like-style button{
+	outline: none;
+	border: none;
+	background-color: #ffffff;
+}
+.detail-userCheck-style{
+	width: 100%;
+}
+
+.detail-userBtn-style{
+	display: flex;
+
+}
+
+.detail-userBtn-style input:first-child{
+	margin-right: 10px;
+}
 .detailArticle-reply-style {
 	display: flex;
 }
