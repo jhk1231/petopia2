@@ -20,6 +20,7 @@ import net.coobird.thumbnailator.Thumbnails;
 public class FileManager {
 	
 	 @Value("${file.dir}")
+	 //"D:/SpringBootHome/petopia2/src/main/resources/static/upload/"
 	 private String fileDir;  // 파일이 저장될 경로
 	
 //	 public FileManager() {

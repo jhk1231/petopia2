@@ -31,9 +31,6 @@ public class ArticleVO {
 	private String writeDate; // 작성일
 	private int viewcount; // 조회수
 	private int likecount; // 추천수
-	private int articleGroup; // 게시글 그룹
-	private int groupNum; // 그룹에서의 순서
-	private int dept; // 원글과의 거리
 	private int displayNotice; // 공지 보여지는 여부
 	private FileVO attacheFile; //첨부 파일
 	private FileVO thumbnail; // 썸네일

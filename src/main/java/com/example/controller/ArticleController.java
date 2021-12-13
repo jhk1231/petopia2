@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.text.StringEscapeUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,7 @@ import com.example.vo.board.ReplyVO;
 import com.example.vo.member.MemberVO;
 
 import lombok.extern.slf4j.Slf4j;
+
 
 @Slf4j
 @Controller
@@ -87,7 +89,13 @@ public class ArticleController {
 			article.setNo(articleNo);
 			article.setReplyList(replys);
 			article.setLikecount(totalCount);
+			// xss 처리 Html tag로 변환
+			String escapeSubject = StringEscapeUtils.unescapeHtml4(article.getSubject());
+			article.setSubject(escapeSubject);
+			String escapeContent = StringEscapeUtils.unescapeHtml4(article.getContent());
+			article.setContent(escapeContent);
 			// view
+			
 			// side bar -------------
 			model.addAttribute("article", article);
 			log.info("detail 넘기는 aritcle: {}", article.toString());
@@ -134,6 +142,10 @@ public class ArticleController {
 		model.addAttribute("categoryBoardList", categoryList);
 		CategoryVO categoryVo = new CategoryVO();
 		model.addAttribute("categoryVo", categoryVo);
+		String escapeSubject = StringEscapeUtils.unescapeHtml4(article.getSubject());
+		article.setSubject(escapeSubject);
+		String escapeContent = StringEscapeUtils.unescapeHtml4(article.getContent());
+		article.setContent(escapeContent);
 
 		// bind
 		List<BoardVO> boardList = this.boardService.retrieveAllWriteBoard(gradeNo);
@@ -218,6 +230,10 @@ public class ArticleController {
 		// bind
 		FileVO file = new FileVO();
 		for (ArticleVO article : articles) {
+			// Html 변환
+			String escapeSubject = StringEscapeUtils.unescapeHtml4(article.getSubject());
+			article.setSubject(escapeSubject);
+			
 			file.setArticleNo(article.getNo());
 			file.setFileType(1);
 			FileVO thumbFile = this.fileService.retrieveThumbFile(file);
@@ -231,9 +247,11 @@ public class ArticleController {
 		}
 		List<CategoryVO> categoryList = this.categoryService.retrieveCategoryBoardList();
 		CategoryVO categoryVo = new CategoryVO();
-
+		
 		BoardBoardGradeVO bbgVO = this.boardService.retrieveOneBoard(boardNo);
 		String boardName = bbgVO.getBoardVo().getBoardName();
+		
+		
 		int boardkind = bbgVO.getBoardVo().getBoardkind();
 		
 		model.addAttribute("categoryBoardList", categoryList);
